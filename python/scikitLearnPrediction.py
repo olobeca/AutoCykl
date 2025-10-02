@@ -19,7 +19,17 @@ print(df.info()) #typy danych
 import matplotlib.pyplot as plt
 import seaborn as sns 
 
-col_study = ['price', 'horsepower']
-sns.pairplot(df[col_study])
+#col_study = ['price', 'horsepower']
+#sns.pairplot(df[col_study])
+#plt.show()
+
+pd.options.display.float_format = '{:,.4f}'.format 
+
+
+print(df.corr()) 
+plt.figure(figsize=(12,8))
+sns.heatmap(df.corr(), annot=True, fmt=".2f")
 plt.show()
+
+
 
