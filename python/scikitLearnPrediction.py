@@ -40,9 +40,9 @@ import seaborn as sns
 # test danych 
 
 y = df['price'].values
-# print(y)
+# # print(y)
 X  = df[['horsepower']].values #podwojne nawiasy zamiast reshape 
-# print(X)
+# # print(X)
 
 
 from sklearn.linear_model import LinearRegression
@@ -50,17 +50,35 @@ from sklearn.linear_model import LinearRegression
 model = LinearRegression()
 model.fit(X,y)
 
-model.coef_ #wspolczynnik kierunkowy
-model.intercept_ #wyraz wolny 
+# model.coef_ #wspolczynnik kierunkowy
+# model.intercept_ #wyraz wolny 
 
 
-plt.figure(figsize=(12,8))
-sns.regplot(data=df, x='horsepower', y='price')
-plt.xlabel('horsepower')
-plt.ylabel("price")
-plt.show()
+# plt.figure(figsize=(12,8))
+# sns.regplot(data=df, x='horsepower', y='price')
+# plt.xlabel('horsepower')
+# plt.ylabel("price")
+# plt.show()
 
 from sklearn.metrics import r2_score
 print(r2_score(y, model.predict(X)))
 #jakosc modelu 
 
+
+y = df['price'].values
+X  = df[['horsepower','carwidth','carheight']].values 
+model = LinearRegression()
+model.fit(X,y)
+# print(model.coef_)
+# print(model.intercept_) 
+print(r2_score(y, model.predict(X)))
+
+
+
+y = df['price'].values
+X  = df[['horsepower','carwidth','carheight','citympg']].values 
+model = LinearRegression()
+model.fit(X,y)
+# print(model.coef_)
+# print(model.intercept_) 
+print(r2_score(y, model.predict(X)))
