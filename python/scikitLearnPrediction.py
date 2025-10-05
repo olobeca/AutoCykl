@@ -82,3 +82,20 @@ model.fit(X,y)
 # print(model.coef_)
 # print(model.intercept_) 
 print(r2_score(y, model.predict(X)))
+
+print('------testowanie czy nie ma overfittingu--------')
+
+from sklearn.model_selection import train_test_split 
+
+y = df['price'].values
+X  = df[['horsepower','carwidth','carheight','citympg']].values 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+model = LinearRegression()
+model.fit(X_train,y_train)
+# print(model.coef_)
+# print(model.intercept_) 
+# R2 na treningu i teście
+print("R2 train:", r2_score(y_train, model.predict(X_train)))
+print("R2 test :", r2_score(y_test, model.predict(X_test)))
+# dobrze jesli oba sa podobne, zle jesli duza roznica - overfitting
+
