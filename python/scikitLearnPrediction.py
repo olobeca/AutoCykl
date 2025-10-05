@@ -99,3 +99,9 @@ print("R2 train:", r2_score(y_train, model.predict(X_train)))
 print("R2 test :", r2_score(y_test, model.predict(X_test)))
 # dobrze jesli oba sa podobne, zle jesli duza roznica - overfitting
 
+
+nowe_auto = np.array([[150, 60, 55, 25]]) #horsepower, carwidth, carheight, citympg
+print("Cena nowego auta:", model.predict(nowe_auto)) 
+
+nowe_auto2 = np.array([[190, 50, 45, 25]]) #horsepower, carwidth, carheight, citympg
+print("Cena nowego auta:", model.predict(nowe_auto2)) 
