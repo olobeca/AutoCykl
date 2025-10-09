@@ -58,13 +58,12 @@ ipython_config.py
 *.joblib
 *.h5
 *.pb
-models/
+
 checkpoints/
 
 # Data files (często za duże dla git)
 *.csv
 *.xlsx
-*.json
 data/
 datasets/
 
