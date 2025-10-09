@@ -19,3 +19,12 @@ try {
 } catch (error) {
   console.error("Error connecting to MongoDB:", error);
 }
+
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+
+// Start serwera
+const PORT = 5001;
+app.listen(PORT, () => {
+  console.log(`Serwer działa na http://localhost:${PORT}`);
+});
