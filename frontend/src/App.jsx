@@ -1,10 +1,15 @@
 import "./App.css";
-import Header from "./components/Header.jsx";
+import WelcomePage from "./pages/WelcomePage";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
-    <Header />
+    <Routes>
+      <Route path="/" element={<WelcomePage />} />
+      <Route path="/dealers" element={<div>Dla dealerów page</div>} />
+      <Route path="/help" element={<div>Pomoc page</div>} />
+    </Routes>
     </>
   );
 }
