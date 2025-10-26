@@ -20,6 +20,24 @@ function InputFrame() {
             </div>
             <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 h-12 px-3 w-full">Dodaj Ogłoszenie</button>
         </div>
+        <div className="flex items-center gap-28 pt-8">
+            <div className="flex flex-col items-center">
+                <span className="text-orange-600 text-lg">50 000+</span>
+                <span className="text-gray-400 text-lg">Ogłoszeń</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-orange-600 text-lg">5000+</span>
+                <span className="text-gray-400 text-lg">Dealerów</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-orange-600 text-lg">1M+</span>
+                <span className="text-gray-400 text-lg">Użytkowników</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-orange-600 text-lg">24/7</span>
+                <span className="text-gray-400 text-lg">Wsparcie</span>
+            </div>
+        </div>
     </div>
   );
 }
