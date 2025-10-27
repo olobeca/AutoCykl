@@ -8,7 +8,8 @@ function WelcomePage() {
     <div className='bg-white'>
       <Header />
       <InputFrame />
-      <FeaturedOffers />
+      <FeaturedOffers /> 
+      
     </div>
   );
 }
