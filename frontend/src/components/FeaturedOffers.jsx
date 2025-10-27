@@ -17,7 +17,7 @@ function FeaturedOffers() {
             </div>
             <a href="#" className='text-orange-600 font-normal text-base'>Zobacz wszystkie</a>
         </div>
-        <div className="grid grid-cols-4 gap-4 mt-4 w-full">
+        <div className="grid grid-cols-3 gap-4 mt-4 w-full mt-12">
             <FeaturedOfferCard props={{image: toyotacorolla, title: "Toyota Corolla", price: "85 000 PLN", year: "2018", mileage: "50 000 km", fuelType: "Benzyna", location: "Warszawa"}} />
             <FeaturedOfferCard props={{image: hondacivic, title: "Honda Civic", price: "90 000 PLN", year: "2019", mileage: "40 000 km", fuelType: "Diesel", location: "Kraków"}} />
             <FeaturedOfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk"}} />

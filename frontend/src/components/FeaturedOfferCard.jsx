@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 
 function FeaturedOfferCard({props}) {
   return ( 
-    <div className='rounded-md shadow-md flex flex-col gap-4 p-4 bg-white'>
-      <img src={props.image} alt={props.title} className='w-full h-48 object-cover rounded-md ease-in-out hover:scale-x-125' />
+    <div className='rounded-md shadow-md hover:shadow-xl flex flex-col gap-4 p-4 bg-white overflow-hidden'>
+        <div className="overflow-hidden rounded-md relative">
+            <img src={props.image} alt={props.title} className='w-full h-48 object-cover rounded-md ease-in-out hover:scale-110 duration-300' />
+            <span className='absolute top-2 left-2 bg-orange-600  text-xs text-white py-1 px-2 rounded-md'>Wyróżnione</span>
+            {/* <span className="absolute top-2 right-2 bg-orange-600 text-xs text-white py-1 px-2 rounded-md">Dodaj do ulubionych</span> */}
+        </div>
       <div className='flex flex-col gap-4'>
         <span className='text-lg font-medium text-gray-700'>{props.title}</span>
         <span className='text-base font-normal text-orange-600'>{props.price}</span>
       </div>
-      <div className='flex w-full '>
+      <div className='flex w-full  justify-between items-center'>
         <span className='text-sm text-gray-500'>{props.year}</span>
         <div className='flex gap-4'>
             <span className='text-sm text-gray-500'>{props.mileage}</span>
