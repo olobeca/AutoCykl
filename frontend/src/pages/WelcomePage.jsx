@@ -2,6 +2,7 @@ import "../App.css";
 import Header from "../components/Header.jsx";
 import InputFrame from "../components/InputFrame.jsx";
 import FeaturedOffers from "../components/FeaturedOffers.jsx";
+import WelcomePageCattegories from "../components/WelcomePageCattegories.jsx";
 
 function WelcomePage() {
   return (
@@ -9,7 +10,8 @@ function WelcomePage() {
       <Header />
       <InputFrame />
       <FeaturedOffers /> 
-      
+      <WelcomePageCattegories />
+
     </div>
   );
 }
