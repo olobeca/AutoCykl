@@ -6,7 +6,8 @@ import Logo from "./Logo.jsx";
 function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
-        <div className='flex w-full justify-center items-start pt-8 gap-12 px-48 pb-8'>
+        <div className='flex flex-col w-full px-48 pb-8'>
+        <div className='flex w-full justify-center items-start pt-8 gap-12 '>
             <div className='flex flex-col  gap-5 pb-8 w-1/6'>
                 <span className="text-2xl text-left font-normal text-white">AutoPortal</span>
                 <span className="text-sm  text-left font-thin text-gray-100 mb-6">Największy portal motoryzacyjny w Polsce. Znajdź swój wymarzony samochód już dziś!</span>
@@ -48,8 +49,23 @@ function Footer() {
                     <a className="text-gray-300 hover:text-orange-600 transition-colors text-sm" href="#">Polityka prywatności</a>
                 </nav>
             </div>
+            
         </div>
-
+        <div className="w-full my-8">
+                <hr className="border-t-1 border-gray-700" />
+        </div>
+        <div className="flex justify-between w-full">
+            <div>
+                <span className="text-sm text-gray-500">© 2025 AutoPortal. Wszelkie prawa zastrzeżone.</span>
+            </div>
+            <nav className="gap-10 flex">
+                <a className="text-gray-300 hover:text-orange-600 transition-colors text-sm" href="#">Regulamin</a>
+                <a className="text-gray-300 hover:text-orange-600 transition-colors text-sm" href="#">Polityka prywatności</a>
+                <a className="text-gray-300 hover:text-orange-600 transition-colors text-sm" href="#">Cookies</a>
+            </nav>
+            </div>
+        </div>
+        
     </footer>
 
   );
