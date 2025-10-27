@@ -3,6 +3,7 @@ import Header from "../components/Header.jsx";
 import InputFrame from "../components/InputFrame.jsx";
 import FeaturedOffers from "../components/FeaturedOffers.jsx";
 import WelcomePageCattegories from "../components/WelcomePageCattegories.jsx";
+import Footer from "../components/Footer.jsx";
 
 function WelcomePage() {
   return (
@@ -11,11 +12,16 @@ function WelcomePage() {
       <InputFrame />
       <FeaturedOffers /> 
       <WelcomePageCattegories />
-
+      <Footer />
     </div>
   );
 }
 
 export default WelcomePage;
+
+
+
+
+
 
 

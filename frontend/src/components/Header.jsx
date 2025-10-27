@@ -1,6 +1,6 @@
 import "../App.css";
 import { Link } from "react-router-dom";
-import car from '../car.png';
+import Logo from "./Logo.jsx";
 
 function Header() {
   return (
@@ -17,10 +17,7 @@ function Header() {
       </div> 
       <div className=" items-center justify-center flex px-2 py-1">
         <div className="flex items-center h-16 justify-between gap-28">
-          <div className='flex items-center gap-2'>
-            <img className="h-16 w-16" src={car} alt="Logo" />
-            <span className="text-2xl font-normal text-gray-900">AutoPortal</span>
-          </div> 
+          <Logo />
           <nav className="flex items-center gap-12">
             <a className="text-gray-700 hover:text-orange-600 transition-colors" href="#">Samochody Osobowe</a>
             <a className="text-gray-700 hover:text-orange-600 transition-colors" href="#">Samochody Dostawcze</a>
