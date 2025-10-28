@@ -18,6 +18,14 @@ function NavigationBar({props}) {
                 <div>
                     <a href="#" className="text-sm text-gray-500">{props.searchResults}</a>
                 </div>
+                {props.offerTitle ? <>
+                    <div>
+                    <h1 className="text-sm text-gray-500">{'>'}</h1>
+                    </div>
+                    <div>
+                        <a href="#" className="text-sm text-gray-500">{props.offerTitle}</a>
+                    </div>
+                </> : null}
             </div>
     )
 }

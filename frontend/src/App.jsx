@@ -2,6 +2,7 @@ import "./App.css";
 import WelcomePage from "./pages/WelcomePage";
 import SearchResult from "./pages/SearchResults";
 import { Routes, Route } from "react-router-dom";
+import OfferDetails from "./pages/OfferDetails";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/dealers" element={<div>Dla dealerów page</div>} />
       <Route path="/help" element={<div>Pomoc page</div>} />
       <Route path="/searchResult" element={<SearchResult />} />
+      <Route path="/offerDetails" element={<OfferDetails />} />
     </Routes>
     </>
   );
