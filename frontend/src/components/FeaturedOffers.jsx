@@ -1,6 +1,5 @@
 import "../App.css";
-import { Link } from "react-router-dom";
-import car from '../car.png';
+
 import OfferCard from "./OfferCard.jsx";
 import fordfocus from '../fordfocus.jpg';
 import hondacivic from '../hondacivic.jpg';
@@ -23,7 +22,6 @@ function FeaturedOffers() {
             <OfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk", isFeatured: true}} />
             <OfferCard props={{image: volkswagengolf, title: "Volkswagen Golf", price: "95 000 PLN", year: "2020", mileage: "30 000 km", fuelType: "Hybryda", location: "Wrocław", isFeatured: true}} />
         </div>
-
     </div> 
 
   );

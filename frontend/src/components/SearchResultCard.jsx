@@ -9,6 +9,7 @@ import fordfocus from '../fordfocus.jpg';
 import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
 import volkswagengolf from '../wolkswagengolf.jpg';
+import CardSplitter from "./CardSplitter.jsx";
 
 function SearchResultCard() {
     return (
@@ -27,6 +28,7 @@ function SearchResultCard() {
                 </div>
 
             </div>
+            <CardSplitter />
         </div>
 
     )

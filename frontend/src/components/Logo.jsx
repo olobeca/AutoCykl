@@ -1,5 +1,4 @@
 import "../App.css";
-import { Link } from "react-router-dom";
 import car from '../car.png';
 
 function Logo() {
