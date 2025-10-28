@@ -7,7 +7,7 @@ function OfferDetails() {
   return (
     <div className='bg-white'>
       <Header />
-      <OfferDetailsCard />
+      <OfferDetailsCard props={{title:'BMW Seria 5 520d xDrive M Sport', isFeatured: true, isAccidentFree: true}} />
       <Footer />
     </div>
   )
