@@ -1,7 +1,7 @@
 import "../App.css";
 import { Link } from "react-router-dom";
 import car from '../car.png';
-import FeaturedOfferCard from "./FeaturedOfferCard.jsx";
+import OfferCard from "./OfferCard.jsx";
 import fordfocus from '../fordfocus.jpg';
 import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
@@ -17,11 +17,11 @@ function FeaturedOffers() {
             </div>
             <a href="#" className='text-orange-600 font-normal text-base'>Zobacz wszystkie</a>
         </div>
-        <div className="grid grid-cols-3 gap-4 mt-4 w-full mt-12">
-            <FeaturedOfferCard props={{image: toyotacorolla, title: "Toyota Corolla", price: "85 000 PLN", year: "2018", mileage: "50 000 km", fuelType: "Benzyna", location: "Warszawa"}} />
-            <FeaturedOfferCard props={{image: hondacivic, title: "Honda Civic", price: "90 000 PLN", year: "2019", mileage: "40 000 km", fuelType: "Diesel", location: "Kraków"}} />
-            <FeaturedOfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk"}} />
-            <FeaturedOfferCard props={{image: volkswagengolf, title: "Volkswagen Golf", price: "95 000 PLN", year: "2020", mileage: "30 000 km", fuelType: "Hybryda", location: "Wrocław"}} />
+        <div className="grid grid-cols-3 gap-4  w-full mt-12">
+            <OfferCard props={{image: toyotacorolla, title: "Toyota Corolla", price: "85 000 PLN", year: "2018", mileage: "50 000 km", fuelType: "Benzyna", location: "Warszawa", isFeatured: true}} />
+            <OfferCard props={{image: hondacivic, title: "Honda Civic", price: "90 000 PLN", year: "2019", mileage: "40 000 km", fuelType: "Diesel", location: "Kraków", isFeatured: true}} />
+            <OfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk", isFeatured: true}} />
+            <OfferCard props={{image: volkswagengolf, title: "Volkswagen Golf", price: "95 000 PLN", year: "2020", mileage: "30 000 km", fuelType: "Hybryda", location: "Wrocław", isFeatured: true}} />
         </div>
 
     </div> 

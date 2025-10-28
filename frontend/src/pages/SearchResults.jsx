@@ -10,7 +10,7 @@ function SearchResult() {
       <SearchResultCard />
       <Footer />
     </div>
-  );
+  )
 }
 
 export default SearchResult;
