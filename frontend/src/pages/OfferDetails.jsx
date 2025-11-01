@@ -6,6 +6,8 @@ import OfferDetailsFirstInfo from "../components/OfferDetailsFirstInfo.jsx";
 import SellerDetails from "../components/SellerDetails.jsx";
 import CarDescription from "../components/CarDescription.jsx";
 import TechnicalSpecification from "../components/TechnicalSpecification.jsx";
+import CarEquipment from "../components/CarEquipment.jsx";
+import SimilarOffers from "../components/SimilarOffers.jsx";
 
 function OfferDetails() {
   return (
@@ -17,6 +19,27 @@ function OfferDetails() {
         <SellerDetails props={{sellerName: 'Jan Kowalski', image: 'https://via.placeholder.com/150', imageTitle: 'BMW Logo', isVerified: true, activeSince: '2020-01-01'}} />
         <CarDescription props={{description: 'BMW Seria 5 520d xDrive M Sport w idealnym stanie, bezwypadkowy, serwisowany w ASO.', isNoAccident: true, isDealerServicedOnly: true, warrantyEndDate: '2024-03-15', additionalInfo: ['Pierwszy właściciel', 'Bezwypadkowy', 'Serwisowany w ASO'], serviceHistory: [{date: '2023-01-01', mileage: '20 000 km', type: 'Przegląd'}, {date: '2022-01-01', mileage: '10 000 km', type: 'Wymiana oleju'}]}} />
         <TechnicalSpecification />
+        <CarEquipment equipment={['System nawigacji GPS',
+          'Tempomat adaptacyjny',
+          'Podgrzewane fotele przednie i tylne',
+          'Panoramiczny dach',
+          'Elektrycznie regulowane fotele',
+          'Start-stop',
+          'Przyciemniane szyby',
+          'Kamera cofania 360°',
+          'Asystent pasa ruchu',
+          'Klimatyzacja automatyczna 3-strefowa',
+          'System nagłośnienia premium',
+          'Pamięć ustawień fotela kierowcy',
+          'Czujnik zmierzchu i deszczu',
+          'Felgi aluminiowe 19"',
+          'Czujniki parkowania przód i tył',
+          'Automatyczne światła LED',
+          'Tapicerka skórzana',
+          'Podgrzewana kierownica',
+          'Keyless entry',
+        'Bluetooth i Apple CarPlay']} />
+        <SimilarOffers />
       </div>
       <Footer />
     </div>

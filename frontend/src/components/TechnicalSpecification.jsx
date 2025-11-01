@@ -28,10 +28,10 @@ function TechnicalSpecification() {
 
   return (
     <div className="border border-gray-100 shadow-md rounded-lg p-6 m-4">
-      <span className="text-base pb-2 text-gray-700">Specyfikacja techniczna</span>
+      <span className="text-base pb-2 text-gray-700 font-bold">Specyfikacja techniczna</span>
       <div className="grid grid-cols-3 gap-4 mt-4">
-        {specs.map((s, i) => (
-          <TechnicalSpecificationLine key={i} label={s.label} value={s.value} />
+        {specs?.map((s, i) => (
+          <TechnicalSpecificationLine key={i} props={{ label: s.label, value: s.value }} />
         ))}
       </div>
     </div>
