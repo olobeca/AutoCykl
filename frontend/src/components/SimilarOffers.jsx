@@ -4,7 +4,6 @@ import OfferCard from "./OfferCard.jsx";
 import fordfocus from '../fordfocus.jpg';
 import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
-import volkswagengolf from '../wolkswagengolf.jpg';
 
 function SimilarOffers() {
     return (
