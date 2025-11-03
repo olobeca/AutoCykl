@@ -20,6 +20,16 @@ function Chat({props}) {
         {fromMe: false, text: "Tak, jutro o 15:00 będzie idealnie. Do zobaczenia!", time: "12:55", type:"text"},
     ];
 
+    const meetingPropositions = [
+        {date: "2024-06-15", Meetingtime: "15:00", place: "ul. Kwiatowa 10, Warszawa", message: "Czy to miejsce Panu odpowiada?", status: "Oczekuje na odpowiedź", fromMe: false, type:"text",time: "12:53"},
+        {date: "2024-06-16", Meetingtime: "10:00", place: "ul. Leśna 5, Kraków", message: "Proszę potwierdzić termin.", status: "Zaakceptowane", fromMe: true, type:"text",time: "12:54"},
+    ]
+
+    const prizeProposition = [
+        {proposedPrice: "140000", message: "Czy mogę zaproponować niższą cenę?", status: "Oczekuje na odpowiedź", fromMe: false, type:"text",time: "12:53"},
+        {proposedPrice: "135000", message: "A co powiesz na 135000 zł?", status: "Oczekuje na odpowiedź", fromMe: true, type:"text",time: "12:54"},
+    ]
+
     return (
         <div className='flex flex-col h-screen'>
             <div className="flex flex-col  border-b border-gray-200">
@@ -55,7 +65,7 @@ function Chat({props}) {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 p-6  h-full">
+            <div className="flex flex-col gap-2 p-6  h-full overflow-y-auto">
                 {messages.map((message, index) => (
                     <div key={index} className={`flex ${message.fromMe ? 'justify-end' : 'justify-start'}`}>
                         {message.type === "text" ? (
@@ -64,6 +74,47 @@ function Chat({props}) {
                                 <p>{message.text}</p>
                             </div>
                             <span className="text-xs text-gray-500  mt-1 text-right">{message.time}</span>
+                        </div>
+                        ) : (null)}
+                    </div>
+                ))}
+                {meetingPropositions.map((proposition, index) => (
+                    <div key={index} className={`flex ${proposition.fromMe ? 'justify-end' : 'justify-start'}`}>
+                        {proposition.type === "text" ? (
+                            <div className="flex flex-col">
+                            <div className={`max-w-1/2 px-4 p-2 rounded-xl flex flex-col gap-2 ${proposition.fromMe ? 'bg-orange-50 text-white border border-orange-400'  : 'bg-gray-50 text-gray-700 border border-gray-400'}`}>
+                                <span className="text-sm text-gray-500  mt-1 text-left">Propozycja spotkania</span>
+                                <div className="flex gap-1">
+                                    <span className="font-bold text-base text-black">Data:</span>
+                                    <span className="text-base text-black">{proposition.date}</span>
+                                </div>
+                                <div className="flex gap-1">
+                                    <span className="font-bold text-base text-black">Godzina:</span>
+                                    <span className="text-base text-black">{proposition.Meetingtime}</span>
+                                </div>
+                                <div className="flex gap-1 mb-1">
+                                    <span className="font-bold text-base text-black">Miejsce:</span>
+                                    <span className="text-base text-black">{proposition.place}</span>
+                                </div>
+                                <span className="text-sm text-gray-500  mt-1 text-left">Proponuję spotkanie</span>
+                                <span className={proposition.status === "Zaakceptowane" ? "bg-green-300 w-full text-green-600 p-1 text-xs text-center rounded-lg" : "bg-red-200 text-red-600 p-1 text-xs text-center rounded-lg"}>{proposition.status}</span>
+                            </div>
+                            <span className="text-xs text-gray-500  mt-1 text-right">{proposition.time}</span>
+                        </div>
+                        ) : (null)}
+                    </div>
+                ))}
+                {prizeProposition.map((proposition, index) => (
+                    <div key={index} className={`flex ${proposition.fromMe ? 'justify-end' : 'justify-start'}`}>
+                        {proposition.type === "text" ? (
+                            <div className="flex flex-col">
+                            <div className={`max-w-1/2 px-4 p-2 rounded-xl flex flex-col gap-2 ${proposition.fromMe ? 'bg-orange-50 text-white border border-orange-400'  : 'bg-gray-50 text-gray-700 border border-gray-400'}`}>
+                                <span className="text-sm text-gray-500  mt-1 text-left">Propozycja ceny</span>
+                                <span className="text-2xl text-black">{proposition.proposedPrice} zł</span>
+                                <span className="text-sm text-gray-500  mt-1 text-left">Moja propozycja</span>
+                                <span className={proposition.status === "Zaakceptowane" ? "bg-green-300 w-full text-green-600 p-1 text-xs text-center rounded-lg" : "bg-red-200 text-red-600 p-1 text-xs text-center rounded-lg"}>{proposition.status}</span>
+                            </div>
+                            <span className="text-xs text-gray-500  mt-1 text-right">{proposition.time}</span>
                         </div>
                         ) : (null)}
                     </div>
