@@ -1,7 +1,7 @@
 
 function MessagesCard({props}) {
     return (
-        <div className=" bg-white p-4 hover:bg-slate-100">
+        <div className=" p-4 hover:bg-slate-100">
             <div className="flex gap-2 relative px-12">
                 <span className=" absolute right-1 top-1 text-gray-500">{props.time}</span>
                 {props.newMessagesAmmount > 0 && <span className="text-sm  bg-orange-600 text-white rounded-full w-6 h-6 text-center absolute right-1 bottom-1">{props.newMessagesAmmount}</span>}
