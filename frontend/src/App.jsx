@@ -4,6 +4,7 @@ import SearchResult from "./pages/SearchResults";
 import { Routes, Route } from "react-router-dom";
 import OfferDetails from "./pages/OfferDetails";
 import Messages from "./pages/Messages";
+import OfferPutting from "./pages/OfferPutting";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/searchResult" element={<SearchResult />} />
       <Route path="/offerDetails" element={<OfferDetails />} />
       <Route path="/messages" element={<Messages />} />
+      <Route path="/offerPutting" element={<OfferPutting />} />
     </Routes>
     </>
   );
