@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import OfferDetails from "./pages/OfferDetails";
 import Messages from "./pages/Messages";
 import OfferPutting from "./pages/OfferPutting";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/offerDetails" element={<OfferDetails />} />
       <Route path="/messages" element={<Messages />} />
       <Route path="/offerPutting" element={<OfferPutting />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
     </>
   );

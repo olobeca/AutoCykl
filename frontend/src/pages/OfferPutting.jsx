@@ -3,8 +3,12 @@ import Header from "../components/Header.jsx";
 import PuttingOfferInfoBar from "../components/PuttingOfferInfoBar.jsx";
 import locationIcon from "../icons/location.svg";
 import React from "react";
-import { useState } from "react"
 import uploadIcon from "../icons/upload.svg";
+import star from "../icons/star.svg";
+import thunder from "../icons/thunder.svg";
+import trending from "../icons/trending.svg";
+import accept from "../icons/acceptGreen.svg";
+import {useState , useEffect} from "react";
 
 
 
@@ -25,8 +29,22 @@ function OfferPutting() {
     function handleDescriptionChange(event) {
         setDescription(event.target.value);
     }
+
+    const [isHighlighted, setIsHighlighted] = useState(false);
+
+    const [selectedPackage, setSelectedPackage] = useState('standard');
+
+    useEffect(() => {
+        if (isHighlighted) {
+            document.body.classList.add("overflow-hidden");
+        } else {
+            document.body.classList.remove("overflow-hidden");
+        }
+    }, [isHighlighted]); {/* poczytać o tym i czx działa */}
+
   return (
-    <div >
+    <div>
+    <div className={`${isHighlighted ? 'brightness-50' : ''}`}>
       <Header />
       { step===1 && <div className="bg-gray-50 flex flex-col  px-64 gap-2 py-9 h-full">
             <h1 className="text-2xl text-black">Dodaj ogłoszenie</h1>
@@ -270,7 +288,7 @@ function OfferPutting() {
                 </div>
                 <div className="flex justify-between mt-8">
                     <button onClick={handleBack} className="bg-white border text-sm border-gray-200 rounded-lg text-gray-700 px-3 py-2"> {'< Wstecz'}</button>
-                    <button onClick={handleNext} className="bg-green-600 hover:bg-green-700 border text-sm border-gray-200 rounded-lg text-white px-4 py-2">Opublikuj ogłoszenie</button>
+                    <button onClick={() => setIsHighlighted(true)} className="bg-green-600 hover:bg-green-700 border text-sm border-gray-200 rounded-lg text-white px-4 py-2">Opublikuj ogłoszenie</button>
                 </div>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-3 pb-8  flex  gap-6 shadow-sm">
@@ -281,6 +299,113 @@ function OfferPutting() {
                 </div>
             </div>
       </div>}
+    </div>
+    <div className={`${isHighlighted ? '' : 'hidden'}   bg-white top-2 left-[30%] w-[45%]  rounded-lg fixed flex flex-col text-left justify-center p-4 gap-4`}>
+        <span className="text-black font-semibold">Wyróżnij swoje ogłoszenie</span>
+        <span className="text-sm text-gray-700 mb-6">Zwiększ widoczność swojego ogłoszenia i sprzedaj szybciej</span> 
+        <span className="text-black">Wybierz pakiet</span>
+        <div className="flex gap-3 w-full justify-between">
+            <div className={`border-2  w-1/3 ${selectedPackage==='standard' ? 'border-orange-400' : 'border-gray-200'} rounded-md p-4 flex flex-col gap-2 cursor-pointer`} onClick={() => setSelectedPackage('standard')}>
+                <button className="hidden"></button>
+                <img src={star} alt='gwiazdka' className="w-12 h-12 bg-sky-200 rounded-full p-2"></img>
+                <span className="text-base text-black">Standardowe</span>
+                <span className="text-base text-black">Bezpłatne</span> 
+                <div className=" flex flex-col mt-2 gap-2">
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Ogłoszenie na 30 dni</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Standardowe wyświetlanie</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Podstawowa widoczność</span>
+                    </div>
+                </div>
+            </div>
+            <div className={`border-2 ${selectedPackage==='highlighted' ? 'border-orange-400' : 'border-gray-200'} rounded-lg p-4 flex flex-col gap-2 cursor-pointer w-1/3`} onClick={() => setSelectedPackage('highlighted')}>
+                <button className="hidden"></button>
+                <img src={thunder} alt='thunder' className="w-12 h-12 bg-orange-200 rounded-full p-2"></img>
+                <span className="text-base text-black">Wyróżnione</span>
+                <div className="flex gap-1 items-center">
+                    <span className="text-base text-black">49 PLN</span>
+                    <span className="text-sm text-gray-700">/ 30 dni</span>
+                </div>
+                <div className=" flex flex-col mt-2 gap-2">
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Ogłoszenie na 30 dni</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Wyróżniona ramka w wynikach</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Etykieta 'Wyróznione'</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">3x więcej wyświetleń</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Wyzsza pozycja w wynikach</span>
+                    </div>
+                </div>
+            </div>
+            <div className={`border-2 w-1/3 ${selectedPackage==='top' ? 'border-orange-400' : 'border-gray-200'} rounded-lg p-4 flex flex-col gap-2 cursor-pointer`} onClick={() => setSelectedPackage('top')}>
+                <button className="hidden"></button>
+                <img src={trending} alt='trending' className="w-12 h-12 bg-yellow-200 rounded-full p-2"></img>
+                <span className="text-base text-black">TOP oferta</span>
+                <div className="flex gap-1 items-center">
+                    <span className="text-base text-black">99 PLN</span>
+                    <span className="text-sm text-gray-700">/ 30 dni</span>
+                </div>
+                <div className=" flex flex-col mt-2 gap-2">
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Ogłoszenie na 30 dni</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Złota ramka premium</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Etykieta 'TOP oferta'</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">10x więcej wyświetleń</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Najwyższa pozycja w wynikach</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Widoczność na stronie głównej</span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                        <img src={accept} alt='accept' className="w-4 h-4"></img>
+                        <span className="text-sm text-gray-700">Push w social mediach</span>
+                    </div>
+                </div>
+            </div> 
+            
+        </div>
+        <div className="w-full flex justify-between gap-2">
+               <button className="border w-1/2 border-gray-200 hover:bg-gray-200 rounded-lg px-4 py-2 text-sm text-gray-700 mr-2" onClick={() => setIsHighlighted(false)}>
+                Anuluj
+               </button>
+               <button className="border w-1/2 bg-green-600 hover:bg-green-700 text-white border-gray-200 rounded-lg px-4 py-2 text-sm " onClick={() => setIsHighlighted(false)}>
+                Opublikuj Ogłoszenie
+               </button>
+        </div>
+    </div>
     </div>
   );
 }
