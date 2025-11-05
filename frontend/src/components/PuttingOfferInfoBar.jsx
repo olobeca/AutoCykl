@@ -8,46 +8,38 @@ import acceptIcon from "../icons/accept.svg"
 
 function PuttingOfferInfoBar({number}) {
     return (
-        <div className="flex gap-4 items-center">
-            {number === 1 ? (<> <div className="flex flex-col gap-1 items-center">
-                            <img src={carIcon} alt="Car Icon" className="w-12 h-12 bg-orange-400 rounded-full p-2"/>
+        <div className="flex gap-4 items-center justify-between px-4">
+                        <div className="flex flex-col gap-1 items-center">
+                            <img src={number > 1 ? acceptIcon : carIcon} alt={number > 1 ? "Accept Icon" : "Car Icon"} className={`w-12 h-12 ${number > 1 ? "bg-green-400" : "bg-orange-400"} rounded-full p-2`}/>
                             <span className="text-xs">Podstawowe <br />informacje</span>
                         </div>
                         <div className="w-1/12">
-                            <hr className="border-t-2 border-gray-300" />
-                        </div> </>) : 
-                        
-                        (<> <div className="flex flex-col gap-1 items-center">
-                            <img src={acceptIcon} alt="Accept Icon" className="w-12 h-12 bg-green-400 rounded-full p-2"/>
-                            <span className="text-xs">Podstawowe <br />informacje</span>
-                        </div>
-                        <div className="w-1/12">
-                            <hr className="border-t-2 border-green-400" />
-                        </div> </>)}
+                            <hr className={`border-t-2 ${number > 1 ? "border-green-400" : "border-gray-300"}`} />
+                        </div> 
 
                         <div className="flex flex-col gap-1 items-center">
-                            <img src={docsIcon} alt="Documents Icon" className="w-12 h-12 bg-orange-400 rounded-full p-2"/>
+                            <img src={number > 2 ? acceptIcon : docsIcon} alt="Documents Icon" className={`w-12 h-12 ${number > 2 ? "bg-green-400" : "bg-orange-400"} rounded-full p-2`}/>
                             <span className="text-xs">Szczegóły <br />techniczne</span>
                         </div>
                         <div className="w-1/12">
-                            <hr className="border-t-2 border-gray-300" />
+                            <hr className={`border-t-2 ${number > 2 ? "border-green-400" : "border-gray-300"}`} />
                         </div>
                         <div className="flex flex-col gap-1 items-center">
-                            <img src={cameraIcon} alt="Camera Icon" className="w-12 h-12 bg-orange-400 rounded-full p-2"/>
+                            <img src={number > 3 ? acceptIcon : cameraIcon} alt="Camera Icon" className={`w-12 h-12 ${number > 3 ? "bg-green-400" : "bg-orange-400"} rounded-full p-2`}/>
                             <span className="text-xs">Zdjęcia</span>
                         </div>
                         <div className="w-1/12">
-                            <hr className="border-t-2 border-gray-300" />
+                            <hr className={`border-t-2 ${number > 3 ? "border-green-400" : "border-gray-300"}`} />
                         </div>
                         <div className="flex flex-col gap-1 items-center">
-                            <img src={docsIcon} alt="Documents Icon" className="w-12 h-12 bg-orange-400 rounded-full p-2"/>
+                            <img src={number > 4 ? acceptIcon : docsIcon} alt="Documents Icon" className={`w-12 h-12 ${number > 4 ? "bg-green-400" : "bg-orange-400"} rounded-full p-2`}/>
                             <span className="text-xs">Opis</span>
                         </div>
                         <div className="w-1/12">
-                            <hr className="border-t-2 border-gray-300" />
+                            <hr className={`border-t-2 ${number > 4 ? "border-green-400" : "border-gray-300"}`} />
                         </div>
                         <div className="flex flex-col gap-1 items-center">
-                            <img src={userIcon} alt="User Icon" className="w-12 h-12 bg-orange-400 rounded-full p-2"/>
+                            <img src={number > 5 ? acceptIcon : userIcon} alt="User Icon" className={`w-12 h-12 ${number > 5 ? "bg-green-400" : "bg-orange-400"} rounded-full p-2`}/>
                             <span className="text-xs">Dane kontaktowe</span>
                         </div>
                     </div>
