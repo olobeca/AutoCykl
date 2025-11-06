@@ -7,6 +7,7 @@ import Messages from "./pages/Messages";
 import OfferPutting from "./pages/OfferPutting";
 import Login from "./pages/Login";
 import Favourites from "./pages/Favourites";
+import SellerPannel from "./pages/SellerPannel";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/offerPutting" element={<OfferPutting />} />
       <Route path="/login" element={<Login />} />
       <Route path="/favourites" element={<Favourites />} />
+      <Route path="/sellerPanel" element={<SellerPannel />} />
     </Routes>
     </>
   );
