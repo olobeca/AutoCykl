@@ -5,6 +5,11 @@ import trash from '../icons/trashRed.svg';
 import filters from '../icons/filters.svg';
 import arrows from '../icons/arrows.svg';
 import heartBlue from '../icons/heartBlue.svg';
+import FavouriteOfferCard from '../components/FavouriteOfferCard';
+import fordfocus from '../fordfocus.jpg';
+import hondacivic from '../hondacivic.jpg';
+import toyotacorolla from '../toyotacorolla.jpg';
+import volkswagengolf from '../wolkswagengolf.jpg';
 
 function Favourites() {
     return (
@@ -35,10 +40,52 @@ function Favourites() {
                             <img src={arrows} alt="Arrows Icon" className="absolute h-5 w-5 top-3 left-1" />
                         </div>
                     </div>
+                    <div className="grid grid-cols-3 gap-6 mt-8 w-full">
+                        <FavouriteOfferCard props={{
+                            image: fordfocus,
+                            title: "Ford Focus",
+                            price: "100 000 zł",
+                            year: "2020",
+                            mileage: "10 000 km",
+                            fuelType: "Benzyna",
+                            location: "Warszawa",
+                            isFeatured: true
+                        }} />
+                        <FavouriteOfferCard props={{
+                            image: hondacivic,
+                            title: "Honda Civic",
+                            price: "80 000 zł",
+                            year: "2019",
+                            mileage: "20 000 km",
+                            fuelType: "Diesel",
+                            location: "Kraków",
+                            isFeatured: false
+                        }} />
+                        <FavouriteOfferCard props={{
+                            image: toyotacorolla,
+                            title: "Utoyota corolla",
+                            price: "120 000 zł",
+                            year: "2021",
+                            mileage: "5 000 km",
+                            fuelType: "Benzyna",
+                            location: "Wrocław",
+                            isFeatured: true
+                        }} />
+                        <FavouriteOfferCard props={{
+                            image: volkswagengolf,
+                            title: "Volkswagen Golf",
+                            price: "90 000 zł",
+                            year: "2018",
+                            mileage: "30 000 km",
+                            fuelType: "Diesel",
+                            location: "Poznań",
+                            isFeatured: false
+                        }} />
+                    </div>
                     <div className=" mt-8 bg-blue-50 border-2 border-blue-200 p-4 rounded-md flex gap-4 w-full">
                         <img src={heartBlue} alt="Heart Icon" className="h-10 w-10 p-2 bg-blue-200 rounded-full" />
                         <nav className="flex flex-col gap-2 items-left">
-                            <span>Dlaczego warto dodawać do ulubionych?</span>
+                            <span className="text-black">Dlaczego warto dodawać do ulubionych?</span>
                             <ul className="list-disc list-inside px-4">
                                 <li className="text-sm text-gray-600">Szybki dostęp do interesujących Cię ogłoszeń</li>
                                 <li className="text-sm text-gray-600">Możliwość porównania różnych ofert</li>

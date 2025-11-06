@@ -24,10 +24,10 @@ function FavouriteOfferCard({props}) {
         </div>
       </div>
       <span className='text-sm text-gray-500'>{props.location}</span>
-      <div>
-        <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3">Zobacz Szczegóły</button>
+      <div className="flex gap-2 w-full justify-between items-center">
+        <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-16">Zobacz Szczegóły</button>
         <div>
-            <img src={trash} alt="usuń" className='absolute top-2 right-2 bg-white p-2 h-10 w-10  rounded-md' />
+            <img src={trash} alt="usuń" className=' bg-gray-100 hover:bg-gray-200 p-2 h-10 w-10  rounded-md' />
             <button className="hidden"></button> {/* tu dodam usuwanie */}
         </div>
       </div>
