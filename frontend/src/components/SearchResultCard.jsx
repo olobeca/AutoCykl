@@ -20,10 +20,10 @@ function SearchResultCard() {
                 <div className="flex flex-col gap-5 w-4/5  ">
                     <SortingBar />
                     <div className=" grid grid-cols-3 gap-4 mt-4 w-full ">
-                        <OfferCard props={{image: toyotacorolla, title: "Toyota Corolla", price: "85 000 PLN", year: "2018", mileage: "50 000 km", fuelType: "Benzyna", location: "Warszawa", isFeatured: false}} />
-                        <OfferCard props={{image: hondacivic, title: "Honda Civic", price: "90 000 PLN", year: "2019", mileage: "40 000 km", fuelType: "Diesel", location: "Kraków", isFeatured: false}} />
-                        <OfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk", isFeatured: false}} />
-                        <OfferCard props={{image: volkswagengolf, title: "Volkswagen Golf", price: "95 000 PLN", year: "2020", mileage: "30 000 km", fuelType: "Hybryda", location: "Wrocław", isFeatured: false}} />
+                        <OfferCard props={{image: toyotacorolla, title: "Toyota Corolla", price: "85 000 PLN", year: "2018", mileage: "50 000 km", fuelType: "Benzyna", location: "Warszawa", isFeatured: false, isHearted: false}} />
+                        <OfferCard props={{image: hondacivic, title: "Honda Civic", price: "90 000 PLN", year: "2019", mileage: "40 000 km", fuelType: "Diesel", location: "Kraków", isFeatured: false, isHearted: false}} />
+                        <OfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk", isFeatured: false, isHearted: false}} />
+                        <OfferCard props={{image: volkswagengolf, title: "Volkswagen Golf", price: "95 000 PLN", year: "2020", mileage: "30 000 km", fuelType: "Hybryda", location: "Wrocław", isFeatured: false, isHearted: false}} />
                     </div>
                 </div>
 
