@@ -104,13 +104,13 @@ function SellerPannelReview({props}) {
                     <span className="text-black text-lg font-medium">Najlepsze ogłoszenia</span>
                     <span className="text-gray-600 text-lg pb-8">Ogłoszenia z największą liczbą wyświetleń</span>
                         {props.CarsData.map((car, index) => (
-                            <div className="mb-1" key={index}>
+                            <div className="mb-3" key={index}>
                             <div className="rounded-md border border-gray-200 hover:bg-gray-100 flex gap-4 p-3" key={index}>
-                                <div className="h-full w-24 overflow-hidden rounded-xl">
-                                    <img src={car.image} className="object-cover rounded-xl"></img>
+                                <div className=" overflow-hidden rounded-xl">
+                                    <img src={car.image} className="object-cover h-20 w-20 rounded-xl"></img>
                                 </div>
                                 <div className="flex justify-between w-full">
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-0">
                                         <div className="flex gap-4">
                                             <span className="text-lg font-normal text-black">{car.name}</span>
                                             <TOP />
@@ -121,20 +121,20 @@ function SellerPannelReview({props}) {
                                             <span className="text-sm text-gray-600">{car.year}</span>
                                         </div>
                                     </div>
-                                    <div className="flex gap-2 items-center">
+                                    <div className="flex gap-4 items-center">
                                         <div className="flex gap-0 items-center">
                                             <img src={eye} alt="eye icon" className="h-4 w-4"/>
-                                            <span className="text-sm text-gray-600 ml-1">{car.views}</span>
+                                            <span className="text-sm text-gray-700 ml-1">{car.views}</span>
                                         </div>
 
                                         <div className="flex gap-0 items-center">
                                             <img src={heart} alt="heart icon" className="h-4 w-4"/>
-                                            <span className="text-sm text-gray-600 ml-1">{car.likes}</span>
+                                            <span className="text-sm text-gray-700 ml-1">{car.likes}</span>
                                         </div>
 
                                         <div className="flex gap-0 items-center">
                                             <img src={messages} alt="messages icon" className="h-4 w-4"/>
-                                            <span className="text-sm text-gray-600 ml-1">{car.messages}</span>
+                                            <span className="text-sm text-gray-700 ml-1">{car.messages}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -5,6 +5,7 @@ import SellerPannelReview from '../components/SellerPannelReview';
 import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
 import volkswagengolf from '../wolkswagengolf.jpg';
+import SellerPannelMyOffers from '../components/SellerPannelMyOffers';
 
 function SellerPannel() {
 
@@ -53,6 +54,10 @@ function SellerPannel() {
                                 { image: volkswagengolf, name: 'Volkswagen Golf', prize: 18000, year: 2017, views: 100, likes: 20, messages: 4 },
                             ]
                         }} />
+                   )}
+                     {
+                    step === 'Moje ogłoszenia' && (
+                        <SellerPannelMyOffers />
                    )}
                 </div>
 
