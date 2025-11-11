@@ -2,13 +2,16 @@ import React from 'react';
 import Header from '../components/Header';
 import {useState} from 'react';
 import SellerPannelReview from '../components/SellerPannelReview';
+import hondacivic from '../hondacivic.jpg';
+import toyotacorolla from '../toyotacorolla.jpg';
+import volkswagengolf from '../wolkswagengolf.jpg';
 
 function SellerPannel() {
 
     const [step, setStep] = useState('Przegląd');
 
     return (
-        <div className="h-screen bg-gray-100">
+        <div className="h-full bg-gray-100">
             <Header />
             <div>
                 <div className="sticky top-0 bg-white flex py-8 px-24 justify-between border items-center">
@@ -28,7 +31,28 @@ function SellerPannel() {
                    </div>
                    {
                     step === 'Przegląd' && (
-                        <SellerPannelReview />
+                        <SellerPannelReview props={{
+                            Monday: 12,
+                            Thuesday: 19,
+                            Wednesday: 8,
+                            Thursday: 15,
+                            Friday: 9,
+                            Saturday: 17,
+                            Sunday: 11,
+                            activeOffers: 5,
+                            totalOffers: 20,
+                            views: 100,
+                            viewPercentChange: 10,
+                            likes: 50,
+                            likesPercentChange: 5,
+                            messages: 20,
+                            unreadMessages: 2,
+                            CarsData: [
+                                { image: hondacivic, name: 'Honda Civic', prize: 20000, year: 2018, views: 150 , likes: 30, messages: 5},
+                                { image: toyotacorolla, name: 'Toyota Corolla', prize: 25000, year: 2019, views: 120, likes: 25, messages: 3 },
+                                { image: volkswagengolf, name: 'Volkswagen Golf', prize: 18000, year: 2017, views: 100, likes: 20, messages: 4 },
+                            ]
+                        }} />
                    )}
                 </div>
 
