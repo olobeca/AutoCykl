@@ -117,7 +117,7 @@ function SellerPannelReview({props}) {
                                         </div>
                                         <div className="items-center">
                                             <span className="text-sm text-gray-600">{car.prize} zł</span>
-                                            <span className="text-sm text-gray-600 ml-4"></span>
+                                            <span className="text-sm text-gray-600 ml-4">•</span>
                                             <span className="text-sm text-gray-600">{car.year}</span>
                                         </div>
                                     </div>

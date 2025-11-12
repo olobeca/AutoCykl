@@ -57,7 +57,13 @@ function SellerPannel() {
                    )}
                      {
                     step === 'Moje ogłoszenia' && (
-                        <SellerPannelMyOffers />
+                        <SellerPannelMyOffers props={{
+                            carsData: [
+                                { image: hondacivic, name: 'Honda Civic', prize: 20000, year: 2018, views: 150 , likes: 30, messages: 5, expiryDate: '2024-07-01' },
+                                { image: toyotacorolla, name: 'Toyota Corolla', prize: 25000, year: 2019, views: 120, likes: 25, messages: 3, expiryDate: '2024-07-10' },
+                                { image: volkswagengolf, name: 'Volkswagen Golf', prize: 18000, year: 2017, views: 100, likes: 20, messages: 4, expiryDate: '2024-07-15' },
+                            ]
+                        }} />
                    )}
                 </div>
 
