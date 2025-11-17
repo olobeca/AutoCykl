@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const user = require("../models/user");
+const user = require("../schemas/user");
 const userService = require("../services/userService");
 
 exports.RegisterUser = async (req, res) => {
