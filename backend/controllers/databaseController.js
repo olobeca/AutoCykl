@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const user = require("../schemas/user");
-const userDBsetup = require("../services/userDBsetup");
+const userDBsetupBySQL = require("../services/userDBsetupBySQL");
 
 exports.setupNewDatabases = async (req, res) => {
   try {
-    await userDBsetup.createUserDatabase();
-    await userDBsetup.createMessagesDatabase();
-    await userDBsetup.createOffersDatabase();
-    await userDBsetup.createChatConversationDatabase();
+    // await userDBsetupBySQL.createUserDatabase();
+    // await userDBsetupBySQL.createMessagesDatabase();
+    // await userDBsetupBySQL.createOffersDatabase();
+    // await userDBsetupBySQL.createChatConversationDatabase();
     res.status(201).json({ message: "Databases created successfully!" });
   } catch (error) {
     console.error("Error creating databases:", error);

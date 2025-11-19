@@ -35,7 +35,7 @@ app.listen(PORT, () => {
 //// zabawa z baza danych pg
 const pool = require("./databases/db");
 
-app.post("/", async (req, res) => {
+app.post("/axsxwscscs", async (req, res) => {
   try {
     const { name, location } = req.body;
     await pool.query("INSERT INTO users (name, location) VALUES ($1, $2)", [
@@ -43,18 +43,6 @@ app.post("/", async (req, res) => {
       location,
     ]);
     res.status(200).send({ message: "Dane zostały dodane do bazy danych" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Błąd serwera");
-  }
-});
-
-app.get("/setup", async (req, res) => {
-  try {
-    await pool.query(
-      "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name VARCHAR(100), location VARCHAR(100))"
-    );
-    res.status(200).send("Tabela users została utworzona lub już istnieje.");
   } catch (err) {
     console.error(err);
     res.status(500).send("Błąd serwera");
