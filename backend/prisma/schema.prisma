@@ -1,0 +1,35 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://avnadmin:AVNS_sEHnHNL-9Y4yhyDOG7U@pg-24d65abb-alerksanderradecki-0de7.d.aivencloud.com:16040/defaultdb?sslmode=require"
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique @db.VarChar(60)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+  products  Product[] //relacja miedzy kategoria a produktem
+
+  @@map("categories") // to dziala tak ze zmienia nazwe tabeli w bazie danych na "categories" zamiast domyslnej "Category"
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(120)
+  description String?  @db.Text //? oznacza ze pole jest opcjonalne 
+  price       Decimal  @db.Decimal(10, 2)
+  currency    String   @default("USD") @db.Char(3)
+  quantity    Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+  categoryId  Int      @map("category_id")
+  category    Category @relation(fields: [categoryId], references: [id]) //relacja miedzy produktem a kategoria
+
+  @@map("products")
+}
