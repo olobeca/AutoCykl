@@ -47,28 +47,44 @@ model User {
 }
 
 model Offer {
-  id             Int      @id @default(autoincrement())
-  ownerName      String   @map("owner_name") @db.VarChar(120)
-  user           User     @relation(fields: [ownerName], references: [name])
-  brand          String   @db.VarChar(120)
-  model          String   @db.VarChar(120)
-  version        String   @db.VarChar(120)
-  year           Int      @db.Int
-  mileage        Int      @db.Int
-  price          Decimal  @db.Decimal(10, 2)
-  fuelType       String   @map("fuel_type") @db.VarChar(60)
-  engineCapacity Int      @map("engine_capacity") @db.Int
-  power          Int      @db.Int
-  doors          Int      @db.Int
-  color          String   @db.VarChar(60)
-  interiorColor  String   @map("interior_color") @db.VarChar(60)
-  torque         Int      @db.Int
-  bodyType       String   @map("body_type") @db.VarChar(60)
-  seats          Int      @db.Int
-  vin            String   @db.VarChar(17)
-  transmission   String   @db.VarChar(60)
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+  id                  Int                 @id @default(autoincrement())
+  ownerName           String              @map("owner_name") @db.VarChar(120)
+  user                User                @relation(fields: [ownerName], references: [name])
+  brand               String              @db.VarChar(120)
+  model               String              @db.VarChar(120)
+  version             String              @db.VarChar(120)
+  year                Int                 @db.Int
+  mileage             Int                 @db.Int
+  price               Decimal             @db.Decimal(10, 2)
+  fuelType            String              @map("fuel_type") @db.VarChar(60)
+  engineCapacity      Int                 @map("engine_capacity") @db.Int
+  power               Int                 @db.Int
+  doors               Int                 @db.Int
+  color               String              @db.VarChar(60)
+  interiorColor       String              @map("interior_color") @db.VarChar(60)
+  torque              Int                 @db.Int
+  bodyType            String              @map("body_type") @db.VarChar(60)
+  seats               Int                 @db.Int
+  vin                 String              @db.VarChar(17)
+  transmission        String              @db.VarChar(60)
+  equipment           String[]
+  warranty            String              @db.Text
+  createdAt           DateTime            @default(now()) @map("created_at")
+  updatedAt           DateTime            @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+  carServiceHistories CarServiceHistory[]
 
   @@map("offers")
+}
+
+model CarServiceHistory {
+  id      Int   @id @default(autoincrement())
+  offerId Int   @map("offer_id")
+  offer   Offer @relation(fields: [offerId], references: [id])
+
+  data      String   @db.Text
+  mileage   Int      @db.Int
+  type      String   @db.VarChar(60)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("car_service_histories")
 }
