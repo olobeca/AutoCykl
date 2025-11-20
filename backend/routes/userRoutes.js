@@ -4,5 +4,6 @@ const userController = require("../controllers/userController");
 
 router.post("/register", userController.RegisterUser);
 router.get("/user:name", userController.GetUserByName);
+router.get("/chats:name", userController.GetUserChats);
 
 module.exports = router;

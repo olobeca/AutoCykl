@@ -34,12 +34,28 @@ exports.RegisterUser = async (req, res) => {
 exports.GetUserByName = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { name: req.params.name },
+      where: { name: req.params.name }, //params bo jest w urlu
     });
     if (!user) {
       return res
         .status(404)
         .json({ message: `User with name ${req.params.name} not found` });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+exports.GetUserChats = async (req, res) => {
+  try {
+    const chats = await prisma.chatConversation.findUnique({
+      where: { name: req.params.name },
+    });
+
+    if (!chats) {
+      return res
+        .status(404)
+        .json({ message: `No chats found for user ${req.params.name}` });
     }
   } catch (error) {
     return res.status(500).json({ error: error.message });
