@@ -23,7 +23,7 @@ app.use(express.json());
 // }
 
 const userRoutes = require("./routes/userRoutes");
-app.use("/user", userRoutes);
+app.use("/", userRoutes);
 
 const databaseRoutes = require("./routes/databaseRoutes");
 app.use("/database", databaseRoutes);

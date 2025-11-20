@@ -27,7 +27,21 @@ exports.RegisterUser = async (req, res) => {
       .status(201)
       .json({ message: `User ${req.body.name} created successfully!` });
   } catch (error) {
-    console.error("Register error:", error);
     res.status(500).json({ message: "Error creating user" });
+  }
+};
+
+exports.GetUserByName = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { name: req.params.name },
+    });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: `User with name ${req.params.name} not found` });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 };
