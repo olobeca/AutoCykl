@@ -8,40 +8,44 @@ datasource db {
   url      = env("DATABASE_URL") //olej error - prisma ma jakis problem
 }
 
-model Category {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique @db.VarChar(60)
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
-  products  Product[] //relacja miedzy kategoria a produktem
+// model Category {
+//   id        Int       @id @default(autoincrement())
+//   name      String    @unique @db.VarChar(60)
+//   createdAt DateTime  @default(now()) @map("created_at")
+//   updatedAt DateTime  @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+//   products  Product[] //relacja miedzy kategoria a produktem
 
-  @@map("categories") // to dziala tak ze zmienia nazwe tabeli w bazie danych na "categories" zamiast domyslnej "Category"
-}
+//   @@map("categories") // to dziala tak ze zmienia nazwe tabeli w bazie danych na "categories" zamiast domyslnej "Category"
+// }
 
-model Product {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(120)
-  description String?  @db.Text //? oznacza ze pole jest opcjonalne 
-  price       Decimal  @db.Decimal(10, 2)
-  currency    String   @default("USD") @db.Char(3)
-  quantity    Int      @default(0)
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
-  categoryId  Int      @map("category_id")
-  category    Category @relation(fields: [categoryId], references: [id]) //relacja miedzy produktem a kategoria
+// model Product {
+//   id          Int      @id @default(autoincrement())
+//   name        String   @db.VarChar(120)
+//   description String?  @db.Text //? oznacza ze pole jest opcjonalne 
+//   price       Decimal  @db.Decimal(10, 2)
+//   currency    String   @default("USD") @db.Char(3)
+//   quantity    Int      @default(0)
+//   active      Boolean  @default(true)
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   updatedAt   DateTime @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+//   categoryId  Int      @map("category_id")
+//   category    Category @relation(fields: [categoryId], references: [id]) //relacja miedzy produktem a kategoria
 
-  @@map("products")
-}
+//   @@map("products")
+// }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  email          String   @unique @db.VarChar(120)
-  name           String   @unique @db.VarChar(120)
-  passwordHashed String   @db.VarChar(255)
-  phoneNumber    String   @db.VarChar(9)
-  createdAt      DateTime @default(now()) @map("created_at")
-  offers         Offer[]
+  id                  Int                @id @default(autoincrement())
+  email               String             @unique @db.VarChar(120)
+  name                String             @unique @db.VarChar(120)
+  passwordHashed      String             @db.VarChar(255)
+  phoneNumber         String             @db.VarChar(9)
+  createdAt           DateTime           @default(now()) @map("created_at")
+  offers              Offer[]
+  chatConversations   ChatConversation[]
+  messages            Message[]
+  sellerConversations ChatConversation[] @relation("SellerConversations")
+  buyerConversations  ChatConversation[] @relation("BuyerConversations")
 
   @@map("users")
 }
@@ -53,25 +57,32 @@ model Offer {
   brand               String              @db.VarChar(120)
   model               String              @db.VarChar(120)
   version             String              @db.VarChar(120)
-  year                Int                 @db.Int
-  mileage             Int                 @db.Int
+  Cartype             String              @default("Samochody osobowe") @db.VarChar(60)
+  year                Int
+  mileage             Int
   price               Decimal             @db.Decimal(10, 2)
   fuelType            String              @map("fuel_type") @db.VarChar(60)
-  engineCapacity      Int                 @map("engine_capacity") @db.Int
-  power               Int                 @db.Int
-  doors               Int                 @db.Int
+  engineCapacity      Int                 @map("engine_capacity")
+  power               Int
+  doors               Int
   color               String              @db.VarChar(60)
   interiorColor       String              @map("interior_color") @db.VarChar(60)
-  torque              Int                 @db.Int
+  torque              Int
   bodyType            String              @map("body_type") @db.VarChar(60)
-  seats               Int                 @db.Int
+  seats               Int
   vin                 String              @db.VarChar(17)
   transmission        String              @db.VarChar(60)
   equipment           String[]
   warranty            String              @db.Text
+  isNoAccident        Boolean             @default(true) @map("is_no_accident")
+  offerType           String              @default("Standardowe") @db.Text
   createdAt           DateTime            @default(now()) @map("created_at")
   updatedAt           DateTime            @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
+  views               Int                 @default(0)
+  likes               Int                 @default(0)
+  messageCount        Int                 @default(0) @map("message_count")
   carServiceHistories CarServiceHistory[]
+  chatConversations   ChatConversation[]
 
   @@map("offers")
 }
@@ -82,9 +93,36 @@ model CarServiceHistory {
   offer   Offer @relation(fields: [offerId], references: [id])
 
   data      String   @db.Text
-  mileage   Int      @db.Int
+  mileage   Int
   type      String   @db.VarChar(60)
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("car_service_histories")
+}
+
+model ChatConversation {
+  id        Int       @id @default(autoincrement())
+  offerId   Int       @map("offer_id")
+  offer     Offer     @relation(fields: [offerId], references: [id])
+  sellerId  Int       @map("seller_id")
+  seller    User      @relation("SellerConversations", fields: [sellerId], references: [id])
+  buyerId   Int       @map("buyer_id")
+  buyer     User      @relation("BuyerConversations", fields: [buyerId], references: [id])
+  createdAt DateTime  @default(now()) @map("created_at")
+  messages  Message[]
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    Int?
+
+  @@map("chat_conversations")
+}
+
+model Message {
+  id                 Int              @id @default(autoincrement())
+  chatConversationId Int              @map("chat_conversation_id")
+  chatConversation   ChatConversation @relation(fields: [chatConversationId], references: [id])
+  senderId           Int              @map("sender_id")
+  sender             User             @relation(fields: [senderId], references: [id])
+  createdAt          DateTime         @default(now()) @map("created_at")
+
+  @@map("messages")
 }
