@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://avnadmin:AVNS_sEHnHNL-9Y4yhyDOG7U@pg-24d65abb-alerksanderradecki-0de7.d.aivencloud.com:16040/defaultdb?sslmode=require"
+  url      = env("DATABASE_URL") //olej error - prisma ma jakis problem
 }
 
 model Category {
@@ -32,4 +32,23 @@ model Product {
   category    Category @relation(fields: [categoryId], references: [id]) //relacja miedzy produktem a kategoria
 
   @@map("products")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique @db.VarChar(120)
+  passwordHashed String   @db.VarChar(255)
+  phoneNumber    String   @db.VarChar(9)
+  createdAt      DateTime @default(now()) @map("created_at")
+  offers         Offer[]
+
+  @@map("users")
+}
+
+model Offer {
+  id    Int    @id @default(autoincrement())
+  owner String @db.VarChar(120)
+  user  User   @relation(fields: [owner], references: [id])
+
+  @@map("offers")
 }
