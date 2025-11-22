@@ -12,9 +12,49 @@ import phone from "../icons/phone.svg";
 function Login() {
 
   const [type, setType] = useState("Logowanie");
+  const [user,setUser] = useState({});
 
   const [isRegulAccepted, setIsRegulAccepted] = useState(false);
 
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  function handleLoginEmailChange(event) {
+    setUserLogin({...userLogin, email: event.target.value});
+  }
+
+  function handleLoginPasswordChange(event) {
+    setUserLogin({...userLogin, password: event.target.value});
+  }
+
+  function handleLoginSubmit() {
+    fetch("http://localhost:5001/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: userLogin.email,
+            password: userLogin.password,
+        })
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("Success:", data);
+        setUser(data);
+        alert(`Zalogowano pomyślnie jako ${user.name}`);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    })
+    setUserLogin({
+        email: "",
+        password: "",
+    })
+
+  }
 
   const [userRegister, setUserRegister] = useState({
     name: "",
@@ -100,14 +140,14 @@ function Login() {
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Email</span>
                         <div className="relative">
-                            <input type="text" placeholder="twoj@email.com" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" value={userLogin.email} onChange={handleLoginEmailChange} placeholder="twoj@email.com" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={email} alt="Email Icon" />
                         </div>
                     </div>
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Hasło</span>
                         <div className="relative">
-                            <input type="text" placeholder="********" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" value={userLogin.password} onChange={handleLoginPasswordChange} placeholder="********" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={password} alt="Password Icon" />
                         </div>
                     </div>
@@ -118,7 +158,7 @@ function Login() {
                         </div> 
                         <button className="text-sm text-orange-600 hover:text-orange-700">Zapomniałeś hasła?</button>
                     </div>
-                    <button className="bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm p-2 mt-2 w-full">Zaloguj się</button>
+                    <button className="bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm p-2 mt-2 w-full" onClick={handleLoginSubmit}>Zaloguj się</button>
                 </div> 
                   :  
                 <div className="flex flex-col gap-4 w-full mt-4">

@@ -46,6 +46,38 @@ exports.RegisterUser = async (req, res) => {
   }
 };
 
+exports.LoginUser = async (req, res) => {
+  console.log("try to login user:", req.body);
+  if (!prisma) {
+    console.error("RegisterUser: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    if (!req.body) {
+      return res.status(422).json({ message: "No data provided" });
+    }
+    const user = await prisma.user.findUnique({
+      where: { email: req.body.email, passwordHashed: req.body.password },
+    });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: `User with email ${req.body.email} not found` });
+    }
+    return res.status(200).json({
+      message: `User ${req.body.email} logged in successfully!`,
+      user: user,
+    });
+  } catch (error) {
+    console.error("LoginUser error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error login user", error: error.message });
+  }
+};
+
 // exports.GetUserByName = async (req, res) => {
 //   try {
 //     const user = await prisma.user.findUnique({
