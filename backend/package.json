@@ -20,6 +20,6 @@
     "router": "^2.2.0"
   },
   "devDependencies": {
-    "prisma": "^6.19.0"
+    "prisma": "^7.0.0"
   }
 }
