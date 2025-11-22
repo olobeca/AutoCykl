@@ -69,3 +69,21 @@ app.listen(PORT, () => {
   await redisClient.connect();
   await redisClient.ping();
 })();
+
+require("dotenv").config();
+const { PrismaClient } = require("@prisma/client");
+
+(async () => {
+  const prisma = new PrismaClient();
+  try {
+    await prisma.$connect();
+    console.log(
+      "Prisma connected, DATABASE_URL present:",
+      !!process.env.DATABASE_URL
+    );
+    await prisma.$disconnect();
+  } catch (e) {
+    console.error("Prisma connect error:", e);
+    process.exit(1);
+  }
+})();

@@ -1,12 +1,14 @@
-import { defineConfig, env } from "prisma/config";
+import { PrismaClient } from "@prisma/client";
 
-export default defineConfig({
-  schema: "prisma/schema.prisma",
-  migrations: {
-    path: "prisma/migrations",
-  },
-  engine: "classic",
-  datasource: {
-    url: env("DATABASE_URL"),
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      adapter: {
+        provider: "postgresql",
+        url: process.env.DATABASE_URL,
+      },
+    },
   },
 });
+
+export default prisma;

@@ -12,6 +12,75 @@ import phone from "../icons/phone.svg";
 function Login() {
 
   const [type, setType] = useState("Logowanie");
+
+  const [isRegulAccepted, setIsRegulAccepted] = useState(false);
+
+
+  const [userRegister, setUserRegister] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  function handleUsernameChange(event) {
+    setUserRegister({...userRegister, name: event.target.value});
+  }
+
+  function handleEmailChange(event) {
+    setUserRegister({...userRegister, email: event.target.value});
+  }
+
+  function handlePhoneNumberChange(event) {
+    setUserRegister({...userRegister, phoneNumber: event.target.value});
+  }
+
+  function handlePasswordChange(event) {
+    setUserRegister({...userRegister, password: event.target.value});
+  }
+
+  function handleConfirmPasswordChange(event) {
+    setUserRegister({...userRegister, confirmPassword: event.target.value});
+  }
+
+  function handleRegisterSubmit() {
+    if (userRegister.password !== userRegister.confirmPassword) {
+        alert("Hasła nie są takie same! Wpisz hasła ponownie");
+        return;
+    }
+    if (!isRegulAccepted) {
+        alert("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
+        return;
+    }
+    fetch("http://localhost:5001/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: userRegister.name,
+            email: userRegister.email,
+            phoneNumber: userRegister.phoneNumber,
+            password: userRegister.password,
+        })
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("Success:", data);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    })
+    setUserRegister({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: ""
+    })
+
+  }
   
   return (
     <div className='bg-orange-50 h-full'> 
@@ -56,41 +125,41 @@ function Login() {
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Imię i nazwisko</span>
                         <div className="relative">
-                            <input type="text" placeholder="Jan Kowalski" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" placeholder="Jan Kowalski" onChange={handleUsernameChange} value={userRegister.name} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-5 w-5 top-2 left-2" src={user} alt="User Icon" />
                         </div>
                     </div>
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Email</span>
                         <div className="relative">
-                            <input type="text" placeholder="twoj@email.com" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" placeholder="twoj@email.com" onChange={handleEmailChange} value={userRegister.email} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={email} alt="Email Icon" />
                         </div>
                     </div>
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Numer telefonu</span>
                         <div className="relative">
-                            <input type="text" placeholder="123-456-789" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" placeholder="123-456-789" onChange={handlePhoneNumberChange} value={userRegister.phoneNumber} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={phone} alt="Phone Icon" />
                         </div>
                     </div>
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Hasło</span>
                         <div className="relative">
-                            <input type="text" placeholder="********" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" placeholder="********" onChange={handlePasswordChange} value={userRegister.password} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={password} alt="Password Icon" />
                         </div>
                     </div>
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Potwierdź hasło</span>
                         <div className="relative">
-                            <input type="text" placeholder="********" className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" placeholder="********" onChange={handleConfirmPasswordChange} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={password} alt="Password Icon" />
                         </div>
                     </div>
                     <div className="flex justify-between">
                         <div className="flex gap-1 items-center">
-                            <input type="checkbox" id="rememberMe" className="h-4 w-4"/>
+                            <input onChange={(e) => setIsRegulAccepted(e.target.checked)} type="checkbox" id="rememberMe" className="h-4 w-4"/>
                             <label htmlFor="rememberMe" className="text-sm text-black font-medium">
                                 <div className="flex gap-1 items-center">
                                     <span>Akceptuję</span>
@@ -101,7 +170,7 @@ function Login() {
                             </label>
                         </div> 
                     </div>
-                    <button className="bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm p-2 mt-2 w-full">Załóż konto</button>
+                    <button className="bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm p-2 mt-2 w-full" onClick={handleRegisterSubmit}>Załóż konto</button>
                 </div> 
                 }
                 <div className="w-full flex gap-0 justify-between mt-5 items-center">
