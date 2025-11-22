@@ -6,13 +6,15 @@ import email from "../icons/email.svg";
 import user from "../icons/userGray.svg";
 import password from "../icons/password.svg";
 import phone from "../icons/phone.svg";
-
+import UserContext from "../context/UserContext";
+import { useContext } from "react";
 
 
 function Login() {
 
+
+  const {user,setUser} = useContext(UserContext);
   const [type, setType] = useState("Logowanie");
-  const [user,setUser] = useState({});
 
   const [isRegulAccepted, setIsRegulAccepted] = useState(false);
 
@@ -43,8 +45,9 @@ function Login() {
     .then((response) => response.json())
     .then((data) => {
         console.log("Success:", data);
-        setUser(data);
+        setUser(data.user);
         alert(`Zalogowano pomyślnie jako ${user.name}`);
+        console.log("User data:", user);
     })
     .catch((error) => {
         console.error("Error:", error);
@@ -108,6 +111,7 @@ function Login() {
     .then((response) => response.json())
     .then((data) => {
         console.log("Success:", data);
+        alert(`Konto ${userRegister.name} zostało utworzone pomyślnie!`);
     })
     .catch((error) => {
         console.error("Error:", error);

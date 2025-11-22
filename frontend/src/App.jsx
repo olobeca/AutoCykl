@@ -8,10 +8,18 @@ import OfferPutting from "./pages/OfferPutting";
 import Login from "./pages/Login";
 import Favourites from "./pages/Favourites";
 import SellerPannel from "./pages/SellerPannel";
-
+import React from "react";
+import UserContext from "./context/UserContext";
+import { useState } from "react";
 function App() {
+  const [user,setUser] = useState({});
+
   return (
     <>
+    <UserContext.Provider value={{
+      user:user, 
+      setUser:setUser, 
+    }}>
     <Routes>
       <Route path="/" element={<WelcomePage />} />
       <Route path="/dealers" element={<div>Dla dealerów page</div>} />
@@ -24,6 +32,7 @@ function App() {
       <Route path="/favourites" element={<Favourites />} />
       <Route path="/sellerPanel" element={<SellerPannel />} />
     </Routes>
+    </UserContext.Provider>
     </>
   );
 }
