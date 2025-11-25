@@ -1,6 +1,4 @@
-import express from "express";
-import dotenv from "dotenv";
-
+const dotenv = require("dotenv");
 dotenv.config();
 
 exports.RefreshToken = async (req, res) => {
