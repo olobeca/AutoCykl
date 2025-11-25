@@ -66,9 +66,15 @@ exports.LoginUser = async (req, res) => {
         .status(404)
         .json({ message: `User with email ${req.body.email} not found` });
     }
+    const jwt = require("jsonwebtoken");
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
     return res.status(200).json({
       message: `User ${req.body.email} logged in successfully!`,
       user: user,
+      token: token,
     });
   } catch (error) {
     console.error("LoginUser error:", error);

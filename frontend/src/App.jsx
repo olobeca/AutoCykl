@@ -13,12 +13,16 @@ import UserContext from "./context/UserContext";
 import { useState } from "react";
 function App() {
   const [user,setUser] = useState({});
+  const [token,setToken] = useState("");
 
   return (
     <>
+    
     <UserContext.Provider value={{
       user:user, 
       setUser:setUser, 
+      token:token,
+      setToken:setToken
     }}>
     <Routes>
       <Route path="/" element={<WelcomePage />} />
