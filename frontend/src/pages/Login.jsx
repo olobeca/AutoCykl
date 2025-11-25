@@ -13,7 +13,7 @@ import { useContext } from "react";
 function Login() {
 
 
-  const {user,setUser} = useContext(UserContext);
+  const {user,setUser, token, setToken} = useContext(UserContext);
   const [type, setType] = useState("Logowanie");
 
   const [isRegulAccepted, setIsRegulAccepted] = useState(false);
@@ -36,6 +36,7 @@ function Login() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
             email: userLogin.email,
@@ -48,6 +49,7 @@ function Login() {
         setUser(data.user);
         alert(`Zalogowano pomyślnie jako ${user.name}`);
         console.log("User data:", user);
+        setToken(data.token);
     })
     .catch((error) => {
         console.error("Error:", error);

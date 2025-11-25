@@ -67,14 +67,32 @@ exports.LoginUser = async (req, res) => {
         .json({ message: `User with email ${req.body.email} not found` });
     }
     const jwt = require("jsonwebtoken");
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+    const accessToken = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_ACCESS_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    const refreshToken = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_REFRESH_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false, // HTTPS = true
+      sameSite: "strict",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     return res.status(200).json({
       message: `User ${req.body.email} logged in successfully!`,
       user: user,
-      token: token,
+      token: accessToken,
     });
   } catch (error) {
     console.error("LoginUser error:", error);
