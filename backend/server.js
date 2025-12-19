@@ -4,6 +4,7 @@ const cors = require("cors");
 const { corsOptions } = require("./config/cors");
 const dotenv = require("dotenv");
 const redis = require("redis");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.options("/api/*", cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 // try {
 //   mongoose
@@ -34,41 +36,14 @@ app.listen(PORT, () => {
   console.log(`Serwer działa na http://localhost:${PORT}`);
 });
 
-// //// zabawa z baza danych pg
-// const pool = require("./databases/db");
-
-// app.post("/axsxwscscs", async (req, res) => {
-//   try {
-//     const { name, location } = req.body;
-//     await pool.query("INSERT INTO users (name, location) VALUES ($1, $2)", [
-//       name,
-//       location,
-//     ]);
-//     res.status(200).send({ message: "Dane zostały dodane do bazy danych" });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Błąd serwera");
-//   }
-// });
-
-// app.get("dataDownload", async (req, res) => {
-//   try {
-//     const data = await pool.query("SELECT * FROM users");
-//     res.status(200).json({ children: data.rows });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Błąd serwera");
-//   }
-// });
-
 //redis nauka???
-(async () => {
-  const redisClient = redis.createClient(); //tutaj wpisuje na jakim porcie ma dzialac ew. link do external servera
-  redisClient.on("error", (err) => console.log("Redis Client Error", err));
-  redisClient.on("connect", () => console.log("Redis client connected"));
-  await redisClient.connect();
-  await redisClient.ping();
-})();
+// (async () => {
+//   const redisClient = redis.createClient(); //tutaj wpisuje na jakim porcie ma dzialac ew. link do external servera
+//   redisClient.on("error", (err) => console.log("Redis Client Error", err));
+//   redisClient.on("connect", () => console.log("Redis client connected"));
+//   await redisClient.connect();
+//   await redisClient.ping();
+// })();
 
 require("dotenv").config();
 const { PrismaClient } = require("@prisma/client");

@@ -36,8 +36,8 @@ function Login() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
         },
+        credentials: "include", // bardzo ważne! pozwala na wysyłanie cookie z refresh tokenem
         body: JSON.stringify({
             email: userLogin.email,
             password: userLogin.password,
@@ -49,7 +49,7 @@ function Login() {
         setUser(data.user);
         alert(`Zalogowano pomyślnie jako ${user.name}`);
         console.log("User data:", user);
-        setToken(data.token);
+        setToken(data.accessToken);
     })
     .catch((error) => {
         console.error("Error:", error);
