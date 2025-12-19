@@ -1,4 +1,3 @@
-const cors = require("cors");
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
@@ -6,4 +5,4 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 };
 
-module.exports = cors(corsOptions);
+module.exports = { corsOptions };

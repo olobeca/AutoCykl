@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { error } = require("console");
 
 console.log("DATABASE_URL set:", !!process.env.DATABASE_URL);
 
@@ -56,15 +57,25 @@ exports.LoginUser = async (req, res) => {
   }
   try {
     if (!req.body) {
-      return res.status(422).json({ message: "No data provided" });
+      return res
+        .status(422)
+        .json({ message: "No data provided", error: "No data" });
+    }
+    if (req.body.email === "" || req.body.password === "") {
+      return res.status(404).json({
+        message: `Email or password cannot be empty`,
+        error: "Email or password cannot be empty",
+      });
     }
     const user = await prisma.user.findUnique({
       where: { email: req.body.email, passwordHashed: req.body.password },
     });
+
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: `User with email ${req.body.email} not found` });
+      return res.status(404).json({
+        message: `User with email ${req.body.email} not found`,
+        error: "Invalid credentials",
+      });
     }
     const jwt = require("jsonwebtoken");
     const accessToken = jwt.sign(

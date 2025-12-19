@@ -11,7 +11,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors(corsOptions));
-app.options("/api/*", cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 

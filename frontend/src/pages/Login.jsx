@@ -8,11 +8,11 @@ import password from "../icons/password.svg";
 import phone from "../icons/phone.svg";
 import UserContext from "../context/UserContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function Login() {
-
-
+  const navigate = useNavigate();
   const {user,setUser, token, setToken} = useContext(UserContext);
   const [type, setType] = useState("Logowanie");
 
@@ -44,12 +44,25 @@ function Login() {
         })
     })
     .then((response) => response.json())
-    .then((data) => {
+    .then((data) => { 
+        if (data.error) {
+            if (data.error === "Invalid credentials") {
+                alert("Nieprawidłowy email lub hasło. Spróbuj ponownie.");
+            } else {
+                if (data.error === "Email or password cannot be empty") {
+                    alert("Nie podano danych. Wypełnij formularz i spróbuj ponownie.");
+                } else {
+                    alert(`Błąd podczas logowania: ${data.message}`);
+                }
+            }
+            return;
+        }
         console.log("Success:", data);
         setUser(data.user);
         alert(`Zalogowano pomyślnie jako ${user.name}`);
         console.log("User data:", user);
         setToken(data.accessToken);
+        navigate("/");
     })
     .catch((error) => {
         console.error("Error:", error);
