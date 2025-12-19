@@ -15,17 +15,25 @@ exports.RegisterUser = async (req, res) => {
   }
   try {
     if (!req.body) {
-      return res.status(422).json({ message: "No data provided" });
+      return res
+        .status(422)
+        .json({ message: "No data provided", error: "No data" });
     }
     if (await prisma.user.findUnique({ where: { email: req.body.email } })) {
       return res
         .status(409)
-        .json({ message: `User with email ${req.body.email} already exists` });
+        .json({
+          message: `User with email ${req.body.email} already exists`,
+          error: "User with this email already exists",
+        });
     }
     if (await prisma.user.findUnique({ where: { name: req.body.name } })) {
       return res
         .status(409)
-        .json({ message: `User with name ${req.body.name} already exists` });
+        .json({
+          message: `User with name ${req.body.name} already exists`,
+          error: "User with this name already exists",
+        });
     }
     const newUser = await prisma.user.create({
       data: {

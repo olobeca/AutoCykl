@@ -82,6 +82,57 @@ function Login() {
     confirmPassword: "",
   });
 
+  function handleRegisterSubmit() {
+    if (userRegister.password !== userRegister.confirmPassword) {
+        alert("Hasła nie są takie same! Wpisz hasła ponownie");
+        return;
+    }
+    if (!isRegulAccepted) {
+        alert("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
+        return;
+    }
+    fetch("http://localhost:5001/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include", 
+        body: JSON.stringify({
+            email: userLogin.email,
+            password: userLogin.password,
+            name: userRegister.name,
+            phoneNumber: userRegister.phoneNumber,
+        })
+    })
+    .then((response) => response.json())
+    .then((data) => { 
+        if (data.error) {
+            if (data.error === "User with this name already exists") {
+                alert(`Użytkownik o nazwie ${userRegister.name} już istnieje. Wybierz inną nazwę.`);
+            } else if (data.error === "User with this email already exists") {
+                alert(`Użytkownik o emailu ${userRegister.email} już istnieje. Użyj innego emaila.`);
+            } else {
+                alert(`Błąd podczas rejestracji: ${data.message}`);
+            }
+            return;
+        }
+        console.log("Success:", data);
+        setUser(data.user);
+        alert(`Zarejestrowano pomyślnie jako ${userRegister.name}`);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    })
+    setUserRegister({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: ""
+    })
+
+  }
+
   function handleUsernameChange(event) {
     setUserRegister({...userRegister, name: event.target.value});
   }
@@ -102,44 +153,6 @@ function Login() {
     setUserRegister({...userRegister, confirmPassword: event.target.value});
   }
 
-  function handleRegisterSubmit() {
-    if (userRegister.password !== userRegister.confirmPassword) {
-        alert("Hasła nie są takie same! Wpisz hasła ponownie");
-        return;
-    }
-    if (!isRegulAccepted) {
-        alert("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
-        return;
-    }
-    fetch("http://localhost:5001/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name: userRegister.name,
-            email: userRegister.email,
-            phoneNumber: userRegister.phoneNumber,
-            password: userRegister.password,
-        })
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Success:", data);
-        alert(`Konto ${userRegister.name} zostało utworzone pomyślnie!`);
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    })
-    setUserRegister({
-        name: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        confirmPassword: ""
-    })
-
-  }
   
   return (
     <div className='bg-orange-50 h-full'> 
@@ -212,7 +225,7 @@ function Login() {
                     <div className="gap-0 flex flex-col">
                         <span className="text-sm text-black font-medium">Potwierdź hasło</span>
                         <div className="relative">
-                            <input type="text" placeholder="********" onChange={handleConfirmPasswordChange} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
+                            <input type="text" placeholder="********" onChange={handleConfirmPasswordChange} value={userRegister.confirmPassword} className=" pl-10 rounded-md text-sm bg-gray-200 p-2 w-full"/> 
                             <img className="absolute h-6 w-6 top-2 left-2" src={password} alt="Password Icon" />
                         </div>
                     </div>
