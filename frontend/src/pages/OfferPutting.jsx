@@ -125,15 +125,51 @@ function OfferPutting() {
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Moc (KM) *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 150"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 150"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Pojemność (cm3) *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 2000"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 2000"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Kolor *</span>
                         <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Czarny"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Gwarancja *</span>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 12 miesięcy"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Wersja *</span>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. e5"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Liczba drzwi *</span>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 4"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Kolor wnętrza *</span>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Czarny"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">VIN *</span>
+                        <input type="text" name="vin" placeholder="np. VF1AB123456789012" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Liczba miejsc *</span>
+                        <input type="number" name="seats" min={1} max={9} className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 5"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Moment (Nm)</span>
+                        <input type="number" name="torque" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 320"/>
+                    </div>
+                    <div className="flex flex-col gap-0">
+                        <span className="font-semibold text-black text-sm">Wyposażenie</span>
+                        <input type="text" name="equipment" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wprowadź listę oddzieloną przecinkami"/>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <input type="checkbox" id="noAccident" name="noAccident" />
+                        <label htmlFor="noAccident" className="text-base text-black">Bez wypadku</label>
                     </div>
                 </div>
                 <div className="w-full mt-6">
