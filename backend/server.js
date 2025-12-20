@@ -31,6 +31,9 @@ app.use("/", userRoutes);
 const databaseRoutes = require("./routes/databaseRoutes");
 app.use("/database", databaseRoutes);
 
+const offersRoutes = require("./routes/offersRoutes");
+app.use("/offers", offersRoutes);
+
 // Start serwera
 const PORT = 5001;
 app.listen(PORT, () => {

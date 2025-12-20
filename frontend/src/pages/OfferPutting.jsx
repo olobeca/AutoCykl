@@ -46,8 +46,34 @@ function OfferPutting() {
     const [offer,setOffer] = useState({
         brand : "",
         model:"",
+        version:"",
+        Cartype:"",
         year:"",
+        location:"",
+        mileage:"",
+        price:"",
+        fueltype:"",
+        engineCapacity:"",
+        power:"",
+        doors:"",
+        color:"",
+        interiorColor:"",
+        torque:"",
+        bodyType:"",
+        seats:"",
+        vin:"",
+        transmission:"",
+        //description:"",
+        // equipment:[],
+        warranty:"",
+        location:"",
+        isNoAccident:false,
+        offerType:"",
     })
+
+    const [equipment,setEquipment] = useState([]);
+
+    const [equimpentInput,setEquipmentInput] = useState("");
 
   return (
     <div>
@@ -67,27 +93,27 @@ function OfferPutting() {
                 <div className="mt-4 grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Marka *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz markę"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.brand} onChange={e => setOffer({...offer, brand: e.target.value})} placeholder="Wybierz markę"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Model *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. A4"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.model} onChange={e => setOffer({...offer, model: e.target.value})} placeholder="np. A4"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Rok produkcji *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 2020"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.year} onChange={e => setOffer({...offer, year: e.target.value})} placeholder="np. 2020"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Cena (PLN) *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 50000"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.price} onChange={e => setOffer({...offer, price: e.target.value})} placeholder="np. 50000"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Przebieg (km) *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 50000"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.mileage} onChange={e => setOffer({...offer, mileage: e.target.value})} placeholder="np. 50000"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Lokalizacja *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Warszawa"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.location} onChange={e => setOffer({...offer, location: e.target.value})} placeholder="np. Warszawa"/>
                     </div>
                 </div>
                 <div className="w-full mt-6">
@@ -120,59 +146,62 @@ function OfferPutting() {
                 <div className="mt-4 grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Typ nadwozia *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz typ"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz typ" value={offer.bodyType} onChange={e => setOffer({...offer, bodyType: e.target.value})} />
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Rodzaj paliwa *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz paliwo"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz paliwo" value={offer.fuelType} onChange={e => setOffer({...offer, fuelType: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Skrzynia biegów *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz skrzynię"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz skrzynię" value={offer.transmission} onChange={e => setOffer({...offer, transmission: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Moc (KM) *</span>
-                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 150"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 150" value={offer.power} onChange={e => setOffer({...offer, power: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Pojemność (cm3) *</span>
-                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 2000"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 2000" value={offer.engineCapacity} onChange={e => setOffer({...offer, engineCapacity: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Kolor *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Czarny"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Czarny" value={offer.color} onChange={e => setOffer({...offer, color: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Gwarancja *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 12 miesięcy"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 12 miesięcy" value={offer.warranty} onChange={e => setOffer({...offer, warranty: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Wersja *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. e5"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. e5" value={offer.version} onChange={e => setOffer({...offer, version: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Liczba drzwi *</span>
-                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 4"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 4" value={offer.doors} onChange={e => setOffer({...offer, doors: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Kolor wnętrza *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Czarny"/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. Czarny" value={offer.interiorColor} onChange={e => setOffer({...offer, interiorColor: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">VIN *</span>
-                        <input type="text" name="vin" placeholder="np. VF1AB123456789012" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2"/>
+                        <input type="text" name="vin" placeholder="np. VF1AB123456789012" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.vin} onChange={e => setOffer({...offer, vin: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Liczba miejsc *</span>
-                        <input type="number" name="seats" min={1} max={9} className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 5"/>
+                        <input type="number" name="seats" min={1} max={9} className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 5" value={offer.seats} onChange={e => setOffer({...offer, seats: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Moment (Nm)</span>
-                        <input type="number" name="torque" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 320"/>
+                        <input type="number" name="torque" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="np. 320" value={offer.torque} onChange={e => setOffer({...offer, torque: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Wyposażenie</span>
-                        <input type="text" name="equipment" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wprowadź listę oddzieloną przecinkami"/>
+                        <div className="flex gap-1 w-full">
+                            <input type="text" name="equipment" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wprowadź listę oddzieloną przecinkami" value={equimpentInput} onChange={e => setEquipmentInput(e.target.value)} /> 
+                            <button type="button" className="bg-orange-600 hover:bg-orange-700 border text-sm border-gray-200 rounded-lg text-white px-4 py-2 w-full" onClick={() => setEquipment(prev => [...prev, equimpentInput])}> Dodaj</button>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-0 relative">
                         <span className="font-semibold text-black text-sm">Rodzaj maszyny</span>
@@ -186,7 +215,7 @@ function OfferPutting() {
                                 <li key={opt}>
                                 <button
                                     type="button"
-                                    onClick={() => { setMachineType(opt); setMachineOpen(false); }}
+                                    onClick={() => { setOffer(offer.Cartype); setMachineOpen(false); }}
                                     className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
                                 >
                                     {opt}
@@ -195,11 +224,11 @@ function OfferPutting() {
                             ))}
                             </ul>
                     )}
-                    <input type="hidden" name="machineType" value={machineType} />
+                    <input type="hidden" name="machineType" value={offer.Cartype} />
                     </div>
-                    <div className="flex items-center gap-3">
-                        <input type="checkbox" id="noAccident" name="noAccident" />
-                        <label htmlFor="noAccident" className="text-base text-black">Bez wypadku</label>
+                    <div className="flex items-center  justify-center gap-3">
+                        <input type="checkbox" id="noAccident" name="noAccident" className="w-6 h-6 border-black" checked={offer.noAccident} onChange={e => setOffer(prev => ({ ...prev, noAccident: e.target.checked }))} />
+                        <label htmlFor="noAccident" className="text-base text-black font-semibold">Bez wypadku</label>
                     </div>
                 </div>
                 <div className="w-full mt-6">
@@ -310,19 +339,23 @@ function OfferPutting() {
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6  flex flex-col shadow-sm">
                 <span className="text-lg text-black font-semibold">Podsumowanie</span>
                 <span className="text-base text-gray-600 font-light mb-6">Krok 5 z 5</span>
+                <div className="flex flex-col gap-0 mb-4">
+                        <span className="font-semibold text-black text-sm">Lokalizacja *</span>
+                        <input type="text" className="border w-full text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Warszawa" value={offer.location} onChange={e => setOffer(prev => ({ ...prev, location: e.target.value }))} />
+                </div>
                 <div className="w-full mt-2 rounded-md bg-gray-100 flex flex-col gap-4 p-4">
                     <span className="text-lg font-semibold text-black mb-2">Podsumowanie ogłoszenia</span>
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Pojazd:</span>
-                        <span className="text-base text-black font-medium">Toyota 222 (2000)</span>
+                        <span className="text-base text-black font-medium">{offer.Cartype}</span>
                     </div>    
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Cena:</span>
-                        <span className="text-base text-black font-medium">22 222 zł</span>
+                        <span className="text-base text-black font-medium">{offer.Price} zł</span>
                     </div> 
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Przebieg:</span>
-                        <span className="text-base text-black font-medium">2222 km</span>
+                        <span className="text-base text-black font-medium">{offer.Mileage} km</span>
                     </div> 
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Lokalizacja:</span>

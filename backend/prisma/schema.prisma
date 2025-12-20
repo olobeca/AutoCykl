@@ -59,6 +59,7 @@ model Offer {
   version             String              @db.VarChar(120)
   Cartype             String              @default("Samochody osobowe") @db.VarChar(60)
   year                Int
+  location            String              @db.VarChar(120)
   mileage             Int
   price               Decimal             @db.Decimal(10, 2)
   fuelType            String              @map("fuel_type") @db.VarChar(60)
