@@ -10,11 +10,11 @@ import trending from "../icons/trending.svg";
 import accept from "../icons/acceptGreen.svg";
 import {useState , useEffect} from "react";
 
-
-
-
 function OfferPutting() {
     const [step, setStep] = useState(1);
+
+    const [machineOpen, setMachineOpen] = useState(false);
+    const [machineType, setMachineType] = useState("");
     
     function handleNext() {
         setStep(step + 1);
@@ -41,6 +41,13 @@ function OfferPutting() {
             document.body.classList.remove("overflow-hidden");
         }
     }, [isHighlighted]); {/* poczytać o tym i czx działa */}
+
+
+    const [offer,setOffer] = useState({
+        brand : "",
+        model:"",
+        year:"",
+    })
 
   return (
     <div>
@@ -166,6 +173,29 @@ function OfferPutting() {
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Wyposażenie</span>
                         <input type="text" name="equipment" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wprowadź listę oddzieloną przecinkami"/>
+                    </div>
+                    <div className="flex flex-col gap-0 relative">
+                        <span className="font-semibold text-black text-sm">Rodzaj maszyny</span>
+                        <button type="button" onClick={() => setMachineOpen(v => !v)} aria-expanded={machineOpen} className="w-full text-left border text-sm border-gray-200 bg-gray-100 py-2 rounded-md p-2 flex justify-between items-center">
+                            <span className={`text-sm ${machineType ? 'text-black' : 'text-gray-400'}`}>{machineType || 'Wybierz rodzaj'}</span> 
+                            <span className={`text-xs transform transition-transform ${machineOpen ? 'rotate-180' : ''}`}>▾</span>
+                        </button>
+                        {machineOpen && (
+                            <ul className="absolute z-20 left-0 right-0 mt-1 bg-white border rounded-md shadow-sm">
+                            {['Samochody osobowe','Samochody dostawcze','Motocykle','Maszyny rolnicze'].map(opt => (
+                                <li key={opt}>
+                                <button
+                                    type="button"
+                                    onClick={() => { setMachineType(opt); setMachineOpen(false); }}
+                                    className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
+                                >
+                                    {opt}
+                                </button>
+                                </li>
+                            ))}
+                            </ul>
+                    )}
+                    <input type="hidden" name="machineType" value={machineType} />
                     </div>
                     <div className="flex items-center gap-3">
                         <input type="checkbox" id="noAccident" name="noAccident" />
@@ -447,10 +477,3 @@ function OfferPutting() {
 }
 
 export default OfferPutting;
-
-
-
-
-
-
-
