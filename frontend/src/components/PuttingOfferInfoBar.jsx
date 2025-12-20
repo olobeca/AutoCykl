@@ -40,7 +40,7 @@ function PuttingOfferInfoBar({number}) {
                         </div>
                         <div className="flex flex-col gap-1 items-center">
                             <img src={number > 5 ? acceptIcon : userIcon} alt="User Icon" className={`w-12 h-12 ${number > 5 ? "bg-green-400" : "bg-orange-400"} rounded-full p-2`}/>
-                            <span className="text-xs">Dane kontaktowe</span>
+                            <span className="text-xs">Podsumowanie</span>
                         </div>
                     </div>
     );

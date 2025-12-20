@@ -308,22 +308,8 @@ function OfferPutting() {
                 <hr className="border-t-8 border-gray-300 w-2/5 rounded-sm"/>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6  flex flex-col shadow-sm">
-                <span className="text-lg text-black font-semibold">Dane kontaktowe</span>
+                <span className="text-lg text-black font-semibold">Podsumowanie</span>
                 <span className="text-base text-gray-600 font-light mb-6">Krok 5 z 5</span>
-
-                <div className="flex flex-col gap-0 mb-4">
-                        <span className="font-semibold text-black text-sm">Imię i nazwisko *</span>
-                        <input type="text" className="border w-full text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Np. Jan Kowalski"/>
-                </div>
-                <div className="flex flex-col gap-0 mb-4">
-                        <span className="font-semibold text-black text-sm">Numer telefonu *</span>
-                        <input type="text" className="border w-full text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Np. 123 456 789"/>
-                </div>
-                <div className="flex flex-col gap-0 mb-4">
-                        <span className="font-semibold text-black text-sm">Adres e-mail *</span>
-                        <input type="text" className="border w-full text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Np. jan.kowalski@example.com"/>
-                </div>
-
                 <div className="w-full mt-2 rounded-md bg-gray-100 flex flex-col gap-4 p-4">
                     <span className="text-lg font-semibold text-black mb-2">Podsumowanie ogłoszenia</span>
                     <div className="flex  justify-between">
