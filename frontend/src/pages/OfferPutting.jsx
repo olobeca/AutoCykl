@@ -9,9 +9,17 @@ import thunder from "../icons/thunder.svg";
 import trending from "../icons/trending.svg";
 import accept from "../icons/acceptGreen.svg";
 import {useState , useEffect} from "react";
+import {useContext} from   "react"
+import UserContext from "../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
+
 
 function OfferPutting() {
+
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
+
+    const {user} = useContext(UserContext);
 
     const [machineOpen, setMachineOpen] = useState(false);
     const [machineType, setMachineType] = useState("");
@@ -68,12 +76,88 @@ function OfferPutting() {
         warranty:"",
         location:"",
         isNoAccident:false,
-        offerType:"",
     })
 
     const [equipment,setEquipment] = useState([]);
 
     const [equimpentInput,setEquipmentInput] = useState("");
+
+    function handleOfferPut() {
+        const payload = {
+            ownerName: user.name,
+            brand: offer.brand,
+            model: offer.model,
+            version: offer.version,
+            Cartype: offer.Cartype, // dopasowane do Prisma
+            year: offer.year ? parseInt(offer.year, 10) : undefined,
+            mileage: offer.mileage ? parseInt(offer.mileage, 10) : undefined,
+            location: offer.location,
+            price: offer.price ? parseFloat(offer.price) : undefined,
+            fuelType: offer.fueltype,
+            engineCapacity: offer.engineCapacity ? parseInt(offer.engineCapacity, 10) : undefined,
+            power: offer.power ? parseInt(offer.power, 10) : undefined,
+            color: offer.color,
+            doors: offer.doors ? parseInt(offer.doors, 10) : undefined,
+            interiorColor: offer.interiorColor,
+            torque: offer.torque ? parseInt(offer.torque, 10) : undefined,
+            bodyType: offer.bodyType,
+            seats: offer.seats ? parseInt(offer.seats, 10) : undefined,
+            vin: offer.vin,
+            transmission: offer.transmission,
+            description: description,
+            equipment: equipment,
+            warranty: offer.warranty,
+            isNoAccident: !!offer.isNoAccident,
+            offerType: selectedPackage,
+        };
+
+        fetch("http://localhost:5001/offers/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(payload),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.error) {
+                if (data.error === "No data") {
+                    alert("Serwer nie otrzymal zadnych danych");
+                } else if (data.error === "Incomplete data") {
+                    alert("Nie wypełniłeś całego formularza.");
+                } else {
+                    alert(`Błąd: ${data.message}`);
+                }
+                return;
+            }
+            alert("Ogłoszenie zostało pomyślnie opublikowane.");
+            navigate("/");
+            setOffer({
+                brand : "",
+                model:"",
+                version:"",
+                Cartype:"",
+                year:"",
+                location:"",
+                mileage:"",
+                price:"",
+                fueltype:"",
+                engineCapacity:"",
+                power:"",
+                doors:"",
+                color:"",
+                interiorColor:"",
+                torque:"",
+                bodyType:"",
+                seats:"",
+                vin:"",
+                transmission:"",
+                warranty:"",
+                location:"",
+                isNoAccident:false,
+            });
+        })
+        .catch((error) => { console.error("Error:", error); });
+    }
 
   return (
     <div>
@@ -101,7 +185,7 @@ function OfferPutting() {
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Rok produkcji *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.year} onChange={e => setOffer({...offer, year: e.target.value})} placeholder="np. 2020"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.year} onChange={e => setOffer({...offer, year: e.target.value})} placeholder="np. 2020"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Cena (PLN) *</span>
@@ -109,7 +193,7 @@ function OfferPutting() {
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Przebieg (km) *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.mileage} onChange={e => setOffer({...offer, mileage: e.target.value})} placeholder="np. 50000"/>
+                        <input type="number" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" value={offer.mileage} onChange={e => setOffer({...offer, mileage: e.target.value})} placeholder="np. 50000"/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Lokalizacja *</span>
@@ -150,7 +234,7 @@ function OfferPutting() {
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Rodzaj paliwa *</span>
-                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz paliwo" value={offer.fuelType} onChange={e => setOffer({...offer, fuelType: e.target.value})}/>
+                        <input type="text" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wybierz paliwo" value={offer.fueltype} onChange={e => setOffer({...offer, fueltype: e.target.value})}/>
                     </div>
                     <div className="flex flex-col gap-0">
                         <span className="font-semibold text-black text-sm">Skrzynia biegów *</span>
@@ -200,7 +284,7 @@ function OfferPutting() {
                         <span className="font-semibold text-black text-sm">Wyposażenie</span>
                         <div className="flex gap-1 w-full">
                             <input type="text" name="equipment" className="border text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Wprowadź listę oddzieloną przecinkami" value={equimpentInput} onChange={e => setEquipmentInput(e.target.value)} /> 
-                            <button type="button" className="bg-orange-600 hover:bg-orange-700 border text-sm border-gray-200 rounded-lg text-white px-4 py-2 w-full" onClick={() => setEquipment(prev => [...prev, equimpentInput])}> Dodaj</button>
+                            <button type="button" className="bg-orange-600 hover:bg-orange-700 border text-sm border-gray-200 rounded-lg text-white px-4 py-2 w-full" onClick={() => { setEquipment(prev => [...prev, equimpentInput]); setEquipmentInput(''); }}> Dodaj</button>
                         </div>
                     </div>
                     <div className="flex flex-col gap-0 relative">
@@ -215,7 +299,7 @@ function OfferPutting() {
                                 <li key={opt}>
                                 <button
                                     type="button"
-                                    onClick={() => { setOffer(offer.Cartype); setMachineOpen(false); }}
+                                    onClick={() => { setOffer({...offer, Cartype: opt}); setMachineOpen(false); setMachineType(opt); console.log(offer.Cartype); }}
                                     className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
                                 >
                                     {opt}
@@ -289,8 +373,8 @@ function OfferPutting() {
             <h2 className="text-base text-gray-700 mb-6">Wypełnij formularz, aby dodać nowe ogłoszenie</h2>
             <PuttingOfferInfoBar number={4} />
             <div className="w-full flex gap-0 mt-2">
-                <hr className="border-t-8 border-gray-600 w-3/5 rounded-sm"/>
-                <hr className="border-t-8 border-gray-300 w-2/5 rounded-sm"/>
+                <hr className="border-t-8 border-gray-600 w-4/5 rounded-sm"/>
+                <hr className="border-t-8 border-gray-300 w-1/5 rounded-sm"/>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6  flex flex-col shadow-sm">
                 <span className="text-lg text-black font-semibold">Opis</span>
@@ -333,33 +417,29 @@ function OfferPutting() {
             <h2 className="text-base text-gray-700 mb-6">Wypełnij formularz, aby dodać nowe ogłoszenie</h2>
             <PuttingOfferInfoBar number={5} />
             <div className="w-full flex gap-0 mt-2">
-                <hr className="border-t-8 border-gray-600 w-3/5 rounded-sm"/>
-                <hr className="border-t-8 border-gray-300 w-2/5 rounded-sm"/>
+                <hr className="border-t-8 border-gray-600 w-full rounded-sm"/>
+                {/* <hr className="border-t-8 border-gray-300 w-0/5 rounded-sm"/> */}
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6  flex flex-col shadow-sm">
                 <span className="text-lg text-black font-semibold">Podsumowanie</span>
                 <span className="text-base text-gray-600 font-light mb-6">Krok 5 z 5</span>
-                <div className="flex flex-col gap-0 mb-4">
-                        <span className="font-semibold text-black text-sm">Lokalizacja *</span>
-                        <input type="text" className="border w-full text-sm border-gray-200 bg-gray-100 rounded-md p-2" placeholder="Warszawa" value={offer.location} onChange={e => setOffer(prev => ({ ...prev, location: e.target.value }))} />
-                </div>
                 <div className="w-full mt-2 rounded-md bg-gray-100 flex flex-col gap-4 p-4">
                     <span className="text-lg font-semibold text-black mb-2">Podsumowanie ogłoszenia</span>
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Pojazd:</span>
-                        <span className="text-base text-black font-medium">{offer.Cartype}</span>
+                        <span className="text-base text-black font-medium">{offer.brand}</span>
                     </div>    
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Cena:</span>
-                        <span className="text-base text-black font-medium">{offer.Price} zł</span>
+                        <span className="text-base text-black font-medium">{offer.price} zł</span>
                     </div> 
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Przebieg:</span>
-                        <span className="text-base text-black font-medium">{offer.Mileage} km</span>
+                        <span className="text-base text-black font-medium">{offer.mileage} km</span>
                     </div> 
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Lokalizacja:</span>
-                        <span className="text-base text-black font-medium">Warszawa</span>
+                        <span className="text-base text-black font-medium">{offer.location}</span>
                     </div> 
                     <div className="flex  justify-between">
                         <span className="text-base text-gray-700">Zdjęcia:</span>
@@ -385,7 +465,7 @@ function OfferPutting() {
             </div>
       </div>}
     </div>
-    <div className={`${isHighlighted ? '' : 'hidden'}   bg-white top-2 left-[30%] w-[45%]  rounded-lg fixed flex flex-col text-left justify-center p-4 gap-4`}>
+    <div className={`${isHighlighted ? '' : 'hidden'}   bg-white top-10 left-[30%] w-[45%]  rounded-lg fixed flex flex-col text-left justify-center p-4 gap-4`}>
         <span className="text-black font-semibold">Wyróżnij swoje ogłoszenie</span>
         <span className="text-sm text-gray-700 mb-6">Zwiększ widoczność swojego ogłoszenia i sprzedaj szybciej</span> 
         <span className="text-black">Wybierz pakiet</span>
@@ -486,7 +566,7 @@ function OfferPutting() {
                <button className="border w-1/2 border-gray-200 hover:bg-gray-200 rounded-lg px-4 py-2 text-sm text-gray-700 mr-2" onClick={() => setIsHighlighted(false)}>
                 Anuluj
                </button>
-               <button className="border w-1/2 bg-green-600 hover:bg-green-700 text-white border-gray-200 rounded-lg px-4 py-2 text-sm " onClick={() => setIsHighlighted(false)}>
+               <button className="border w-1/2 bg-green-600 hover:bg-green-700 text-white border-gray-200 rounded-lg px-4 py-2 text-sm " onClick={() => { setIsHighlighted(false); handleOfferPut(); }}>
                 Opublikuj Ogłoszenie
                </button>
         </div>

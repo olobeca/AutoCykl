@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const user = require("../schemas/user");
 const userDBsetupBySQL = require("../services/userDBsetupBySQL");
 const redis = require("redis");
 

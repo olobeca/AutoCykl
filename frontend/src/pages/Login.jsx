@@ -59,7 +59,7 @@ function Login() {
         }
         console.log("Success:", data);
         setUser(data.user);
-        alert(`Zalogowano pomyślnie jako ${user.name}`);
+        alert(`Zalogowano pomyślnie jako ${data.user.name}`);
         console.log("User data:", user);
         setToken(data.accessToken);
         navigate("/");
@@ -98,8 +98,8 @@ function Login() {
         },
         credentials: "include", 
         body: JSON.stringify({
-            email: userLogin.email,
-            password: userLogin.password,
+            email: userRegister.email,
+            password: userRegister.password,
             name: userRegister.name,
             phoneNumber: userRegister.phoneNumber,
         })
