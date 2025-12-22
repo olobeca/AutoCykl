@@ -3,5 +3,15 @@ const router = express.Router();
 const offersController = require("../controllers/offersController");
 
 router.post("/create", offersController.CreateOffer);
-
+router.get("/getAll", offersController.GetAllOffers);
+router.get("/getOfferById/:id", offersController.GetOfferById);
+router.get(
+  "/getLikedOffersByUser/:userId",
+  offersController.GetLikedOffersByUser
+);
+router.get("/getTopOffers", offersController.GetTopOffers);
+router.get("/getSamochodyOsobowew", offersController.GetSamochodyOsobowe);
+router.get("/getSamochodyDostawcze", offersController.GetSamochodyDostawcze);
+router.get("/getMotocykle", offersController.GetMotocykle);
+router.post("/getMaszynyRolnicze", offersController.GetMaszynyRolnicze);
 module.exports = router;

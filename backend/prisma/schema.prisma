@@ -46,6 +46,7 @@ model User {
   messages            Message[]
   sellerConversations ChatConversation[] @relation("SellerConversations")
   buyerConversations  ChatConversation[] @relation("BuyerConversations")
+  likes               Like[]
 
   @@map("users")
 }
@@ -85,6 +86,7 @@ model Offer {
   messageCount        Int                 @default(0) @map("message_count")
   carServiceHistories CarServiceHistory[]
   chatConversations   ChatConversation[]
+  likedBy             Like[]
 
   @@map("offers")
 }
@@ -127,4 +129,14 @@ model Message {
   createdAt          DateTime         @default(now()) @map("created_at")
 
   @@map("messages")
+}
+
+model Like {
+  id      Int   @id @default(autoincrement())
+  userId  Int   @map("user_id")
+  user    User  @relation(fields: [userId], references: [id])
+  offerId Int   @map("offer_id")
+  offer   Offer @relation(fields: [offerId], references: [id])
+
+  @@map("likes")
 }
