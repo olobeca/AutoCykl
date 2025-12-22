@@ -29,7 +29,9 @@ function OfferPutting() {
     }
 
     function handleBack() {
-        setStep(step - 1);
+        if (step > 1 ) {
+            setStep(step - 1); 
+        }
     }
 
     const [description, setDescription] = useState("");
@@ -88,7 +90,7 @@ function OfferPutting() {
             brand: offer.brand,
             model: offer.model,
             version: offer.version,
-            Cartype: offer.Cartype, // dopasowane do Prisma
+            Cartype: offer.Cartype, 
             year: offer.year ? parseInt(offer.year, 10) : undefined,
             mileage: offer.mileage ? parseInt(offer.mileage, 10) : undefined,
             location: offer.location,

@@ -6,8 +6,8 @@ function Logo() {
     const navigate = useNavigate();
     return (
         <div className='flex items-center gap-2' onClick={() => navigate("/")}>
-            <img className="h-16 w-16" src={car} alt="Logo" />
-            <span className="text-2xl font-normal text-gray-900">AutoPortal</span>
+            <img className="h-16 w-16 cursor-pointer" src={car} alt="Logo" />
+            <span className="text-2xl font-normal text-gray-900 cursor-pointer">AutoPortal</span>
           </div> 
     )
 }
