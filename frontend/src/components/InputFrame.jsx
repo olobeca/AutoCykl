@@ -19,9 +19,7 @@ function InputFrame() {
 
   function handleWyszukaj() {
     console.log("Searching with parameters:", carParameters);
-    navigate("/searchResult", {
-        state: { carParameters }
-    })
+    navigate("/searchResult?" + new URLSearchParams(carParameters).toString());
   }
 
   return (
