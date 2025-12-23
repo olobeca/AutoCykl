@@ -10,8 +10,12 @@ router.get(
   offersController.GetLikedOffersByUser
 );
 router.get("/getTopOffers", offersController.GetTopOffers);
-router.get("/getSamochodyOsobowew", offersController.GetSamochodyOsobowe);
-router.get("/getSamochodyDostawcze", offersController.GetSamochodyDostawcze);
-router.get("/getMotocykle", offersController.GetMotocykle);
-router.post("/getMaszynyRolnicze", offersController.GetMaszynyRolnicze);
+// router.get("/getSamochodyOsobowew", offersController.GetSamochodyOsobowe);
+// router.get("/getSamochodyDostawcze", offersController.GetSamochodyDostawcze);
+// router.get("/getMotocykle", offersController.GetMotocykle);
+// router.get("/getMaszynyRolnicze", offersController.GetMaszynyRolnicze);
+router.get(
+  "/isOfferLiked/:offerId/:userId",
+  offersController.isOfferLikedByUser
+);
 module.exports = router;

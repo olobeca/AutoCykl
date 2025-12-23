@@ -16,7 +16,7 @@ function Header() {
           <Link className="text-sm  text-gray-600 hover:text-gray-900" to="/help">Pomoc</Link>
         </div>
         <div className="items-center justify-between flex py-3 px-8  gap-6">
-          <Link className="text-sm  text-gray-600 hover:text-gray-900" to="/dealers">Obserwowane</Link>
+          <Link className="text-sm  text-gray-600 hover:text-gray-900" to="/favourites">Obserwowane</Link>
           {user.name ? (
           <Link className="text-sm  text-gray-600 hover:text-gray-900" to="/sellerPanel">Panel Sprzedawcy</Link>
           ) : null}

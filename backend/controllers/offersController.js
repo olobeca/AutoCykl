@@ -213,3 +213,22 @@ exports.GetMaszynyRolnicze = async (req, res) => {
     });
   }
 };
+
+exports.isOfferLikedByUser = async (offerId, userId) => {
+  try {
+    const like = await prisma.like.findUnique({
+      where: {
+        userId: req.params.userId,
+        offerId: req.params.offerId,
+      },
+    });
+    if (like) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("isOfferLikedByUser error:", error);
+    throw new Error("Error checking if offer is liked by user");
+  }
+};
