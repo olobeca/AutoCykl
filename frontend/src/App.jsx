@@ -12,6 +12,7 @@ import React from "react";
 import UserContext from "./context/UserContext";
 import { useState } from "react";
 import { useTokenRefresher } from "./tokenRefreshing.jsx";
+import ScrollToTop from "./functions/ScrollToTop.jsx";
 
 function App() {
   const [user,setUser] = useState({});
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <>
-    
+    <ScrollToTop />
     <UserContext.Provider value={{
       user:user, 
       setUser:setUser, 
