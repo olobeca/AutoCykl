@@ -76,7 +76,6 @@ function OfferPutting() {
         //description:"",
         // equipment:[],
         warranty:"",
-        location:"",
         isNoAccident:false,
     })
 
