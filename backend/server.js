@@ -66,3 +66,17 @@ const { PrismaClient } = require("@prisma/client");
     process.exit(1);
   }
 })();
+
+///testowanie elastic searcha
+
+const { esClient } = require("./config/elastic");
+const { pingElastic } = require("./config/elastic");
+
+console.log("Pinging ElasticSearch...");
+pingElastic()
+  .then(() => {
+    console.log("ElasticSearch is up!");
+  })
+  .catch((err) => {
+    console.error("ElasticSearch ping failed:", err);
+  });
