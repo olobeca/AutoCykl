@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { esClient } = require("../config/elastic");
 
 const prisma = new PrismaClient();
 
@@ -76,6 +77,26 @@ exports.CreateOffer = async (req, res) => {
         offerType: req.body.offerType,
       },
     });
+    try {
+      await esClient.index({
+        index: "offers",
+        id: newOffer.id,
+        document: {
+          brand: newOffer.brand,
+          model: newOffer.model,
+          price: newOffer.price,
+          year: newOffer.year,
+          mileage: newOffer.mileage,
+          fuelType: newOffer.fuelType,
+          description: newOffer.description,
+          location: newOffer.location,
+          createdAt: newOffer.createdAt,
+        },
+      });
+    } catch (esError) {
+      console.error("Error indexing new offer to ElasticSearch:", esError);
+    }
+
     return res.status(201).json({
       message: `Car ${req.body.brand} ${req.body.model} created successfully!`,
       carId: newOffer.id,
@@ -230,5 +251,35 @@ exports.isOfferLikedByUser = async (offerId, userId) => {
   } catch (error) {
     console.error("isOfferLikedByUser error:", error);
     throw new Error("Error checking if offer is liked by user");
+  }
+};
+
+exports.GetOffersByParams = async (req, res) => {
+  console.log("Try to get offers by parameters:", req.query);
+  const { brand, model, minPrice, maxPrice, year, fuelType, location } =
+    req.query;
+  try {
+    const result = await esClient.search({
+      index: "cars",
+      query: {
+        bool: {
+          filter: [
+            { term: { brand: brand } },
+            { range: { price: { lte: maxPrice } } },
+            { range: { price: { gte: minPrice } } },
+            { range: { year: { gte: year } } },
+            { term: { fuelType: fuelType } },
+            { term: { location: location } },
+            { term: { model: model } },
+          ],
+        },
+      },
+    });
+    return res.status(200).json({ offers: result.hits.hits });
+  } catch (error) {
+    console.error("GetOffersByParams error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error retrieving offers", error: error.message });
   }
 };

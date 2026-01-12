@@ -8,6 +8,20 @@ function SearchResult() {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramsObject = Object.fromEntries(searchParams.entries());
   console.log("Search parameters:", paramsObject);
+
+  try {
+    fetch(`http://localhost:5001/offers/create?${new URLSearchParams(paramsObject).toString()}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched offers by parameters:", data);
+      });
+  } catch (error) {
+    console.error("Error fetching offers by parameters:", error);
+  }
   return (
     <div className='bg-white'>
       <Header />
