@@ -18,6 +18,6 @@ router.get(
   "/isOfferLiked/:offerId/:userId",
   offersController.isOfferLikedByUser
 );
-module.exports = router;
+router.get("/getOffersByParams", offersController.GetOffersByParams);
 
-router.get("getOffersByParams", offersController.GetOffersByParams);
+module.exports = router;

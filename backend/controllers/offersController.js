@@ -256,22 +256,37 @@ exports.isOfferLikedByUser = async (offerId, userId) => {
 
 exports.GetOffersByParams = async (req, res) => {
   console.log("Try to get offers by parameters:", req.query);
-  const { brand, model, minPrice, maxPrice, year, fuelType, location } =
-    req.query;
+  const {
+    brand,
+    model,
+    minPrice,
+    maxPrice,
+    priceFrom,
+    priceTo,
+    year,
+    yearFrom,
+    fuelType,
+    location,
+  } = req.query;
+
+  const gtePrice = minPrice || priceFrom;
+  const ltePrice = maxPrice || priceTo;
+  const gteYear = year || yearFrom;
   try {
+    const filters = [];
+    if (brand) filters.push({ term: { brand } });
+    if (model) filters.push({ match: { model } });
+    if (fuelType) filters.push({ term: { fuelType } });
+    if (location) filters.push({ term: { location } });
+    if (ltePrice) filters.push({ range: { price: { lte: Number(ltePrice) } } });
+    if (gtePrice) filters.push({ range: { price: { gte: Number(gtePrice) } } });
+    if (gteYear) filters.push({ range: { year: { gte: Number(gteYear) } } });
+
     const result = await esClient.search({
-      index: "cars",
+      index: "offers",
       query: {
         bool: {
-          filter: [
-            { term: { brand: brand } },
-            { range: { price: { lte: maxPrice } } },
-            { range: { price: { gte: minPrice } } },
-            { range: { year: { gte: year } } },
-            { term: { fuelType: fuelType } },
-            { term: { location: location } },
-            { term: { model: model } },
-          ],
+          filter: filters,
         },
       },
     });

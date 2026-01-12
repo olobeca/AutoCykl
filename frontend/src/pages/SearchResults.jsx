@@ -9,13 +9,34 @@ function SearchResult() {
   const paramsObject = Object.fromEntries(searchParams.entries());
   console.log("Search parameters:", paramsObject);
 
+  const mapped = {
+    brand: paramsObject.brand,
+    model: paramsObject.model,
+    // dopasuj do backendu — tutaj wysyłam minPrice/maxPrice
+    minPrice: paramsObject.priceFrom,
+    maxPrice: paramsObject.priceTo,
+    year: paramsObject.yearFrom,
+    fuelType: paramsObject.fuelType,
+    location: paramsObject.location,
+    mileageTo: paramsObject.mileageTo,
+  };
+
+  const qs = new URLSearchParams(
+    Object.entries(mapped).filter(([, v]) => v !== undefined && v !== "")
+  ).toString();
+
   try {
-    fetch(`http://localhost:5001/offers/getOffersByParams?${new URLSearchParams(paramsObject).toString()}`, {
+    fetch(`http://localhost:5001/offers/getOffersByParams?${qs}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log("Fetched offers by parameters:", data);
       });
