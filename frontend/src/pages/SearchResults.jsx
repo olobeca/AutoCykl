@@ -10,7 +10,7 @@ function SearchResult() {
   console.log("Search parameters:", paramsObject);
 
   try {
-    fetch(`http://localhost:5001/offers/create?${new URLSearchParams(paramsObject).toString()}`, {
+    fetch(`http://localhost:5001/offers/getOffersByParams?${new URLSearchParams(paramsObject).toString()}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
