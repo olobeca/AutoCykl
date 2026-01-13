@@ -90,7 +90,8 @@ function Favourites() {
                             mileage: "20 000 km",
                             fuelType: "Diesel",
                             location: "Kraków",
-                            isFeatured: false
+                            isFeatured: false,
+                            id: 2
                         }} />
                         <FavouriteOfferCard props={{
                             image: toyotacorolla,
@@ -100,7 +101,8 @@ function Favourites() {
                             mileage: "5 000 km",
                             fuelType: "Benzyna",
                             location: "Wrocław",
-                            isFeatured: true
+                            isFeatured: true,
+                            id: 1
                         }} />
                         <FavouriteOfferCard props={{
                             image: volkswagengolf,
@@ -110,7 +112,8 @@ function Favourites() {
                             mileage: "30 000 km",
                             fuelType: "Diesel",
                             location: "Poznań",
-                            isFeatured: false
+                            isFeatured: false,
+                            id: 2
                         }} />
                         {data.map((offer) => (<FavouriteOfferCard key={offer.id} props={{
                             image: offer.imageUrl,
@@ -120,7 +123,8 @@ function Favourites() {
                             mileage: `${offer.mileage} km`,
                             fuelType: offer.fuelType,
                             location: offer.location,
-                            isFeatured: offer.isFeatured
+                            isFeatured: offer.isFeatured,
+                            id: offer.id
                         }} />))}
 
                     </div>

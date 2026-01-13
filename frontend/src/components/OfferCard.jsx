@@ -1,8 +1,18 @@
 import "../App.css";
 import Featured from "../ui/Featured.jsx";
 import Hearted from "../ui/Hearted.jsx";
+import { useNavigate } from "react-router-dom";
 
 function OfferCard({props}) {
+
+  const id = props.id;
+  const navigate = useNavigate();
+
+  async function handleDetails() {
+    console.log("Viewing details for offer ID:", id);
+    navigate(`/offerDetails?id=${id}`);
+  }
+
   return ( 
     <div className='rounded-md shadow-md hover:shadow-xl flex flex-col gap-4 p-4 bg-white overflow-hidden'>
         <div className="overflow-hidden rounded-md relative">
@@ -23,7 +33,7 @@ function OfferCard({props}) {
         </div>
       </div>
       <span className='text-sm text-gray-500'>{props.location}</span>
-      <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3">Zobacz Szczegóły</button>
+      <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3" onClick={handleDetails}>Zobacz Szczegóły</button>
     </div>
 
   );
