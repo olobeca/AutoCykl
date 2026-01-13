@@ -4,6 +4,8 @@ function SortingBar({props}) {
 
     const [machineOpen, setMachineOpen] = useState(false);
 
+    const {sortingType, setSortingType} = props;
+
     return (
         <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md">
             <div className="flex flex-col gap-2">

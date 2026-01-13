@@ -2,12 +2,15 @@ import "../App.css";
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import SearchResultCard from "../components/SearchResultCard.jsx";
-import { useSearchParams } from "react-router-dom";
+import { data, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 function SearchResult() {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramsObject = Object.fromEntries(searchParams.entries());
   console.log("Search parameters:", paramsObject);
+
+  const [filters, setFilters] = useState({})
 
   const mapped = {
     brand: paramsObject.brand,
@@ -46,7 +49,7 @@ function SearchResult() {
   return (
     <div className='bg-white'>
       <Header />
-      <SearchResultCard />
+      <SearchResultCard props={{setFilters,data}} />
       <Footer />
     </div>
   )

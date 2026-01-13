@@ -10,15 +10,17 @@ import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
 import volkswagengolf from '../wolkswagengolf.jpg';
 import CardSplitter from "./CardSplitter.jsx";
+import { useState } from "react";
 
-function SearchResultCard() {
-    const [sortingType, setSortingType] = useState("Sortowanie malejąco"); 
+function SearchResultCard({props}) {
+    const [sortingType, setSortingType] = useState("Sortowanie malejąco");
+    const {setFilters,data} = props; 
 
     return (
         <div className="bg-gray-50 border-gray-200 flex flex-col gap-6 px-24  py-4">
             <NavigationBar props={{home: "Strona główna", category: "Samochody osobowe", searchResults: "Wyniki Wyszukiwania"}}/>
             <div className="flex gap-6">
-                <FiltersBar />
+                <FiltersBar/>
                 <div className="flex flex-col gap-5 w-4/5  ">
                     <SortingBar props={{sortingType, setSortingType}}/>
                     <div className=" grid grid-cols-3 gap-4 mt-4 w-full ">
