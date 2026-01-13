@@ -14,10 +14,12 @@ router.get("/getSamochodyOsobowew", offersController.GetSamochodyOsobowe);
 router.get("/getSamochodyDostawcze", offersController.GetSamochodyDostawcze);
 router.get("/getMotocykle", offersController.GetMotocykle);
 router.get("/getMaszynyRolnicze", offersController.GetMaszynyRolnicze);
+
 router.get(
   "/isOfferLiked/:offerId/:userId",
   offersController.isOfferLikedByUser
 );
+
 router.get("/getOffersByParams", offersController.GetOffersByParams);
 router.post("/getOffersByFilters", offersController.GetOffersByFilters);
 

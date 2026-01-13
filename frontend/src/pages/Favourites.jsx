@@ -10,8 +10,39 @@ import fordfocus from '../fordfocus.jpg';
 import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
 import volkswagengolf from '../wolkswagengolf.jpg';
+import {useContext} from   "react"
+import UserContext from "../context/UserContext.jsx";
+import { useEffect } from 'react';
+import {useState} from "react";
 
 function Favourites() {
+
+    const {user} = useContext(UserContext);
+    const [data,setData] = useState([]);
+    console.log("Favourites page - current user:", user);
+    function fetchFavourites() {
+        fetch(`http://localhost:5001/offers/getLikedOffersByUser/${user.id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        })
+        .then((res) => {
+            if (!res.ok) throw new Error("Network response was not ok");
+            return res.json();
+        })
+        .then((data) => {
+            console.log("Fetched favourite offers:", data);
+            setData(data.likedOffers || []);
+        })
+        .catch((err) => console.error("Error fetching favourite offers:", err));
+    }
+    useEffect(() => {
+        if (user && user.id) {
+            fetchFavourites();
+        }
+    }, [user]);
+    
+
     return (
         <div className="h-full bg-gray-100">
             <Header />
@@ -81,6 +112,17 @@ function Favourites() {
                             location: "Poznań",
                             isFeatured: false
                         }} />
+                        {data.map((offer) => (<FavouriteOfferCard key={offer.id} props={{
+                            image: offer.imageUrl,
+                            title: offer.title,
+                            price: `${offer.price} zł`,
+                            year: offer.year,
+                            mileage: `${offer.mileage} km`,
+                            fuelType: offer.fuelType,
+                            location: offer.location,
+                            isFeatured: offer.isFeatured
+                        }} />))}
+
                     </div>
                     <div className=" mt-8 bg-blue-50 border-2 border-blue-200 p-4 rounded-md flex gap-4 w-full">
                         <img src={heartBlue} alt="Heart Icon" className="h-10 w-10 p-2 bg-blue-200 rounded-full" />
