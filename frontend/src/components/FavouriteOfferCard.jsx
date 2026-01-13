@@ -12,7 +12,7 @@ function FavouriteOfferCard({props}) {
 
   async function handleDetails() {
     console.log("Viewing details for offer ID:", id);
-    navigate(`/offerDetails?id=${id}`);
+    navigate(`/offerDetails/${id}`);
   }
 
 

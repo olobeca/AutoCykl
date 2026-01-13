@@ -8,8 +8,37 @@ import CarDescription from "../components/CarDescription.jsx";
 import TechnicalSpecification from "../components/TechnicalSpecification.jsx";
 import CarEquipment from "../components/CarEquipment.jsx";
 import SimilarOffers from "../components/SimilarOffers.jsx";
+import {useParams} from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function OfferDetails() {
+
+  const {id} = useParams();
+  console.log("OfferDetails page loaded for offer ID:", id);
+  const [cardata, setCardata] = useState(null);
+
+  async function fetchOfferDetails(offerId) {
+    try {
+      const response = await fetch(`http://localhost:5001/offers/getOfferById/${offerId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setCardata(data.offer);
+      console.log("Fetched offer details:", data);
+    } catch (err) {
+      console.error("Error fetching offer details:", err);
+    }
+  }
+
+  useEffect(() => {
+    fetchOfferDetails(id);
+  }, [id]);  
+
   return (
     <div className='bg-white'>
       <Header />

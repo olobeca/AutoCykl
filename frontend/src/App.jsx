@@ -34,7 +34,7 @@ function App() {
       <Route path="/dealers" element={<div>Dla dealerów page</div>} />
       <Route path="/help" element={<div>Pomoc page</div>} />
       <Route path="/searchResult" element={<SearchResult />} />
-      <Route path="/offerDetails" element={<OfferDetails />} />
+      <Route path="/offerDetails/:id" element={<OfferDetails />} />
       <Route path="/messages" element={<Messages />} />
       <Route path="/offerPutting" element={<OfferPutting />} />
       <Route path="/login" element={<Login />} />
