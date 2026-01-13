@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 function FiltersBar({props}) {
-    const {setFilters2} = props;
+    const {setNewFilters} = props;
     const [filters, setFilters] = useState({
         brand: "",
         minPrice: 0,
@@ -29,7 +29,10 @@ function FiltersBar({props}) {
     }
 
     function submitFilters() {
-        setFilters2(filters);
+        // console.log('FiltersBar.submitFilters called, setNewFilters type:', typeof setNewFilters, 'filters:', filters);
+        // if (typeof setNewFilters === 'function') setNewFilters(filters);
+        // //debug
+        setNewFilters(filters);
     }
 
     function resetFilters() {

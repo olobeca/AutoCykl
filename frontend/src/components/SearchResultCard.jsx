@@ -14,13 +14,13 @@ import { useState } from "react";
 
 function SearchResultCard({props}) {
     const [sortingType, setSortingType] = useState("Sortowanie malejąco");
-    const {setFilters2,data} = props; 
+    const {setNewFilters,data} = props; 
 
     return (
         <div className="bg-gray-50 border-gray-200 flex flex-col gap-6 px-24  py-4">
             <NavigationBar props={{home: "Strona główna", category: "Samochody osobowe", searchResults: "Wyniki Wyszukiwania"}}/>
             <div className="flex gap-6">
-                <FiltersBar props={{setFilters2}}/>
+                <FiltersBar props={{setNewFilters}}/>
                 <div className="flex flex-col gap-5 w-4/5  ">
                     <SortingBar props={{sortingType, setSortingType}}/>
                     <div className=" grid grid-cols-3 gap-4 mt-4 w-full ">
