@@ -1,6 +1,7 @@
 import {useState} from "react";
 
-function FiltersBar() {
+function FiltersBar({props}) {
+    const {setFilters2} = props;
     const [filters, setFilters] = useState({
         brand: "",
         minPrice: 0,
@@ -25,6 +26,10 @@ function FiltersBar() {
             const exists = arr.includes(value);
             return {...prev, [key]: exists ? arr.filter(x => x !== value) : [...arr, value]};
         });
+    }
+
+    function submitFilters() {
+        setFilters2(filters);
     }
 
     function resetFilters() {
@@ -432,11 +437,9 @@ function FiltersBar() {
                 <div className="w-full mt-2 mb-2">
                     <hr className="border-t-1 border-gray-300" />
                 </div>
-                <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3">Zastosuj filtry</button>
-
+                <button onClick={submitFilters} className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3">Zastosuj filtry</button>
             </div>
-
-                </div>
+        </div>
     )
 }
 
