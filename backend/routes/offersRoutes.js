@@ -19,5 +19,6 @@ router.get(
   offersController.isOfferLikedByUser
 );
 router.get("/getOffersByParams", offersController.GetOffersByParams);
+router.post("/getOffersByFilters", offersController.GetOffersByFilters);
 
 module.exports = router;

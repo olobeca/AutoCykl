@@ -14,7 +14,6 @@ function FiltersBar({props}) {
         gearboxTypes: [],
         bodyTypes: [],
         colors: [],
-        conditions: [],
         features: []
     });
     const [activeThumbPrice, setActiveThumbPrice] = useState(null); // 'min' | 'max' | null
@@ -388,24 +387,6 @@ function FiltersBar({props}) {
                 <div className="flex gap-2">
                     <input type="checkbox" className="w-4 h-4" checked={filters.colors.includes('Czerwony')} onChange={() => toggleArray('colors','Czerwony')} />
                     <span className="text-sm text-gray-600 font-bold">Czerwony</span>
-                </div>
-                <div className="w-full mt-2">
-                    <hr className="border-t-1 border-gray-300" />
-                </div>
-            </div>
-            <div className="flex flex-col gap-2 p-2">
-                <h1 className="text-base font-normal text-black mb-4">Stan</h1>
-                <div className="flex gap-2">
-                    <input type="checkbox" className="w-4 h-4" checked={filters.conditions.includes('Nowy')} onChange={() => toggleArray('conditions','Nowy')} />
-                    <span className="text-sm text-gray-600 font-bold">Nowy</span>
-                </div>
-                <div className="flex gap-2">
-                    <input type="checkbox" className="w-4 h-4" checked={filters.conditions.includes('Używany')} onChange={() => toggleArray('conditions','Używany')} />
-                    <span className="text-sm text-gray-600 font-bold">Używany</span>
-                </div>
-                <div className="flex gap-2">
-                    <input type="checkbox" className="w-4 h-4" checked={filters.conditions.includes('Uszkodzony')} onChange={() => toggleArray('conditions','Uszkodzony')} />
-                    <span className="text-sm text-gray-600 font-bold">Uszkodzony</span>
                 </div>
                 <div className="w-full mt-2">
                     <hr className="border-t-1 border-gray-300" />

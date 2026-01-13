@@ -17,6 +17,27 @@ function SearchResult() {
 
   useEffect(() => {
     console.log("Current filters state", newFilters);
+    // if there are filters, call backend endpoint to fetch filtered offers
+    if (newFilters && Object.keys(newFilters).length > 0) {
+      try {
+        fetch("http://localhost:5001/offers/getOffersByFilters", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(newFilters),
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error("Network response was not ok");
+            return res.json();
+          })
+          .then((data) => {
+            console.log("Fetched offers by filters:", data);
+          })
+          .catch((err) => console.error("Error fetching offers by filters:", err));
+      } catch (error) {
+        console.error("Error while fetching offers by filters:", error);
+      }
+    }
   }, [newFilters]);
   
   

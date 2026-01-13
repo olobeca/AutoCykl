@@ -254,6 +254,93 @@ exports.isOfferLikedByUser = async (offerId, userId) => {
   }
 };
 
+exports.GetOffersByFilters = async (req, res) => {
+  console.log("Try to get offers by filters:", req.body);
+  try {
+    const {
+      brand,
+      model,
+      minPrice,
+      maxPrice,
+      yearFrom,
+      yearTo,
+      mileageFrom,
+      mileageTo,
+      fuelTypes,
+      bodyTypes,
+      colors,
+      features,
+      location,
+    } = req.body || {};
+
+    const filters = [];
+    if (brand) filters.push({ match: { brand } });
+    if (model) filters.push({ match: { model } });
+    if (location) filters.push({ term: { location } });
+
+    if (fuelTypes && fuelTypes.length)
+      filters.push({ terms: { fuelType: fuelTypes } });
+    if (bodyTypes && bodyTypes.length)
+      filters.push({ terms: { bodyType: bodyTypes } });
+    if (colors && colors.length) filters.push({ terms: { color: colors } });
+
+    if (minPrice || maxPrice) {
+      const range = {};
+      if (minPrice !== undefined && minPrice !== null && minPrice !== "")
+        range.gte = Number(minPrice);
+      if (maxPrice !== undefined && maxPrice !== null && maxPrice !== "")
+        range.lte = Number(maxPrice);
+      filters.push({ range: { price: range } });
+    }
+
+    if (yearFrom || yearTo) {
+      const range = {};
+      if (yearFrom !== undefined && yearFrom !== null && yearFrom !== "")
+        range.gte = Number(yearFrom);
+      if (yearTo !== undefined && yearTo !== null && yearTo !== "")
+        range.lte = Number(yearTo);
+      filters.push({ range: { year: range } });
+    }
+
+    if (mileageFrom || mileageTo) {
+      const range = {};
+      if (
+        mileageFrom !== undefined &&
+        mileageFrom !== null &&
+        mileageFrom !== ""
+      )
+        range.gte = Number(mileageFrom);
+      if (mileageTo !== undefined && mileageTo !== null && mileageTo !== "")
+        range.lte = Number(mileageTo);
+      filters.push({ range: { mileage: range } });
+    }
+
+    // features / equipment matching
+    if (features && features.length) {
+      features.forEach((f) => {
+        filters.push({ match: { equipment: f } });
+      });
+    }
+
+    const result = await esClient.search({
+      index: "offers",
+      size: 100,
+      query: {
+        bool: {
+          filter: filters,
+        },
+      },
+    });
+
+    return res.status(200).json({ offers: result.hits.hits });
+  } catch (error) {
+    console.error("GetOffersByFilters error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error retrieving offers", error: error.message });
+  }
+};
+
 exports.GetOffersByParams = async (req, res) => {
   console.log("Try to get offers by parameters:", req.query);
   const {
