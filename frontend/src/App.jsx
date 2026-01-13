@@ -13,6 +13,7 @@ import UserContext from "./context/UserContext";
 import { useState } from "react";
 import { useTokenRefresher } from "./tokenRefreshing.jsx";
 import ScrollToTop from "./functions/ScrollToTop.jsx";
+import ProtectedRoutes from "./protectedRoutes.jsx";
 
 function App() {
   const [user,setUser] = useState({});
@@ -35,11 +36,11 @@ function App() {
       <Route path="/help" element={<div>Pomoc page</div>} />
       <Route path="/searchResult" element={<SearchResult />} />
       <Route path="/offerDetails/:id" element={<OfferDetails />} />
-      <Route path="/messages" element={<Messages />} />
-      <Route path="/offerPutting" element={<OfferPutting />} />
+      <Route path="/messages" element={<ProtectedRoutes><Messages /></ProtectedRoutes>} />
+      <Route path="/offerPutting" element={<ProtectedRoutes><OfferPutting /></ProtectedRoutes>} />
       <Route path="/login" element={<Login />} />
-      <Route path="/favourites" element={<Favourites />} />
-      <Route path="/sellerPanel" element={<SellerPannel />} />
+      <Route path="/favourites" element={<ProtectedRoutes><Favourites /></ProtectedRoutes>} />
+      <Route path="/sellerPanel" element={<ProtectedRoutes><SellerPannel /></ProtectedRoutes>} />
     </Routes>
     </UserContext.Provider>
     </>
