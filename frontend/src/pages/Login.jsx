@@ -62,6 +62,9 @@ function Login() {
         alert(`Zalogowano pomyślnie jako ${data.user.name}`);
         console.log("User data:", user);
         setToken(data.accessToken);
+        // Przechowaj token w localStorage, żeby trwał po reloadu
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
     })
     .catch((error) => {
@@ -119,6 +122,11 @@ function Login() {
         console.log("Success:", data);
         setUser(data.user);
         alert(`Zarejestrowano pomyślnie jako ${userRegister.name}`);
+        // Przechowaj token w localStorage
+        if (data.accessToken) {
+            localStorage.setItem("accessToken", data.accessToken);
+        }
+        localStorage.setItem("user", JSON.stringify(data.user));
     })
     .catch((error) => {
         console.error("Error:", error);

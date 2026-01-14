@@ -1,11 +1,27 @@
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "./context/UserContext";
 
 function ProtectedRoutes({children}) {
-    const {user, token} = useContext(UserContext);
+    const {user, setUser, token, setToken} = useContext(UserContext);
 
-    if (!user?.id || !token) {
+    // Przy montowaniu, sprawdź localStorage
+    useEffect(() => {
+        const savedToken = localStorage.getItem("accessToken");
+        const savedUser = localStorage.getItem("user");
+        
+        if (savedToken && !token) {
+            setToken(savedToken);
+        }
+        if (savedUser && !user?.id) {
+            setUser(JSON.parse(savedUser));
+        }
+    }, []);
+
+    // Sprawdzaj token z contextu lub localStorage
+    const isAuthenticated = token || localStorage.getItem("accessToken");
+    
+    if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     } 
 

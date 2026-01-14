@@ -1,12 +1,22 @@
 import { useEffect } from "react";
 
 function isTokenExpired(token) {
-  if (!token) return true;
+  if (!token || typeof token !== 'string') return true;
 
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  const expiry = payload.exp * 1000; // JWT exp jest w sekundach
+  try {
+    // Sprawdzaj czy token ma format JWT (3 części oddzielone kropkami)
+    const parts = token.split(".");
+    if (parts.length !== 3) return true;
 
-  return Date.now() > expiry;
+    const payload = JSON.parse(atob(parts[1]));
+    if (!payload.exp) return true;
+    
+    const expiry = payload.exp * 1000; // JWT exp jest w sekundach
+    return Date.now() > expiry;
+  } catch (err) {
+    console.error("Token parsing error:", err);
+    return true;
+  }
 }
 
 
