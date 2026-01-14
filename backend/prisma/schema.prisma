@@ -35,18 +35,20 @@ datasource db {
 // }
 
 model User {
-  id                  Int                @id @default(autoincrement())
-  email               String             @unique @db.VarChar(120)
-  name                String             @unique @db.VarChar(120)
-  passwordHashed      String             @db.VarChar(255)
-  phoneNumber         String             @db.VarChar(9)
-  createdAt           DateTime           @default(now()) @map("created_at")
+  id                  Int                 @id @default(autoincrement())
+  email               String              @unique @db.VarChar(120)
+  name                String              @unique @db.VarChar(120)
+  passwordHashed      String              @db.VarChar(255)
+  phoneNumber         String              @db.VarChar(9)
+  createdAt           DateTime            @default(now()) @map("created_at")
   offers              Offer[]
   chatConversations   ChatConversation[]
   messages            Message[]
-  sellerConversations ChatConversation[] @relation("SellerConversations")
-  buyerConversations  ChatConversation[] @relation("BuyerConversations")
+  sellerConversations ChatConversation[]  @relation("SellerConversations")
+  buyerConversations  ChatConversation[]  @relation("BuyerConversations")
   likes               Like[]
+  pricePropostions    PricePropostion[]
+  meetingPropostions  MeetingPropostion[]
 
   @@map("users")
 }
@@ -105,17 +107,19 @@ model CarServiceHistory {
 }
 
 model ChatConversation {
-  id        Int       @id @default(autoincrement())
-  offerId   Int       @map("offer_id")
-  offer     Offer     @relation(fields: [offerId], references: [id])
-  sellerId  Int       @map("seller_id")
-  seller    User      @relation("SellerConversations", fields: [sellerId], references: [id])
-  buyerId   Int       @map("buyer_id")
-  buyer     User      @relation("BuyerConversations", fields: [buyerId], references: [id])
-  createdAt DateTime  @default(now()) @map("created_at")
-  messages  Message[]
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    Int?
+  id                 Int                 @id @default(autoincrement())
+  offerId            Int                 @map("offer_id")
+  offer              Offer               @relation(fields: [offerId], references: [id])
+  sellerId           Int                 @map("seller_id")
+  seller             User                @relation("SellerConversations", fields: [sellerId], references: [id])
+  buyerId            Int                 @map("buyer_id")
+  buyer              User                @relation("BuyerConversations", fields: [buyerId], references: [id])
+  createdAt          DateTime            @default(now()) @map("created_at")
+  messages           Message[]
+  user               User?               @relation(fields: [userId], references: [id])
+  userId             Int?
+  pricePropostions   PricePropostion[]
+  meetingPropostions MeetingPropostion[]
 
   @@map("chat_conversations")
 }
@@ -127,8 +131,36 @@ model Message {
   senderId           Int              @map("sender_id")
   sender             User             @relation(fields: [senderId], references: [id])
   createdAt          DateTime         @default(now()) @map("created_at")
+  isRead             Boolean          @default(false) @map("is_read")
+  content            String           @db.Text
 
   @@map("messages")
+}
+
+model PricePropostion {
+  id                 Int              @id @default(autoincrement())
+  chatConversationId Int              @map("chat_conversation_id")
+  chatConversation   ChatConversation @relation(fields: [chatConversationId], references: [id])
+  senderId           Int              @map("sender_id")
+  sender             User             @relation(fields: [senderId], references: [id])
+  createdAt          DateTime         @default(now()) @map("created_at")
+  isRead             Boolean          @default(false) @map("is_read")
+  price              Decimal          @db.Decimal(10, 2)
+  status             String           @default("Oczekuje na odpowiedź") @db.VarChar(60)
+}
+
+model MeetingPropostion {
+  id                 Int              @id @default(autoincrement())
+  chatConversationId Int              @map("chat_conversation_id")
+  chatConversation   ChatConversation @relation(fields: [chatConversationId], references: [id])
+  senderId           Int              @map("sender_id")
+  sender             User             @relation(fields: [senderId], references: [id])
+  createdAt          DateTime         @default(now()) @map("created_at")
+  isRead             Boolean          @default(false) @map("is_read")
+  meetingDate        DateTime         @map("meeting_date")
+  meetingTime        String           @map("meeting_time") @db.VarChar(10)
+  location           String           @db.VarChar(255)
+  status             String           @default("Oczekuje na odpowiedź") @db.VarChar(60)
 }
 
 model Like {
