@@ -42,7 +42,6 @@ model User {
   phoneNumber         String              @db.VarChar(9)
   createdAt           DateTime            @default(now()) @map("created_at")
   offers              Offer[]
-  chatConversations   ChatConversation[]
   messages            Message[]
   sellerConversations ChatConversation[]  @relation("SellerConversations")
   buyerConversations  ChatConversation[]  @relation("BuyerConversations")
@@ -116,8 +115,6 @@ model ChatConversation {
   buyer              User                @relation("BuyerConversations", fields: [buyerId], references: [id])
   createdAt          DateTime            @default(now()) @map("created_at")
   messages           Message[]
-  user               User?               @relation(fields: [userId], references: [id])
-  userId             Int?
   pricePropostions   PricePropostion[]
   meetingPropostions MeetingPropostion[]
 
