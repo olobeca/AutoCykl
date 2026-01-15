@@ -54,8 +54,8 @@ model User {
 
 model Offer {
   id                  Int                 @id @default(autoincrement())
-  ownerName           String              @map("owner_name") @db.VarChar(120)
-  user                User                @relation(fields: [ownerName], references: [name])
+  ownerId             Int                 @map("owner_id")
+  user                User                @relation(fields: [ownerId], references: [id])
   brand               String              @db.VarChar(120)
   model               String              @db.VarChar(120)
   version             String              @db.VarChar(120)

@@ -19,7 +19,7 @@ exports.CreateOffer = async (req, res) => {
         .json({ message: "No data provided", error: "No data" });
     }
     if (
-      !req.body.ownerName ||
+      !req.body.ownerId ||
       !req.body.brand ||
       !req.body.model ||
       !req.body.version ||
@@ -50,7 +50,7 @@ exports.CreateOffer = async (req, res) => {
     }
     const newOffer = await prisma.offer.create({
       data: {
-        ownerName: req.body.ownerName,
+        ownerId: req.body.ownerId,
         brand: req.body.brand,
         model: req.body.model,
         version: req.body.version,

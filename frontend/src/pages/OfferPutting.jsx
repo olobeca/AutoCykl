@@ -85,7 +85,7 @@ function OfferPutting() {
 
     function handleOfferPut() {
         const payload = {
-            ownerName: user.name,
+            ownerId: user.id,
             brand: offer.brand,
             model: offer.model,
             version: offer.version,

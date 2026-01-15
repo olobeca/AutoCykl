@@ -1,5 +1,32 @@
 
 function SellerDetails({props}) {
+
+    async function handleContactSeller() {
+        if(!props.buyerId) {
+            alert("Zaloguj się, aby wysłać wiadomość.");
+            return;
+    }
+        try {
+            const response = await fetch(`http://localhost:5001/chats/newChat`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    sellerId: props.sellerId,
+                    buyerId: props.buyerId,
+                    offerId: props.offerId,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("Chat initiated successfully:", data);
+        } catch (error) {
+            console.error("Error initiating chat:", error);
+        }
+    }
+
     return (
        <div className="border border-gray-100 shadow-md rounded-lg p-8 m-4">
             <div className="flex flex-col gap-3">
@@ -19,10 +46,10 @@ function SellerDetails({props}) {
 
                 </div>
                 <div className="flex justify-between gap-6 ">
-                                <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3 w-full">Pokaż numer telefonu</button>
-                                <button className="bg-white hover:bg-gray-200 transition-colors rounded-md text-sm font-medium text-gray-700 py-2 px-3 border-gray-300 w-full">Wyślij e-mail</button>
-                                <button className="bg-white hover:bg-gray-200 transition-colors rounded-md text-sm font-medium text-gray-700 py-2 px-3 border-gray-300 w-full">Wyślij wiadomość</button>
-                            </div>
+                    <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3 w-full">Pokaż numer telefonu</button>
+                    <button className="bg-white hover:bg-gray-200 transition-colors rounded-md text-sm font-medium text-gray-700 py-2 px-3 border-gray-300 w-full">Wyślij e-mail</button>
+                    <button className="bg-white hover:bg-gray-200 transition-colors rounded-md text-sm font-medium text-gray-700 py-2 px-3 border-gray-300 w-full" onClick={handleContactSeller}>Wyślij wiadomość</button>
+                </div>
             </div>
         </div>
     );

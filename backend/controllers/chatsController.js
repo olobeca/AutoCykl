@@ -13,20 +13,27 @@ exports.NewChat = async (req, res) => {
   }
 
   try {
+    const { sellerId, buyerId, offerId } = req.body;
+
+    if (!sellerId || !buyerId || !offerId) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: sellerId, buyerId, and offerId are required",
+      });
+    }
+
     const newChat = await prisma.chatConversation.create({
       data: {
-        sellerId: req.body.sellerId,
-        buyerId: req.body.buyerId,
-        offerId: req.body.offerId,
+        sellerId: parseInt(sellerId),
+        buyerId: parseInt(buyerId),
+        offerId: parseInt(offerId),
       },
     });
-    if (!req.body) {
-      return res
-        .status(422)
-        .json({ message: "No data provided", error: "No data" });
-    }
+    return res.status(201).json(newChat);
   } catch (error) {
     console.error("Error creating new chat:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };
