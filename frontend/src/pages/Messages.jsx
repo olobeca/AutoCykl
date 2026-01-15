@@ -6,11 +6,15 @@ import MessagesCard from "../components/MessagesCard.jsx";
 import Chat from "../components/Chat.jsx";
 import {useLocation} from "react-router-dom";
 import { useEffect } from "react";
+import {useContext} from   "react"
+import UserContext from "../context/UserContext.jsx";
 
 
 function Messages() {
   const [selectedConversation, setSelectedConversation] = useState(false);
   const [conversationData, setConversationData] = useState(null);
+  const [userChats, setUserChats] = useState([]);
+  const [isLoadingChats, setIsLoadingChats] = useState(true);
 
   const [isPrizeProposalFormOpen, setIsPrizeProposalFormOpen] = useState(false);
 
@@ -60,6 +64,42 @@ function Messages() {
       setSelectedConversation(true);
     }
   }, [conversationId]);
+
+  const {user} = useContext(UserContext);
+
+  useEffect(() => {
+    if (!user || !user.id) {
+      setUserChats([]);
+      setIsLoadingChats(false);
+      return;
+    }
+
+    async function fetchUserChats() {
+      try {
+        console.log("Fetching chats for user ID:", user.id);
+        const response = await fetch(`http://localhost:5001/chats/getChatsByUserId/${user.id}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Fetched user chats:", data);
+        setUserChats(data.chats || []);
+      } catch (err) {
+        console.error("Error fetching user chats:", err);
+      } finally {
+        setIsLoadingChats(false);
+      }
+    }
+
+    setIsLoadingChats(true);
+    fetchUserChats();
+  }, [user?.id]);
+
+
   
   return (
     
