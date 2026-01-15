@@ -7,7 +7,11 @@ function SellerDetails({props}) {
         if(!props.buyerId) {
             alert("Zaloguj się, aby wysłać wiadomość.");
             return;
-    }
+        }
+        if(props.buyerId === props.sellerId) {
+            alert("Nie możesz wysłać wiadomości do samego siebie.");
+            return;
+        }
         try {
             const response = await fetch(`http://localhost:5001/chats/newChat`, {
                 method: "POST",
