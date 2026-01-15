@@ -1,6 +1,8 @@
+import {useNavigate} from "react-router-dom";
 
 function SellerDetails({props}) {
 
+    const navigate = useNavigate();
     async function handleContactSeller() {
         if(!props.buyerId) {
             alert("Zaloguj się, aby wysłać wiadomość.");
@@ -22,6 +24,11 @@ function SellerDetails({props}) {
             }
             const data = await response.json();
             console.log("Chat initiated successfully:", data);
+            if(data && data.id) {
+                navigate(`/messages`, {
+                    state: { conversationId: data.id }
+                });
+            }
         } catch (error) {
             console.error("Error initiating chat:", error);
         }

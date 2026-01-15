@@ -4,6 +4,8 @@ import React from "react";
 import { useState } from "react";
 import MessagesCard from "../components/MessagesCard.jsx";
 import Chat from "../components/Chat.jsx";
+import {useLocation} from "react-router-dom";
+import { useEffect } from "react";
 
 
 function Messages() {
@@ -49,6 +51,16 @@ function Messages() {
   function handleMeetingProposalMessageChange(event) {
     setMeetingProposalMessage(event.target.value);
   }
+
+  const location = useLocation();
+  const conversationId = location.state?.conversationId;
+
+  useEffect(() => {
+    if (conversationId) {
+      setSelectedConversation(true);
+    }
+  }, [conversationId]);
+  
   return (
     
     <div className="relative">
