@@ -69,6 +69,11 @@ exports.GetChatsByUserId = async (req, res) => {
       where: {
         OR: [{ sellerId: userId }, { buyerId: userId }],
       },
+      include: {
+        messages: true,
+        pricePropostions: true,
+        meetingPropostions: true,
+      },
     });
     return res.status(200).json({ chats });
   } catch (error) {
@@ -79,33 +84,38 @@ exports.GetChatsByUserId = async (req, res) => {
   }
 };
 
-exports.getChatDataById = async (req, res) => {
-  if (!prisma) {
-    console.error("Get chat data: Prisma client is not initialized");
-    return res
-      .status(500)
-      .json({ message: "Prisma client not initialized on server" });
-  }
-  try {
-    const chatId = parseInt(req.params.chatId);
-    if (!chatId) {
-      return res
-        .status(400)
-        .json({ message: "Missing required field: chatId" });
-    }
-    const chatData = await prisma.chatConversation.findMany({
-      where: {
-        id: chatId,
-      },
-    });
-    return res.status(200).json({ chatData });
-  } catch (error) {
-    console.error("Error fetching chat data:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
-  }
-};
+// exports.getChatDataById = async (req, res) => {
+//   if (!prisma) {
+//     console.error("Get chat data: Prisma client is not initialized");
+//     return res
+//       .status(500)
+//       .json({ message: "Prisma client not initialized on server" });
+//   }
+//   try {
+//     const chatId = parseInt(req.params.chatId);
+//     if (!chatId) {
+//       return res
+//         .status(400)
+//         .json({ message: "Missing required field: chatId" });
+//     }
+//     const chatData = await prisma.chatConversation.findUnique({
+//       where: {
+//         id: chatId,
+//       },
+//       include: {
+//         messages: true,
+//         pricePropostions: true,
+//         meetingPropostions: true,
+//       },
+//     });
+//     return res.status(200).json({ chatData });
+//   } catch (error) {
+//     console.error("Error fetching chat data:", error);
+//     res
+//       .status(500)
+//       .json({ message: "Internal server error", error: error.message });
+//   }
+// };
 
 exports.newMessage = async (req, res) => {
   if (!prisma) {
