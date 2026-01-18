@@ -106,7 +106,7 @@ function Messages() {
     <div className="relative">
     <div className={`${isPrizeProposalFormOpen || isMeetingProposalFormOpen ? 'brightness-50' : ''}`}>
       <Header />
-      <div className='bg-gray-50 border-gray-200 flex px-24 '>
+      <div className='bg-gray-50 border-gray-200 flex px-16 '>
         <div className='w-[27%] mx-auto bg-white border border-gray-100 '>
             <div className="flex flex-col gap-2 text-center mb-4 p-4">
                 <span className="text-lg font-semibold text-black text-left">Wiadomości</span>

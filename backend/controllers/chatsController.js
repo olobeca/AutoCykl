@@ -29,7 +29,7 @@ exports.NewChat = async (req, res) => {
     if (testExistingChat) {
       console.log(
         "Chat already exists between these users for this offer:",
-        testExistingChat
+        testExistingChat,
       );
       return res.status(200).json(testExistingChat);
     }
@@ -73,6 +73,67 @@ exports.GetChatsByUserId = async (req, res) => {
     return res.status(200).json({ chats });
   } catch (error) {
     console.error("Error fetching chats:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+exports.getChatDataById = async (req, res) => {
+  if (!prisma) {
+    console.error("Get chat data: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const chatId = parseInt(req.params.chatId);
+    if (!chatId) {
+      return res
+        .status(400)
+        .json({ message: "Missing required field: chatId" });
+    }
+    const chatData = await prisma.chatConversation.findMany({
+      where: {
+        id: chatId,
+      },
+    });
+    return res.status(200).json({ chatData });
+  } catch (error) {
+    console.error("Error fetching chat data:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+exports.newMessage = async (req, res) => {
+  if (!prisma) {
+    console.error("New message: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const { chatId, senderId, content } = req.body;
+
+    if (!chatId || !senderId || !content) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: chatId, senderId, and content are required",
+      });
+    }
+
+    const newMessage = await prisma.chatMessage.create({
+      data: {
+        chatId: parseInt(chatId),
+        senderId: parseInt(senderId),
+        content: content,
+      },
+    });
+    return res.status(201).json(newMessage);
+  } catch (error) {
+    console.error("Error creating new message:", error);
     res
       .status(500)
       .json({ message: "Internal server error", error: error.message });
