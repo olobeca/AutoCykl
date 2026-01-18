@@ -126,7 +126,7 @@ exports.newMessage = async (req, res) => {
 
     const newMessage = await prisma.chatMessage.create({
       data: {
-        chatId: parseInt(chatId),
+        chatConversationId: parseInt(chatId),
         senderId: parseInt(senderId),
         content: content,
       },
@@ -134,6 +134,81 @@ exports.newMessage = async (req, res) => {
     return res.status(201).json(newMessage);
   } catch (error) {
     console.error("Error creating new message:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+exports.newPrizeProposal = async (req, res) => {
+  if (!prisma) {
+    console.error("New prize proposal: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const { chatId, proposerId, proposedPrize } = req.body;
+
+    if (!chatId || !proposerId || !proposedPrize) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: chatId, proposerId, and proposedPrize are required",
+      });
+    }
+
+    const newProposal = await prisma.PricePropostion.create({
+      data: {
+        chatConversationId: parseInt(chatId),
+        proposerId: parseInt(proposerId),
+        price: parseFloat(proposedPrize),
+      },
+    });
+    return res.status(201).json(newProposal);
+  } catch (error) {
+    console.error("Error creating new prize proposal:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+exports.newMeetingProposal = async (req, res) => {
+  if (!prisma) {
+    console.error("New meeting proposal: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const { chatId, proposerId, proposedDate, proposedTime, proposedLocation } =
+      req.body;
+
+    if (
+      !chatId ||
+      !proposerId ||
+      !proposedDate ||
+      !proposedTime ||
+      !proposedLocation
+    ) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: chatId, proposerId, proposedDate, proposedTime, and proposedLocation are required",
+      });
+    }
+
+    const newMeetingProposal = await prisma.MeetingPropostion.create({
+      data: {
+        chatConversationId: parseInt(chatId),
+        senderId: parseInt(proposerId),
+        meetingDate: proposedDate,
+        meetingTime: proposedTime,
+        location: proposedLocation,
+      },
+    });
+    return res.status(201).json(newMeetingProposal);
+  } catch (error) {
+    console.error("Error creating new meeting proposal:", error);
     res
       .status(500)
       .json({ message: "Internal server error", error: error.message });

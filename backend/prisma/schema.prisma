@@ -154,7 +154,7 @@ model MeetingPropostion {
   sender             User             @relation(fields: [senderId], references: [id])
   createdAt          DateTime         @default(now()) @map("created_at")
   isRead             Boolean          @default(false) @map("is_read")
-  meetingDate        DateTime         @map("meeting_date")
+  meetingDate        String           @map("meeting_date")
   meetingTime        String           @map("meeting_time") @db.VarChar(10)
   location           String           @db.VarChar(255)
   status             String           @default("Oczekuje na odpowiedź") @db.VarChar(60)
