@@ -99,11 +99,30 @@ function Messages() {
     fetchUserChats();
   }, [user?.id]);
 
-
+  function formatMessageTime(dateString) {
+    if (!dateString) return "";
+    
+    const messageDate = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now - messageDate;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+    
+    if (diffInHours < 24) {
+      // Dzisiaj - pokaż godzinę
+      return messageDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+    } else if (diffInDays < 2) {
+      return "Wczoraj";
+    } else if (diffInDays < 7) {
+      return `${Math.floor(diffInDays)} dni temu`;
+    } else {
+      return messageDate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' });
+    }
+  }
   
   return (
     
-    <div className="relative">
+    <div className="relative overflow-hidden">
     <div className={`${isPrizeProposalFormOpen || isMeetingProposalFormOpen ? 'brightness-50' : ''}`}>
       <Header />
       <div className='bg-gray-50 border-gray-200 flex px-16 '>
@@ -115,7 +134,37 @@ function Messages() {
             <div className="w-full mt-2">
                 <hr className="border-t-1 border-gray-200" />
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 overflow-y-auto h-[75vh]">
+                {userChats.map((chat) => {
+                  const lastMessage = chat.messages && chat.messages.length > 0 ? chat.messages[chat.messages.length - 1] : null;
+                  const messageTime = lastMessage ? formatMessageTime(lastMessage.createdAt) : "";
+                  const messageContent = lastMessage ? lastMessage.content : "Brak wiadomości";
+                  
+                  return (
+                  <div key={chat.id} onClick={() => { 
+                    setSelectedConversation('true'); 
+                    setConversationData({
+                      time: messageTime, 
+                      profileImage: "https://randomuser.me/api/portraits/men/7.jpg",
+                      name: chat.sellerId === user.id ? chat.buyer.name : chat.seller.name,
+                      carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg",
+                      carName: chat.offer.brand + " " + chat.offer.model,
+                      lastMessage: messageContent
+                    })
+                  }}>
+                    <MessagesCard props={{
+                        time: messageTime,
+                        isNewMessage: lastMessage ? !lastMessage.isRead && lastMessage.senderId !== user.id : false,
+                        profileImage: "https://randomuser.me/api/portraits/men/75.jpg",   
+                        name: chat.sellerId === user.id ? chat.buyer.name : chat.seller.name,
+                        carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg", 
+                        carName: chat.offer.brand + " " + chat.offer.model,
+                        lastMessage: messageContent
+                    }} />
+                  </div>
+                  );
+                })}
+                {/* Placeholder conversations */}
                 <div onClick={() => { setSelectedConversation('true'); setConversationData({time: "12:45", profileImage: "https://randomuser.me/api/portraits/men/75.jpg",name: "Jan Kowalski",carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg",carName: "Toyota Corolla",lastMessage: "Dzień dobry, czy oferta jest nadal aktualna?"})}}>
                     <MessagesCard props={{
                         time: "12:45",
@@ -127,6 +176,7 @@ function Messages() {
                         lastMessage: "Dzień dobry, czy oferta jest nadal aktualna?"
                     }} />
                 </div>
+              <div onClick={() => { setSelectedConversation('true'); setConversationData({time: "12:45", profileImage: "https://randomuser.me/api/portraits/men/75.jpg",name: "Jan Kowalski",carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg",carName: "Toyota Corolla",lastMessage: "Dzień dobry, czy oferta jest nadal aktualna?"})}}>
                 <MessagesCard props={{
                     time: "09:30",
                     isNewMessage: false,
@@ -136,15 +186,18 @@ function Messages() {
                     carName: "Toyota Corolla",
                     lastMessage: "Dziękuję za szybką odpowiedź!"
                 }} />
-                <MessagesCard props={{
-                    time: "Wczoraj",
-                    isNewMessage: true,
-                    profileImage: "https://randomuser.me/api/portraits/men/45.jpg",
-                    name: "Piotr Wiśniewski",
-                    carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg",
-                    carName: "Toyota Corolla",
-                    lastMessage: "Czy mogę umówić się na jazdę próbną?"
-                }} />
+                </div>
+                <div onClick={() => { setSelectedConversation('true'); setConversationData({time: "12:45", profileImage: "https://randomuser.me/api/portraits/men/75.jpg",name: "Jan Kowalski",carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg",carName: "Toyota Corolla",lastMessage: "Dzień dobry, czy oferta jest nadal aktualna?"})}}>
+                  <MessagesCard props={{
+                      time: "Wczoraj",
+                      isNewMessage: true,
+                      profileImage: "https://randomuser.me/api/portraits/men/45.jpg",
+                      name: "Piotr Wiśniewski",
+                      carImage: "https://cdn.motor1.com/images/mgl/0AN2V/s1/2020-toyota-corolla-hatchback.jpg",
+                      carName: "Toyota Corolla",
+                      lastMessage: "Czy mogę umówić się na jazdę próbną?"
+                  }} />
+                  </div>
             </div>
 
         </div>

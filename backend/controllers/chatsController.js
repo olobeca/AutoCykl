@@ -73,6 +73,9 @@ exports.GetChatsByUserId = async (req, res) => {
         messages: true,
         pricePropostions: true,
         meetingPropostions: true,
+        seller: true,
+        buyer: true,
+        offer: true,
       },
     });
     return res.status(200).json({ chats });
