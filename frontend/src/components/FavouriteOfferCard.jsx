@@ -15,6 +15,23 @@ function FavouriteOfferCard({props}) {
     navigate(`/offerDetails/${id}`);
   }
 
+  async function handleRemoveFavourite() {
+    try {
+      const response = await fetch(`http://localhost:5001/offers/unlikeOffer`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ offerId: id, userId: props.userId }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to remove favourite");
+      }
+      console.log("Successfully removed favourite for offer ID:", id);
+    } catch (error) {
+      console.error("Error removing favourite:", error);
+    }
+  }
+
 
   return ( 
     <div className='rounded-md shadow-md hover:shadow-xl flex flex-col gap-4 p-4 bg-white overflow-hidden'>

@@ -7,7 +7,7 @@ router.get("/getAll", offersController.GetAllOffers);
 router.get("/getOfferById/:id", offersController.GetOfferById);
 router.get(
   "/getLikedOffersByUser/:userId",
-  offersController.GetLikedOffersByUser
+  offersController.GetLikedOffersByUser,
 );
 router.get("/getTopOffers", offersController.GetTopOffers);
 router.get("/getSamochodyOsobowew", offersController.GetSamochodyOsobowe);
@@ -17,10 +17,13 @@ router.get("/getMaszynyRolnicze", offersController.GetMaszynyRolnicze);
 
 router.get(
   "/isOfferLiked/:offerId/:userId",
-  offersController.isOfferLikedByUser
+  offersController.isOfferLikedByUser,
 );
 
 router.get("/getOffersByParams", offersController.GetOffersByParams);
 router.post("/getOffersByFilters", offersController.GetOffersByFilters);
+
+router("/likeOffer", offersController.LikeOffer);
+router("/unlikeOffer", offersController.UnlikeOffer);
 
 module.exports = router;

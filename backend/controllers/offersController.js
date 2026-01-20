@@ -385,3 +385,53 @@ exports.GetOffersByParams = async (req, res) => {
       .json({ message: "Error retrieving offers", error: error.message });
   }
 };
+
+exports.LikeOffer = async (req, res) => {
+  console.log("Try to like offer:", req.body);
+  try {
+    const { userId, offerId } = req.body;
+    if (!userId || !offerId) {
+      return res
+        .status(422)
+        .json({ message: "Missing userId or offerId in request body" });
+    }
+    const newLike = await prisma.like.create({
+      data: {
+        userId: userId,
+        offerId: offerId,
+      },
+    });
+    return res.status(201).json({ message: "Offer liked", like: newLike });
+  } catch (error) {
+    console.error("LikeOffer error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error liking offer", error: error.message });
+  }
+};
+
+exports.UnlikeOffer = async (req, res) => {
+  console.log("Try to unlike offer:", req.body);
+  try {
+    const { userId, offerId } = req.body;
+    if (!userId || !offerId) {
+      return res
+        .status(422)
+        .json({ message: "Missing userId or offerId in request body" });
+    }
+    const deletedLike = await prisma.like.delete({
+      where: {
+        userId: userId,
+        offerId: offerId,
+      },
+    });
+    return res
+      .status(200)
+      .json({ message: "Offer unliked", like: deletedLike });
+  } catch (error) {
+    console.error("UnlikeOffer error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error unliking offer", error: error.message });
+  }
+};

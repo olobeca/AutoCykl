@@ -80,7 +80,10 @@ function Favourites() {
                             mileage: "10 000 km",
                             fuelType: "Benzyna",
                             location: "Warszawa",
-                            isFeatured: true
+                            isFeatured: true,
+                            id: 1,
+                            userId: user.id
+                            
                         }} />
                         <FavouriteOfferCard props={{
                             image: hondacivic,
@@ -91,7 +94,8 @@ function Favourites() {
                             fuelType: "Diesel",
                             location: "Kraków",
                             isFeatured: false,
-                            id: 2
+                            id: 2,
+                            userId: user.id
                         }} />
                         <FavouriteOfferCard props={{
                             image: toyotacorolla,
@@ -102,7 +106,8 @@ function Favourites() {
                             fuelType: "Benzyna",
                             location: "Wrocław",
                             isFeatured: true,
-                            id: 1
+                            id: 1,
+                            userId: user.id
                         }} />
                         <FavouriteOfferCard props={{
                             image: volkswagengolf,
@@ -113,10 +118,11 @@ function Favourites() {
                             fuelType: "Diesel",
                             location: "Poznań",
                             isFeatured: false,
-                            id: 2
+                            id: 2,
+                            userId: user.id
                         }} />
                         {data.map((offer) => (<FavouriteOfferCard key={offer.id} props={{
-                            image: offer.imageUrl,
+                            image: volkswagengolf,
                             title: offer.title,
                             price: `${offer.price} zł`,
                             year: offer.year,
@@ -124,7 +130,8 @@ function Favourites() {
                             fuelType: offer.fuelType,
                             location: offer.location,
                             isFeatured: offer.isFeatured,
-                            id: offer.id
+                            id: offer.id,
+                            userId: user.id
                         }} />))}
 
                     </div>
