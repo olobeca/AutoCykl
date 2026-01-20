@@ -56,7 +56,7 @@ function FavouriteOfferCard({props}) {
         <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-16" onClick={handleDetails}>Zobacz Szczegóły</button>
         <div>
             <img src={trash} alt="usuń" className=' bg-gray-100 hover:bg-gray-200 p-2 h-10 w-10  rounded-md' />
-            <button className="hidden"></button> {/* tu dodam usuwanie */}
+            <button className="hidden" onClick={handleRemoveFavourite}></button> 
         </div>
       </div>
     </div>
