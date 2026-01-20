@@ -119,6 +119,58 @@ function Messages() {
       return messageDate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' });
     }
   }
+
+  async function sendPriceProposal() {
+    console.log("Sending price proposal:", priceProposal, prizeProposalMessage);
+        if (!priceProposal) {
+            console.error("Price proposal empty");
+            alert("Proszę wypełnić cene.");
+            return;
+        }
+        try {
+          const response = await fetch(`http://localhost:5001/chats/newPrizeProposal`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                  chatId: conversationData.id,
+                  proposerId: user.id,
+                  proposedPrize: parseFloat(priceProposal),
+                }),
+                });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("Price proposal sent successfully:", data);
+
+            if (prizeProposalMessage) {
+                const messageResponse = await fetch(`http://localhost:5001/chats/newMessage`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        chatId: conversationData.id,
+                        senderId: user.id,
+                        content: prizeProposalMessage,
+                    }),
+                });
+                if (!messageResponse.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const messageData = await messageResponse.json();
+                console.log("Accompanying message sent successfully:", messageData);
+            }
+            setPriceProposal("");
+            setPriceProposalMessage("");
+        } catch (error) {
+            console.error("Error fetching chats:", error);
+        }
+  }
+
+  async function sendMeetingProposal() {
+    // Implementacja wysyłania propozycji spotkania
+  }
   
   return (
     
@@ -235,8 +287,8 @@ function Messages() {
             <textarea className="w-full bg-gray-200 rounded-md text-gray-500 p-2 text-sm mb-2" placeholder="Dodaj wiadomość..." value={prizeProposalMessage} onChange={handlePrizeProposalMessageChange}></textarea>
         </div>
         <div className="flex justify-end gap-2">
-            <button onClick={() => setIsPrizeProposalFormOpen(false)} className="bg-white border text-base border-gray-300 rounded-md text-gray-700 px-3 py-2">Anuluj</button>
-            <button onClick={() => setIsPrizeProposalFormOpen(false)} className="bg-orange-600 text-base hover:bg-orange-500 rounded-md text-white px-3 py-2">Wyślij propozycję</button>
+            <button onClick={() => {setIsPrizeProposalFormOpen(false); setPriceProposal(""); setPriceProposalMessage("");}} className="bg-white border text-base border-gray-300 rounded-md text-gray-700 px-3 py-2">Anuluj</button>
+            <button onClick={() => { setIsPrizeProposalFormOpen(false); sendPriceProposal(); }} className="bg-orange-600 text-base hover:bg-orange-500 rounded-md text-white px-3 py-2">Wyślij propozycję</button>
         </div>
     </div>
     <div className={`${isMeetingProposalFormOpen ? '' : 'hidden'}  bg-white top-1/4 left-[40%] w-1/4  rounded-md fixed flex flex-col text-left justify-center p-6 gap-4`}>

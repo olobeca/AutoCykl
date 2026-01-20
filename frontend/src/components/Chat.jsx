@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 function Chat({props}) {
 
     const [message, setMessage] = useState("");
-    console.log("Chat props:", props);
     
     function handleMessageInputChange(event) {
         setMessage(event.target.value);

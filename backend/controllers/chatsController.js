@@ -173,7 +173,7 @@ exports.newPrizeProposal = async (req, res) => {
     const newProposal = await prisma.pricePropostion.create({
       data: {
         chatConversationId: parseInt(chatId),
-        proposerId: parseInt(proposerId),
+        senderId: parseInt(proposerId),
         price: parseFloat(proposedPrize),
       },
     });
