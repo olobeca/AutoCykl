@@ -60,6 +60,7 @@ function Chat({props}) {
     // Kombinowanie wszystkich wiadomości, propozycji i sortowanie po godzinie
     const allItems = [
         ...messagesList.map(msg => ({
+            id: msg.id,
             type: "message",
             fromMe: msg.senderId === props.senderId,
             text: msg.content,
@@ -67,6 +68,7 @@ function Chat({props}) {
             time: msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : '',
         })),
         ...meetingPropositionsList.map(meeting => ({
+            id: meeting.id,
             type: "meetingProposal",
             fromMe: meeting.senderId === props.senderId,
             date: meeting.meetingDate,
@@ -77,6 +79,7 @@ function Chat({props}) {
             time: meeting.createdAt ? new Date(meeting.createdAt).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : '',
         })),
         ...prizePropositionsList.map(prize => ({
+            id: prize.id,
             type: "priceProposal",
             fromMe: prize.senderId === props.senderId,
             proposedPrice: prize.price,
@@ -85,6 +88,47 @@ function Chat({props}) {
             time: prize.createdAt ? new Date(prize.createdAt).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : '',
         })),
     ].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+
+    async function changeMeetingStatus(newStatus,id) {
+        try {
+            const response = await fetch(`http://localhost:5001/chats/changeMeetingProposalStatus/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    newStatus: newStatus,
+                }),
+                });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("Meeting status changed successfully:", data);  
+        } catch (error) {
+            console.error("Error changing meeting status:", error);
+        }
+    }
+
+    async function changePriceStatus(newStatus,id) {
+        try {
+            const response = await fetch(`http://localhost:5001/chats/changePrizeProposalStatus/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    newStatus: newStatus,
+                }),
+                });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("Price status changed successfully:", data);  
+        } catch (error) {
+            console.error("Error changing price status:", error);
+        }
+    }
 
     return (
         <div className='flex flex-col h-screen'>
@@ -149,7 +193,13 @@ function Chat({props}) {
                                     <span className="text-base text-black">{item.place}</span>
                                 </div>
                                 <span className="text-sm text-gray-500  mt-1 text-left">Proponuję spotkanie</span>
-                                <span className={item.status === "Zaakceptowane" ? "bg-green-300 w-full text-green-600 p-1 text-xs text-center rounded-lg" : "bg-red-200 text-red-600 p-1 text-xs text-center rounded-lg"}>{item.status}</span>
+                                <div className={item.status === "Zaakceptowane" ? "bg-green-300 w-full text-green-600 p-1 text-xs text-center rounded-lg relative" : "bg-red-200 text-red-600 p-1 text-xs text-center rounded-lg relative"}>{item.status}
+                                    {item.fromMe ? null :
+                                    <div className="absolute top-0 left-0 w-full h-full rounded-lg opacity-0 hover:opacity-100 bg-orange-50 flex items-center justify-center gap-1">
+                                        <button className="bg-white text-xs text-green-600 px-2 py-1 w-full rounded-md border " onClick={() => changeMeetingStatus("Zaakceptowane", item.id)}>Zaakceptuj</button>
+                                        <button className="bg-white text-xs text-red-600 px-2 py-1 rounded-md w-full border" onClick={() => changeMeetingStatus("Odrzucone", item.id)}>Odrzuć</button>
+                                    </div> }
+                                </div>
                             </div>
                             <span className="text-xs text-gray-500  mt-1 text-right">{item.time}</span>
                         </div>
@@ -160,7 +210,14 @@ function Chat({props}) {
                                 <span className="text-sm text-gray-500  mt-1 text-left">Propozycja ceny</span>
                                 <span className="text-2xl text-black">{item.proposedPrice} zł</span>
                                 <span className="text-sm text-gray-500  mt-1 text-left">Moja propozycja</span>
-                                <span className={item.status === "Zaakceptowane" ? "bg-green-300 w-full text-green-600 p-1 text-xs text-center rounded-lg" : "bg-red-200 text-red-600 p-1 text-xs text-center rounded-lg"}>{item.status}</span>
+                                <div className={item.status === "Zaakceptowane" ? "bg-green-300 w-full text-green-600 p-1 text-xs text-center relative rounded-lg" : "bg-red-200 text-red-600 p-1 text-xs text-center relative rounded-lg"}>{item.status}
+                                    {item.fromMe ? null :
+                                    <div className="absolute top-0 left-0 w-full h-full rounded-lg opacity-0 hover:opacity-100 bg-orange-50 flex items-center justify-center gap-1">
+                                        <button className="bg-white text-xs text-green-600 px-2 py-1 w-full rounded-md border " onClick={() => changePriceStatus("Zaakceptowane", item.id)}>Zaakceptuj</button>
+                                        <button className="bg-white text-xs text-red-600 px-2 py-1 rounded-md w-full border" onClick={() => changePriceStatus("Odrzucone", item.id)}>Odrzuć</button>
+                                    </div>
+                                 }
+                                </div>
                             </div>
                             <span className="text-xs text-gray-500  mt-1 text-right">{item.time}</span>
                         </div>

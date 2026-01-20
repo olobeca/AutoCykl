@@ -227,3 +227,77 @@ exports.newMeetingProposal = async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 };
+
+exports.changePriceProposalStatus = async (req, res) => {
+  if (!prisma) {
+    console.error(
+      "Change price proposal status: Prisma client is not initialized",
+    );
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const proposalId = parseInt(req.params.proposalId);
+    const { newStatus } = req.body;
+
+    if (!proposalId || !newStatus) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: proposalId and newStatus are required",
+      });
+    }
+
+    const updatedProposal = await prisma.pricePropostion.update({
+      where: {
+        id: proposalId,
+      },
+      data: {
+        status: newStatus,
+      },
+    });
+    return res.status(200).json(updatedProposal);
+  } catch (error) {
+    console.error("Error updating price proposal status:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+exports.changeMeetingProposalStatus = async (req, res) => {
+  if (!prisma) {
+    console.error(
+      "Change meeting proposal status: Prisma client is not initialized",
+    );
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const proposalId = parseInt(req.params.proposalId);
+    const { newStatus } = req.body;
+
+    if (!proposalId || !newStatus) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: proposalId and newStatus are required",
+      });
+    }
+
+    const updatedProposal = await prisma.meetingPropostion.update({
+      where: {
+        id: proposalId,
+      },
+      data: {
+        status: newStatus,
+      },
+    });
+    return res.status(200).json(updatedProposal);
+  } catch (error) {
+    console.error("Error updating meeting proposal status:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};

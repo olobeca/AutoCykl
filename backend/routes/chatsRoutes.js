@@ -8,5 +8,12 @@ router.get("/getChatsByUserId/:userId", chatsController.GetChatsByUserId);
 router.post("/newMessage", chatsController.newMessage);
 router.post("/newPrizeProposal", chatsController.newPrizeProposal);
 router.post("/newMeetingProposal", chatsController.newMeetingProposal);
-
+router.post(
+  "/changePrizeProposalStatus/:proposalId",
+  chatsController.changePriceProposalStatus,
+);
+router.post(
+  "/changeMeetingProposalStatus/:proposalId",
+  chatsController.changeMeetingProposalStatus,
+);
 module.exports = router;

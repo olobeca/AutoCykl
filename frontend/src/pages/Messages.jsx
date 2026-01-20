@@ -109,7 +109,6 @@ function Messages() {
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     
     if (diffInHours < 24) {
-      // Dzisiaj - pokaż godzinę
       return messageDate.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
     } else if (diffInDays < 2) {
       return "Wczoraj";
