@@ -169,7 +169,56 @@ function Messages() {
   }
 
   async function sendMeetingProposal() {
-    // Implementacja wysyłania propozycji spotkania
+    console.log("Sending meeting proposal:", meetingDate, meetingTime, meetingPlace, meetingProposalMessage);
+    if(!meetingDate || !meetingTime || !meetingPlace) {
+        console.error("Meeting proposal incomplete");
+        alert("Proszę wypełnić wszystkie pola dotyczące spotkania.");
+        return;
+    }
+    try {
+      const response = await fetch(`http://localhost:5001/chats/newMeetingProposal`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              chatId: conversationData.id,
+              proposerId: user.id,
+              proposedDate: meetingDate,
+              proposedTime: meetingTime,
+              proposedLocation: meetingPlace,
+            }),
+            });
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Meeting proposal sent successfully:", data);
+
+        if (meetingProposalMessage) {
+            const messageResponse = await fetch(`http://localhost:5001/chats/newMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    chatId: conversationData.id,
+                    senderId: user.id,
+                    content: meetingProposalMessage,
+                }),
+            });
+            if (!messageResponse.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const messageData = await messageResponse.json();
+            console.log("Accompanying message sent successfully:", messageData);
+        }
+        setMeetingDate("");
+        setMeetingTime("");
+        setMeetingPlace("");
+        setMeetingProposalMessage("");
+
+    } catch (error) {
+        console.error("Error sending meeting proposal:", error);
+    }
   }
   
   return (
@@ -314,8 +363,8 @@ function Messages() {
             <textarea className="w-full bg-gray-200 rounded-md text-gray-500 p-2 text-sm mb-2" placeholder="Dodaj wiadomość..." value={meetingProposalMessage} onChange={handleMeetingProposalMessageChange}></textarea>
         </div>
         <div className="flex justify-end gap-2">
-            <button onClick={() => setIsMeetingProposalFormOpen(false)} className="bg-white border text-base border-gray-300 rounded-md text-gray-700 px-3 py-2">Anuluj</button>
-            <button onClick={() => setIsMeetingProposalFormOpen(false)} className="bg-orange-600 text-base hover:bg-orange-500 rounded-md text-white px-3 py-2">Wyślij propozycję</button>
+            <button onClick={() => {setIsMeetingProposalFormOpen(false); setMeetingDate(""); setMeetingTime(""); setMeetingPlace(""); setMeetingProposalMessage("");}} className="bg-white border text-base border-gray-300 rounded-md text-gray-700 px-3 py-2">Anuluj</button>
+            <button onClick={() => {setIsMeetingProposalFormOpen(false); sendMeetingProposal();}} className="bg-orange-600 text-base hover:bg-orange-500 rounded-md text-white px-3 py-2">Wyślij propozycję</button>
         </div>
     </div>
     </div>
