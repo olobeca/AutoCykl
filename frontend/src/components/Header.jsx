@@ -2,12 +2,26 @@ import "../App.css";
 import { Link } from "react-router-dom";
 import Logo from "./Logo.jsx";
 import { useNavigate } from "react-router-dom";
-import {useContext} from "react";
+import { useContext, useState } from "react";
 import UserContext from "../context/UserContext.jsx";
 
 function Header() {
   const navigate = useNavigate();
-  const {user} = useContext(UserContext);
+  const { user, setUser, setToken } = useContext(UserContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function toggleMenu() {
+    setIsMenuOpen((prev) => !prev);
+  }
+
+  function handleLogout() {
+    setUser({});
+    setToken("");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    setIsMenuOpen(false);
+    navigate("/");
+  }
   return (
     <header className="sticky top-0 z-50  bg-white border-b border-gray-200">
       <div className=" flex items-center justify-between border-b bg-gray-50 border-gray-200">
@@ -20,7 +34,28 @@ function Header() {
           {user.name ? (
           <Link className="text-sm  text-gray-600 hover:text-gray-900" to="/sellerPanel">Panel Sprzedawcy</Link>
           ) : null}
-          {user.name ? <span className="text-sm  text-gray-600">Witaj {user.name}</span> : (
+          {user.name ? (
+            <div className="relative">
+              <button className="text-sm text-gray-600" onClick={toggleMenu}>Witaj {user.name}</button>
+              {isMenuOpen && (
+                <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg">
+                  <button
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    onClick={() => { setIsMenuOpen(false); navigate("/messages"); }}
+                  >
+                     Wiadomości
+                  </button>
+                  <div className="border-t border-gray-200" />
+                  <button
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    onClick={handleLogout}
+                  >
+                    Wyloguj
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
           <Link className="text-sm  text-gray-600 hover:text-gray-900" to="/login">Zaloguj się</Link>
           )}
         </div>
