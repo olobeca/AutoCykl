@@ -23,7 +23,7 @@ router.get(
 router.get("/getOffersByParams", offersController.GetOffersByParams);
 router.post("/getOffersByFilters", offersController.GetOffersByFilters);
 
-router("/likeOffer", offersController.LikeOffer);
-router("/unlikeOffer", offersController.UnlikeOffer);
+router.post("/likeOffer", offersController.LikeOffer);
+router.post("/unlikeOffer", offersController.UnlikeOffer);
 
 module.exports = router;
