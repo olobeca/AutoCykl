@@ -3,18 +3,47 @@ import React, { useState } from 'react';
 function Chat({props}) {
 
     const [message, setMessage] = useState("");
+    console.log("Chat props:", props);
     
     function handleMessageInputChange(event) {
-    setMessage(event.target.value);
+        setMessage(event.target.value);
     }
-    function handleSendMessage() {
-        console.log("Wysłano wiadomość:", message);
+    async function handleSendMessage() {
+        console.log("probuje wyslac iadomosc do czatu o id:", props.id, "od uzytkownika:", props.senderId, "o tresci:", message);
+        if (!props.id || !props.senderId || !message.trim()) {
+            console.error("Brakuje chatId, senderId lub tresci - anulowano wysylke");
+            return;
+        }
+        try {
+            const response = await fetch(`http://localhost:5001/chats/newMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    chatId: props.id,
+                    senderId: props.senderId,
+                    content: message,
+                }),
+                });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("Message sent successfully:", data);
+        } catch (error) {
+            console.error("Error fetching chats:", error);
+        }
         setMessage("");
     }
+    const [messagesList, setMessagesList] = useState(props.messages || []);
+    const [meetingPropositionsList, setMeetingPropositionsList] = useState(props.meetingPropostions || []);
+    const [prizePropositionsList, setPrizePropositionsList] = useState(props.pricePropostions || []);
+
+    
 
     const messages = [
         {fromMe: false, text: "Dzień dobry, czy oferta jest nadal aktualna?", time: "12:45", type:"text"},
-        {fromMe: true, text: "Tak, oferta jest aktualna. Proszę o kontakt w celu umówienia się na oględziny.", time: "12:47", type:"text"},
+        {fromMe: true, text: "Tak, oferta jest ak tualna. Proszę o kontakt w celu umówienia się na oględziny.", time: "12:47", type:"text"},
         {fromMe: false, text: "Dziękuję za szybką odpowiedź! Kiedy moglibyśmy się spotkać?", time: "12:50", type:"text"},
         {fromMe: true, text: "Czy jutro o 15:00 pasuje?", time: "12:52", type:"text"},
         {fromMe: false, text: "Tak, jutro o 15:00 będzie idealnie. Do zobaczenia!", time: "12:55", type:"text"},

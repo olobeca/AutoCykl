@@ -137,7 +137,7 @@ exports.newMessage = async (req, res) => {
       });
     }
 
-    const newMessage = await prisma.chatMessage.create({
+    const newMessage = await prisma.message.create({
       data: {
         chatConversationId: parseInt(chatId),
         senderId: parseInt(senderId),
@@ -170,7 +170,7 @@ exports.newPrizeProposal = async (req, res) => {
       });
     }
 
-    const newProposal = await prisma.PricePropostion.create({
+    const newProposal = await prisma.pricePropostion.create({
       data: {
         chatConversationId: parseInt(chatId),
         proposerId: parseInt(proposerId),
@@ -210,7 +210,7 @@ exports.newMeetingProposal = async (req, res) => {
       });
     }
 
-    const newMeetingProposal = await prisma.MeetingPropostion.create({
+    const newMeetingProposal = await prisma.meetingPropostion.create({
       data: {
         chatConversationId: parseInt(chatId),
         senderId: parseInt(proposerId),
