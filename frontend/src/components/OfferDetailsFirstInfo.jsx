@@ -2,6 +2,24 @@ import CarDetailsCard from "./CarDetailsCard.jsx";
 
 
 function OfferDetailsFirstInfo({ props }) {
+
+    async function handleAddToFavourites() {
+        try {
+          const response = await fetch(`http://localhost:5001/offers/likeOffer`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ offerId: props.offerId, userId: props.userId }),
+          });
+          if (!response.ok) {
+            throw new Error("Failed to add to favourites");
+          }
+          console.log("Successfully added to favourites for offer ID:", props.offerId);
+        } catch (error) {
+          console.error("Error adding to favourites:", error);
+        }
+      }
+
     return (
         <div className="border border-gray-100 shadow-md rounded-lg p-4 m-4">
           <div className="flex flex-col gap-3">
@@ -12,7 +30,7 @@ function OfferDetailsFirstInfo({ props }) {
                   {props.isAccidentFree ? <span className='inline border border-orange-600  text-xs text-orange-600 p-1 h-7 rounded-xl'>Wyróżnione</span>: null}
               </div>
               <div className="flex gap-4 p-2">
-                <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3">Dodaj do ulubionych</button>
+                <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3" onClick={handleAddToFavourites}>Dodaj do ulubionych</button>
                 <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3">Udostępnij</button>
               </div>
             </div>
