@@ -301,3 +301,39 @@ exports.changeMeetingProposalStatus = async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 };
+
+exports.handleReadMessages = async (req, res) => {
+  if (!prisma) {
+    console.error("Handle read messages: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const chatId = parseInt(req.params.chatId);
+    const userId = parseInt(req.params.userId);
+
+    if (!chatId || !userId) {
+      return res.status(400).json({
+        message: "Missing required fields: chatId and userId are required",
+      });
+    }
+
+    const updatedMessages = await prisma.message.updateMany({
+      where: {
+        chatConversationId: chatId,
+        senderId: { not: userId },
+        read: false,
+      },
+      data: {
+        read: true,
+      },
+    });
+    return res.status(200).json(updatedMessages);
+  } catch (error) {
+    console.error("Error updating read messages:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};

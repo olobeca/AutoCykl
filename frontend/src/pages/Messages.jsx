@@ -220,6 +220,23 @@ function Messages() {
     }
   }
   
+  async function handleReadMessages(chatId, userId) {
+    try {
+      const response = await fetch(`http://localhost:5001/chats/handleReadMessages/${chatId}/${userId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        });
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Messages marked as read successfully:", data);
+    } catch (error) {
+        console.error("Error marking messages as read:", error);
+    }
+  }
+
   return (
     
     <div className="relative overflow-hidden">
@@ -258,6 +275,7 @@ function Messages() {
                       id: chat.id,
                       senderId: user.id
                     })
+                    handleReadMessages(chat.id, user.id);
                   }}>
                     <MessagesCard props={{ 
                         time: messageTime,

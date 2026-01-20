@@ -16,4 +16,10 @@ router.post(
   "/changeMeetingProposalStatus/:proposalId",
   chatsController.changeMeetingProposalStatus,
 );
+
+router.post(
+  "/handleReadMessages/:chatId/:userId",
+  chatsController.handleReadMessages,
+);
+
 module.exports = router;
