@@ -435,3 +435,26 @@ exports.UnlikeOffer = async (req, res) => {
       .json({ message: "Error unliking offer", error: error.message });
   }
 };
+
+exports.AddViewToOffer = async (req, res) => {
+  console.log("Try to add view to offer ID:", req.params.offerId);
+  try {
+    const offerId = parseInt(req.params.offerId);
+    const updatedOffer = await prisma.offer.update({
+      where: { id: offerId },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+    return res
+      .status(200)
+      .json({ message: "View added to offer", offer: updatedOffer });
+  } catch (error) {
+    console.error("AddViewToOffer error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error adding view to offer", error: error.message });
+  }
+};

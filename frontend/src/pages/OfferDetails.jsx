@@ -21,6 +21,10 @@ function OfferDetails() {
   const {user} = useContext(UserContext);
 
   async function fetchOfferDetails(offerId) {
+    if(!offerId) {
+      console.error("No offer ID provided to fetchOfferDetails");
+      return;
+    }
     try {
       const response = await fetch(`http://localhost:5001/offers/getOfferById/${offerId}`, {
         method: "GET",
@@ -33,9 +37,17 @@ function OfferDetails() {
       const data = await response.json();
       setCardata(data.offer);
       console.log("Fetched offer details:", data);
+
     } catch (err) {
       console.error("Error fetching offer details:", err);
     }
+    //add view 
+      await fetch(`http://localhost:5001/offers/addView/${offerId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      console.log("Added view for offer ID:", offerId); 
   }
 
   useEffect(() => {

@@ -26,4 +26,6 @@ router.post("/getOffersByFilters", offersController.GetOffersByFilters);
 router.post("/likeOffer", offersController.LikeOffer);
 router.post("/unlikeOffer", offersController.UnlikeOffer);
 
+router.post("/addView/:offerId", offersController.AddViewToOffer);
+
 module.exports = router;
