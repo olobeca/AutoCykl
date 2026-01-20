@@ -38,7 +38,7 @@ function Header() {
             <div className="relative">
               <button className="text-sm text-gray-600" onClick={toggleMenu}>Witaj {user.name}</button>
               {isMenuOpen && (
-                <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg">
+                <div className="absolute right-[-0.5rem] mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg">
                   <button
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                     onClick={() => { setIsMenuOpen(false); navigate("/messages"); }}
