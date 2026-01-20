@@ -92,6 +92,8 @@ model Offer {
   @@map("offers")
 }
 
+//usunac likes i messageCount bo to nie ma sensuy!!!!!!!£! ale rano
+
 model CarServiceHistory {
   id      Int   @id @default(autoincrement())
   offerId Int   @map("offer_id")
