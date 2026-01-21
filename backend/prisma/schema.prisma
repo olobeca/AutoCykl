@@ -82,12 +82,13 @@ model Offer {
   offerType           String              @default("Standardowe") @db.Text
   createdAt           DateTime            @default(now()) @map("created_at")
   updatedAt           DateTime            @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
-  views               Int                 @default(0)
+  // views               Int                 @default(0)
   // likes               Int                 @default(0)
   // messageCount        Int                 @default(0) @map("message_count")
   carServiceHistories CarServiceHistory[]
   chatConversations   ChatConversation[]
   likedBy             Like[]
+  views               View[]
 
   @@map("offers")
 }
@@ -170,4 +171,13 @@ model Like {
   offer   Offer @relation(fields: [offerId], references: [id])
 
   @@map("likes")
+}
+
+model View {
+  id       Int      @id @default(autoincrement())
+  offerId  Int      @map("offer_id")
+  offer    Offer    @relation(fields: [offerId], references: [id])
+  viewDate DateTime @default(now()) @map("view_date")
+
+  @@map("views")
 }

@@ -440,12 +440,9 @@ exports.AddViewToOffer = async (req, res) => {
   console.log("Try to add view to offer ID:", req.params.offerId);
   try {
     const offerId = parseInt(req.params.offerId);
-    const updatedOffer = await prisma.offer.update({
-      where: { id: offerId },
+    const updatedOffer = await prisma.view.create({
       data: {
-        views: {
-          increment: 1,
-        },
+        offerId: offerId,
       },
     });
     return res
