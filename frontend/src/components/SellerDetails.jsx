@@ -1,9 +1,12 @@
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 import {toast} from 'react-toastify';
 
 function SellerDetails({props}) {
 
     const navigate = useNavigate();
+    const [isPhoneNumberVisible, setIsPhoneNumberVisible] = useState(false);
+
     async function handleContactSeller() {
         if(!props.buyerId) {
             toast.warning("Zaloguj się, aby wysłać wiadomość.");
@@ -58,7 +61,7 @@ function SellerDetails({props}) {
 
                 </div>
                 <div className="flex justify-between gap-6 ">
-                    <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3 w-full">Pokaż numer telefonu</button>
+                    <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3 w-full" onClick={() => setIsPhoneNumberVisible(!isPhoneNumberVisible)}>{isPhoneNumberVisible ? props?.phoneNumber : "Pokaż numer telefonu"}</button>
                     <button className="bg-white hover:bg-gray-200 transition-colors rounded-md text-sm font-medium text-gray-700 py-2 px-3 border-gray-300 w-full">Wyślij e-mail</button>
                     <button className="bg-white hover:bg-gray-200 transition-colors rounded-md text-sm font-medium text-gray-700 py-2 px-3 border-gray-300 w-full" onClick={handleContactSeller}>Wyślij wiadomość</button>
                 </div>
