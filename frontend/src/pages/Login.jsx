@@ -9,6 +9,8 @@ import phone from "../icons/phone.svg";
 import UserContext from "../context/UserContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 function Login() {
@@ -47,19 +49,24 @@ function Login() {
     .then((data) => { 
         if (data.error) {
             if (data.error === "Invalid credentials") {
-                alert("Nieprawidłowy email lub hasło. Spróbuj ponownie.");
+                // alert("Nieprawidłowy email lub hasło. Spróbuj ponownie.");
+                toast.error("Nieprawidłowy email lub hasło. Spróbuj ponownie.");
             } else {
                 if (data.error === "Email or password cannot be empty") {
-                    alert("Nie podano danych. Wypełnij formularz i spróbuj ponownie.");
+                    // alert("Nie podano danych. Wypełnij formularz i spróbuj ponownie.");
+                    toast.error("Nie podano danych. Wypełnij formularz i spróbuj ponownie.");
                 } else {
-                    alert(`Błąd podczas logowania: ${data.message}`);
+                    // alert(`Błąd podczas logowania: ${data.message}`);
+                    toast.error(`Błąd podczas logowania: ${data.message}`);
+
                 }
             }
             return;
         }
         console.log("Success:", data);
         setUser(data.user);
-        alert(`Zalogowano pomyślnie jako ${data.user.name}`);
+        // alert(`Zalogowano pomyślnie jako ${data.user.name}`);
+        toast.success(`Zalogowano pomyślnie jako ${data.user.name}`);
         console.log("User data:", user);
         setToken(data.accessToken);
         // Przechowaj token w localStorage, żeby trwał po reloadu
@@ -87,11 +94,13 @@ function Login() {
 
   function handleRegisterSubmit() {
     if (userRegister.password !== userRegister.confirmPassword) {
-        alert("Hasła nie są takie same! Wpisz hasła ponownie");
+        // alert("Hasła nie są takie same! Wpisz hasła ponownie");
+        toast.error("Hasła nie są takie same! Wpisz hasła ponownie");
         return;
     }
     if (!isRegulAccepted) {
-        alert("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
+        // alert("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
+        toast.error("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
         return;
     }
     fetch("http://localhost:5001/register", {
@@ -121,7 +130,8 @@ function Login() {
         }
         console.log("Success:", data);
         setUser(data.user);
-        alert(`Zarejestrowano pomyślnie jako ${userRegister.name}`);
+        // alert(`Zarejestrowano pomyślnie jako ${userRegister.name}`);
+        toast.success(`Zarejestrowano pomyślnie jako ${userRegister.name}`);
         // Przechowaj token w localStorage
         if (data.accessToken) {
             localStorage.setItem("accessToken", data.accessToken);

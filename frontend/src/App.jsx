@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useTokenRefresher } from "./tokenRefreshing.jsx";
 import ScrollToTop from "./functions/ScrollToTop.jsx";
 import ProtectedRoutes from "./protectedRoutes.jsx";
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
   const [user,setUser] = useState({});
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer />
     <ScrollToTop />
     <UserContext.Provider value={{
       user:user, 
