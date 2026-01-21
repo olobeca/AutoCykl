@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import {useState} from 'react';
 import SellerPannelReview from '../components/SellerPannelReview';
@@ -6,10 +6,38 @@ import hondacivic from '../hondacivic.jpg';
 import toyotacorolla from '../toyotacorolla.jpg';
 import volkswagengolf from '../wolkswagengolf.jpg';
 import SellerPannelMyOffers from '../components/SellerPannelMyOffers';
+import {useContext} from   "react"
+import UserContext from "../context/UserContext.jsx";
 
 function SellerPannel() {
 
     const [step, setStep] = useState('Przegląd');
+    const {user} = useContext(UserContext);
+
+   async function fetchUserOffers(user2) {
+        if(!user2.id) {
+            return;
+        }
+        try {
+            const response = await fetch(`http://localhost:5001/offers/getAllUserOffers/${user2.id}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("Fetched user offers:", data);
+        } catch (err) {
+            console.error("Error fetching user offers:", err);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserOffers(user);
+    }, [user]);
+
 
     return (
         <div className="h-full bg-gray-100">

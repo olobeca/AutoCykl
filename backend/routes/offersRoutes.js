@@ -28,4 +28,5 @@ router.post("/unlikeOffer", offersController.UnlikeOffer);
 
 router.post("/addView/:offerId", offersController.AddViewToOffer);
 
+router.get("/getAllUserOffers/:userId", offersController.GetAllUserOffers);
 module.exports = router;

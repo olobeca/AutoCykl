@@ -455,3 +455,22 @@ exports.AddViewToOffer = async (req, res) => {
       .json({ message: "Error adding view to offer", error: error.message });
   }
 };
+
+exports.GetAllUserOffers = async (req, res) => {
+  console.log("Try to get all offers for user ID:", req.params.userId);
+  try {
+    const userId = parseInt(req.params.userId);
+    const userOffers = await prisma.offer.findMany({
+      where: { ownerId: userId },
+    });
+    return res.status(200).json({ offers: userOffers });
+  } catch (error) {
+    console.error("GetAllUserOffers error:", error);
+    return res
+      .status(500)
+      .json({
+        message: "Error retrieving user's offers",
+        error: error.message,
+      });
+  }
+};
