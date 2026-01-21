@@ -26,8 +26,8 @@ function OfferDetailsFirstInfo({ props }) {
             <div className="justify-between flex">
               <div className="flex gap-4 p-2">
                   <span className="text-lg text-gray-800">{props.title}</span>
-                  {props.isFeatured ? <span className='inline  text-green-600 border border-green-600   h-7 text-xs p-1 rounded-xl'>Bezwypadkowy</span> : null}
-                  {props.isAccidentFree ? <span className='inline border border-orange-600  text-xs text-orange-600 p-1 h-7 rounded-xl'>Wyróżnione</span>: null}
+                  {props.isAccidentFree ? <span className='inline  text-green-600 border border-green-600   h-7 text-xs p-1 rounded-xl'>Bezwypadkowy</span> : null}
+                  {props.isFeatured ? <span className='inline border border-orange-600  text-xs text-orange-600 p-1 h-7 rounded-xl'>Wyróżnione</span>: null}
               </div>
               <div className="flex gap-4 p-2">
                 <button className="bg-orange-600 hover:bg-orange-800 transition-colors rounded-md text-sm font-medium text-white py-2 px-3" onClick={handleAddToFavourites}>Dodaj do ulubionych</button>

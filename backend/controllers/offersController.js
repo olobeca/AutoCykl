@@ -127,6 +127,7 @@ exports.GetOfferById = async (req, res) => {
   try {
     const offer = await prisma.offer.findUnique({
       where: { id: parseInt(req.params.id) },
+      include: { views: true, likedBy: true, chatConversations: true },
     });
     if (!offer) {
       return res.status(404).json({ message: "Offer not found" });

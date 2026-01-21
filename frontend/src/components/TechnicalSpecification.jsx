@@ -1,7 +1,30 @@
 import TechnicalSpecificationLine from "./TechnicalSpecificationLine";
 
-function TechnicalSpecification() {
-  const specs = [
+function TechnicalSpecification({props}) {
+  const specs = props ? [
+    { label: "Marka", value: props.brand || "N/A" },
+    { label: "Model", value: props.model || "N/A" },
+    { label: "Wersja", value: props.version || "N/A" },
+
+    { label: "Rok produkcji", value: props.year || "N/A" },
+    { label: "Przebieg", value: props.mileage ? `${props.mileage} km` : "N/A" },
+    { label: "Pojemność silnika", value: props.engineCapacity ? `${props.engineCapacity} cm³` : "N/A" },
+
+    { label: "Moc", value: props.power ? `${props.power} KM` : "N/A" },
+    { label: "Moment obrotowy", value: props.torque ? `${props.torque} Nm` : "N/A" },
+    { label: "Rodzaj paliwa", value: props.fuelType || "N/A" },
+
+    { label: "Skrzynia biegów", value: props.transmission || "N/A" },
+    { label: "Napęd", value: "4x4 (xDrive)" },
+    { label: "Typ nadwozia", value: props.bodyType || "N/A" },
+
+    { label: "Liczba drzwi", value: props.doors || "N/A" },
+    { label: "Liczba miejsc", value: props.seats || "N/A" },
+    { label: "Kolor", value: props.color || "N/A" },
+
+    { label: "Kolor wnętrza", value: props.interiorColor || "N/A" },
+    { label: "VIN", value: props.vin || "N/A" },
+  ] : [
     { label: "Marka", value: "BMW" },
     { label: "Model", value: "Seria 5" },
     { label: "Wersja", value: "520d xDrive M Sport" },
