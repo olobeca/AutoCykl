@@ -1,15 +1,16 @@
 import {useNavigate} from "react-router-dom";
+import {toast} from 'react-toastify';
 
 function SellerDetails({props}) {
 
     const navigate = useNavigate();
     async function handleContactSeller() {
         if(!props.buyerId) {
-            alert("Zaloguj się, aby wysłać wiadomość.");
+            toast.warning("Zaloguj się, aby wysłać wiadomość.");
             return;
         }
         if(props.buyerId === props.sellerId) {
-            alert("Nie możesz wysłać wiadomości do samego siebie.");
+            toast.warning("Nie możesz wysłać wiadomości do samego siebie.");
             return;
         }
         try {

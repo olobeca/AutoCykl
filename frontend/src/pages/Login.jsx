@@ -120,11 +120,11 @@ function Login() {
     .then((data) => { 
         if (data.error) {
             if (data.error === "User with this name already exists") {
-                alert(`Użytkownik o nazwie ${userRegister.name} już istnieje. Wybierz inną nazwę.`);
+                toast.error(`Użytkownik o nazwie ${userRegister.name} już istnieje. Wybierz inną nazwę.`);
             } else if (data.error === "User with this email already exists") {
-                alert(`Użytkownik o emailu ${userRegister.email} już istnieje. Użyj innego emaila.`);
+                toast.error(`Użytkownik o emailu ${userRegister.email} już istnieje. Użyj innego emaila.`);
             } else {
-                alert(`Błąd podczas rejestracji: ${data.message}`);
+                toast.error(`Błąd podczas rejestracji: ${data.message}`);
             }
             return;
         }

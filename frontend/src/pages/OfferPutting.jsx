@@ -12,6 +12,7 @@ import {useState , useEffect} from "react";
 import {useContext} from   "react"
 import UserContext from "../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 function OfferPutting() {
@@ -122,15 +123,15 @@ function OfferPutting() {
         .then((data) => {
             if (data.error) {
                 if (data.error === "No data") {
-                    alert("Serwer nie otrzymal zadnych danych");
+                    toast.error("Serwer nie otrzymał żadnych danych");
                 } else if (data.error === "Incomplete data") {
-                    alert("Nie wypełniłeś całego formularza.");
+                    toast.error("Nie wypełniłeś całego formularza.");
                 } else {
-                    alert(`Błąd: ${data.message}`);
+                    toast.error(`Błąd: ${data.message}`);
                 }
                 return;
             }
-            alert("Ogłoszenie zostało pomyślnie opublikowane.");
+            toast.success("Ogłoszenie zostało pomyślnie opublikowane.");
             navigate("/");
             setOffer({
                 brand : "",

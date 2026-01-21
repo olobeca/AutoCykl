@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import {useContext} from   "react"
 import UserContext from "../context/UserContext.jsx";
 import io from 'socket.io-client';
+import { toast } from 'react-toastify';
 
 
 
@@ -127,7 +128,7 @@ function Messages() {
     console.log("Sending price proposal:", priceProposal, prizeProposalMessage);
         if (!priceProposal) {
             console.error("Price proposal empty");
-            alert("Proszę wypełnić cene.");
+            toast.warning("Proszę wypełnić cene.");
             return;
         }
         try {
@@ -175,7 +176,7 @@ function Messages() {
     console.log("Sending meeting proposal:", meetingDate, meetingTime, meetingPlace, meetingProposalMessage);
     if(!meetingDate || !meetingTime || !meetingPlace) {
         console.error("Meeting proposal incomplete");
-        alert("Proszę wypełnić wszystkie pola dotyczące spotkania.");
+        toast.warning("Proszę wypełnić wszystkie pola dotyczące spotkania.");
         return;
     }
     try {
