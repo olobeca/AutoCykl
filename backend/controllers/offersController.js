@@ -474,3 +474,21 @@ exports.GetAllUserOffers = async (req, res) => {
     });
   }
 };
+
+exports.GetSimilarOffers = async (req, res) => {
+  console.log("Try to get similar offers for car type:", req.params.carType);
+  try {
+    const carType = req.params.carType;
+    const similarOffers = await prisma.offer.findMany({
+      where: { Cartype: carType },
+      take: 3,
+    });
+    return res.status(200).json({ offers: similarOffers });
+  } catch (error) {
+    console.error("GetSimilarOffers error:", error);
+    return res.status(500).json({
+      message: "Error retrieving similar offers",
+      error: error.message,
+    });
+  }
+};

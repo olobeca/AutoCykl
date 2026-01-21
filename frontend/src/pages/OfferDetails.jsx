@@ -112,7 +112,7 @@ function OfferDetails() {
           'Podgrzewana kierownica',
           'Keyless entry',
         'Bluetooth i Apple CarPlay']} />
-        <SimilarOffers />
+        <SimilarOffers props={{carType: cardata?.carType || 'Samochody osobowe'}} />
       </div>
       <Footer />
     </div>
