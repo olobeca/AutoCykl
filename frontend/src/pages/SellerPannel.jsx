@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import Header from '../components/Header';
 import {useState} from 'react';
 import SellerPannelReview from '../components/SellerPannelReview';
@@ -13,6 +13,7 @@ function SellerPannel() {
 
     const [step, setStep] = useState('Przegląd');
     const {user} = useContext(UserContext);
+    const [userData, setUserData] = useState(null);
 
    async function fetchUserOffers(user2) {
         if(!user2.id) {
@@ -28,6 +29,7 @@ function SellerPannel() {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
+            setUserData(data.offers);
             console.log("Fetched user offers:", data);
         } catch (err) {
             console.error("Error fetching user offers:", err);
@@ -37,6 +39,23 @@ function SellerPannel() {
     useEffect(() => {
         fetchUserOffers(user);
     }, [user]);
+
+
+    const [weekDayViews, setWeekDayViews] = useState({
+        Monday: 0,
+        Thuesday: 0,
+        Wednesday: 0,
+        Thursday: 0,
+        Friday: 0,
+        Saturday: 0,
+        Sunday: 0,
+    });
+    // useEffect(() => {
+    //     userData.views.forEach(offer => {
+    //         const date = getDayOfWeek(new Date(offer.viewDate));
+    //     });
+    
+    // },[userData]);
 
 
     return (

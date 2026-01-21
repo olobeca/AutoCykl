@@ -462,15 +462,14 @@ exports.GetAllUserOffers = async (req, res) => {
     const userId = parseInt(req.params.userId);
     const userOffers = await prisma.offer.findMany({
       where: { ownerId: userId },
+      include: { views: true, likedBy: true, chatConversations: true },
     });
     return res.status(200).json({ offers: userOffers });
   } catch (error) {
     console.error("GetAllUserOffers error:", error);
-    return res
-      .status(500)
-      .json({
-        message: "Error retrieving user's offers",
-        error: error.message,
-      });
+    return res.status(500).json({
+      message: "Error retrieving user's offers",
+      error: error.message,
+    });
   }
 };
