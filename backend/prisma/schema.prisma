@@ -83,8 +83,8 @@ model Offer {
   createdAt           DateTime            @default(now()) @map("created_at")
   updatedAt           DateTime            @updatedAt @map("updated_at") //to dziala tak ze prisma to aktualizuje automatycznie przy kazdej zmianie rekordu
   views               Int                 @default(0)
-  likes               Int                 @default(0)
-  messageCount        Int                 @default(0) @map("message_count")
+  // likes               Int                 @default(0)
+  // messageCount        Int                 @default(0) @map("message_count")
   carServiceHistories CarServiceHistory[]
   chatConversations   ChatConversation[]
   likedBy             Like[]
