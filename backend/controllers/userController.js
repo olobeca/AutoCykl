@@ -87,14 +87,14 @@ exports.LoginUser = async (req, res) => {
       process.env.JWT_ACCESS_SECRET,
       {
         expiresIn: "1h",
-      }
+      },
     );
     const refreshToken = jwt.sign(
       { userId: user.id },
       process.env.JWT_REFRESH_SECRET,
       {
         expiresIn: "7d",
-      }
+      },
     );
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -147,3 +147,36 @@ exports.LoginUser = async (req, res) => {
 //     return res.status(500).json({ error: error.message });
 //   }
 // };
+
+exports.GetUserProfile = async (req, res) => {
+  if (!prisma) {
+    console.error("GetUserProfile: Prisma client is not initialized");
+    return res
+      .status(500)
+      .json({ message: "Prisma client not initialized on server" });
+  }
+  try {
+    const userId = parseInt(req.params.userId);
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ message: "Missing required field: userId" });
+    }
+    const userProfile = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!userProfile) {
+      return res
+        .status(404)
+        .json({ message: `User with ID ${userId} not found` });
+    }
+    return res.status(200).json({ userProfile });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};

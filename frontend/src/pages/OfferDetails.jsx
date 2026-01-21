@@ -29,13 +29,12 @@ function OfferDetails() {
       const response = await fetch(`http://localhost:5001/offers/getOfferById/${offerId}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      setCardata(data.offer);
+      setCardata(data.offer);      
       console.log("Fetched offer details:", data);
 
     } catch (err) {
@@ -45,7 +44,6 @@ function OfferDetails() {
       await fetch(`http://localhost:5001/offers/addView/${offerId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
       });
       console.log("Added view for offer ID:", offerId); 
   }
@@ -54,6 +52,35 @@ function OfferDetails() {
     fetchOfferDetails(id);
   }, [id]);  
 
+  const [sellerData, setSellerData] = useState(null);
+
+ //zrobic usefedt do pobierania nazwy uzytwkinikwa znajac cardata.ownerId 
+  useEffect(() => {
+    async function fetchSellerData(id) {
+      if(!id) {
+        console.error("No seller ID provided to fetchSellerData");
+        return;
+      }
+      try {
+        const response = await fetch(`http://localhost:5001/profile/${id}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Fetched seller data:", data)
+        setSellerData(data.userProfile);
+      } catch (err) {
+        console.error("Error fetching seller data:", err);
+      }
+    }
+
+    if (cardata && cardata.ownerId) {
+      fetchSellerData(cardata.ownerId);
+    }
+  }, [cardata]);
 
 
   return (
@@ -61,8 +88,8 @@ function OfferDetails() {
       <Header />
       <div className='bg-gray-50 border-gray-200 flex flex-col gap-2 px-24  py-4'>
         <NavigationBar props={{home: 'Home',category: 'Category',searchResults: 'Search Results',offerTitle: cardata?.brand + " " + cardata?.model}} />
-        <OfferDetailsFirstInfo props={{title: cardata?.brand + " " + cardata?.model, isFeatured: cardata?.offerType && cardata?.offerType !== "standard", isAccidentFree: cardata?.isNoAccident, location: cardata?.location, views: cardata?.views || 120, dateAdded: cardata?.createdAt ? new Date(cardata.createdAt).toLocaleDateString('pl-PL') : '2023-03-15', price: cardata?.price ? `${cardata.price.toLocaleString('pl-PL')} zł` : '250 000 zł', year: cardata?.year, mileage: cardata?.mileage ? `${cardata.mileage} km` : '30 000 km', fuelType: cardata?.fuelType, transmission: cardata?.transmission, offerId: id, userId: user?.id}} />
-        <SellerDetails props={{sellerName: cardata?.seller?.name || 'Jan Kowalski', image: 'https://via.placeholder.com/150', imageTitle: 'Seller Logo', isVerified: true, activeSince: '2020-01-01', sellerId: cardata?.ownerId, buyerId: user?.id, offerId: id}} />
+        <OfferDetailsFirstInfo props={{title: cardata?.brand + " " + cardata?.model, isFeatured: cardata?.offerType && cardata?.offerType !== "standard", isAccidentFree: cardata?.isNoAccident, location: cardata?.location, views: cardata?.views?.length || 120, dateAdded: cardata?.createdAt ? new Date(cardata.createdAt).toLocaleDateString('pl-PL') : '2023-03-15', price: cardata?.price ? `${cardata.price.toLocaleString('pl-PL')} zł` : '250 000 zł', year: cardata?.year, mileage: cardata?.mileage ? `${cardata.mileage} km` : '30 000 km', fuelType: cardata?.fuelType, transmission: cardata?.transmission, offerId: id, userId: user?.id}} />
+        <SellerDetails props={{sellerName: sellerData?.name || 'Jan Kowalski', image: 'https://via.placeholder.com/150', imageTitle: 'Seller Logo', isVerified: true, activeSince: sellerData?.createdAt.slice(0, 10) || '2020-01-01', sellerId: cardata?.ownerId, buyerId: user?.id, offerId: id}} />
         <CarDescription props={{description: cardata?.description || 'Brak opisu', isNoAccident: cardata?.isNoAccident, isDealerServicedOnly: true, warrantyEndDate: cardata?.warranty || '2024-03-15', additionalInfo: cardata?.isNoAccident ? ['Pierwszy właściciel', 'Bezwypadkowy', 'Serwisowany w ASO'] : ['Serwisowany w ASO'], serviceHistory: [{date: '2023-01-01', mileage: cardata?.mileage, type: 'Przegląd'}, {date: '2022-01-01', mileage: cardata?.mileage, type: 'Wymiana oleju'}]}} />
         <TechnicalSpecification props={{brand: cardata?.brand, model: cardata?.model, version: cardata?.version, year: cardata?.year, mileage: cardata?.mileage, engineCapacity: cardata?.engineCapacity, power: cardata?.power, torque: cardata?.torque, fuelType: cardata?.fuelType, transmission: cardata?.transmission, bodyType: cardata?.bodyType, doors: cardata?.doors, seats: cardata?.seats, color: cardata?.color, interiorColor: cardata?.interiorColor, vin: cardata?.vin}} />
         <CarEquipment equipment={cardata?.equipment || ['System nawigacji GPS',
