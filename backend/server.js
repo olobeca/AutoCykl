@@ -37,9 +37,15 @@ app.use("/offers", offersRoutes);
 const chatsRoutes = require("./routes/chatsRoutes");
 app.use("/chats", chatsRoutes);
 
+// import http from "http";
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
 // Start serwera
 const PORT = 5001;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Serwer działa na http://localhost:${PORT}`);
 });
 
@@ -61,7 +67,7 @@ const { PrismaClient } = require("@prisma/client");
     await prisma.$connect();
     console.log(
       "Prisma connected, DATABASE_URL present:",
-      !!process.env.DATABASE_URL
+      !!process.env.DATABASE_URL,
     );
     await prisma.$disconnect();
   } catch (e) {
@@ -83,3 +89,25 @@ pingElastic()
   .catch((err) => {
     console.error("ElasticSearch ping failed:", err);
   });
+
+// websocket
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true, //stestoweac
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("New client connected:", socket.id);
+
+  socket.on("message", (msg) => {
+    io.emit("message", msg);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
+});

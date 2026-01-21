@@ -1,6 +1,6 @@
 import "../App.css";
 import Header from "../components/Header.jsx";
-import React from "react";
+import React, { use } from "react";
 import { useState } from "react";
 import MessagesCard from "../components/MessagesCard.jsx";
 import Chat from "../components/Chat.jsx";
@@ -8,9 +8,12 @@ import {useLocation} from "react-router-dom";
 import { useEffect } from "react";
 import {useContext} from   "react"
 import UserContext from "../context/UserContext.jsx";
+import io from 'socket.io-client';
+
 
 
 function Messages() {
+
   const [selectedConversation, setSelectedConversation] = useState(false);
   const [conversationData, setConversationData] = useState(null);
   const [userChats, setUserChats] = useState([]);
@@ -98,6 +101,7 @@ function Messages() {
     setIsLoadingChats(true);
     fetchUserChats();
   }, [user?.id]);
+
 
   function formatMessageTime(dateString) {
     if (!dateString) return "";

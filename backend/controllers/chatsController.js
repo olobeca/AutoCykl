@@ -323,10 +323,10 @@ exports.handleReadMessages = async (req, res) => {
       where: {
         chatConversationId: chatId,
         senderId: { not: userId },
-        read: false,
+        isRead: false,
       },
       data: {
-        read: true,
+        isRead: true,
       },
     });
     return res.status(200).json(updatedMessages);

@@ -1,6 +1,28 @@
 import React, { useState } from 'react';
+import io from 'socket.io-client';
+import { useEffect } from 'react';
 
 function Chat({props}) {
+
+    const socket = io('http://localhost:5001');
+
+
+    useEffect(() => {
+        const socket = io('http://localhost:5001');
+    
+        socket.on("message", (msg) => {
+          console.log("Received websocket message:", msg);
+          console.log("Current chat ID:", props.id);
+          if(props.id === msg.data.chatConversationId) {
+            setMessagesList((prevMessages) => [...prevMessages, msg.data]);
+            // console.log("Updated messages list with new message:", msg.data);
+          }
+        });
+    
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
 
     const [message, setMessage] = useState("");
     
@@ -29,6 +51,11 @@ function Chat({props}) {
             }
             const data = await response.json();
             console.log("Message sent successfully:", data);
+
+            // websocket emit
+            socket.emit("message", {
+                data
+            });
         } catch (error) {
             console.error("Error fetching chats:", error);
         }
