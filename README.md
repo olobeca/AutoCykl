@@ -203,7 +203,9 @@ docker-compose -f backend/docker-compose.yaml up
 
 Użytkownik sprzedawca wypełnia formularz z danymi pojazdu i wybiera pakiet publikacji. System tworzy record w bazie, indeksuje dane w Elasticsearch i wyświetla ofertę na platformie.
 
-![Strona główna](./docs/Screenshot%202026-01-22%20at%2009.15.44.png)
+![Strona główna](./docs/image.png)
+
+![Strona główna - statystyki](./docs/Screenshot%202026-01-22%20at%2009.15.44.png)
 
 ### Wyszukiwanie Ofert
 
