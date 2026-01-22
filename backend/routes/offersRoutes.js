@@ -31,4 +31,6 @@ router.post("/addView/:offerId", offersController.AddViewToOffer);
 router.get("/getAllUserOffers/:userId", offersController.GetAllUserOffers);
 
 router.get("/getSimilarOffers/:carType", offersController.GetSimilarOffers);
+
+router.get("/getFeaturedOffers", offersController.GetFeaturedOffers);
 module.exports = router;

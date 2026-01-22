@@ -191,7 +191,7 @@ exports.GetSamochodyOsobowe = async (req, res) => {
 exports.GetSamochodyDostawcze = async (req, res) => {
   console.log("Try to get Samochody Osobowe offers");
   try {
-    const osoboweOffers = await prisma.offer.findMany({
+    const dostawczeOffers = await prisma.offer.findMany({
       where: { Cartype: "Samochody dostawcze" },
     });
     return res.status(200).json({ dostawczeOffers });
@@ -488,6 +488,22 @@ exports.GetSimilarOffers = async (req, res) => {
     console.error("GetSimilarOffers error:", error);
     return res.status(500).json({
       message: "Error retrieving similar offers",
+      error: error.message,
+    });
+  }
+};
+
+exports.GetFeaturedOffers = async (req, res) => {
+  console.log("Try to get featured offers");
+  try {
+    const featuredOffers = await prisma.offer.findMany({
+      where: { offerType: { in: ["featured", "top"] } },
+    });
+    return res.status(200).json({ featuredOffers });
+  } catch (error) {
+    console.error("GetFeaturedOffers error:", error);
+    return res.status(500).json({
+      message: "Error retrieving featured offers",
       error: error.message,
     });
   }
