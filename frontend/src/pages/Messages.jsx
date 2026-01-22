@@ -81,7 +81,7 @@ function Messages() {
     async function fetchUserChats() {
       try {
         console.log("Fetching chats for user ID:", user.id);
-        const response = await fetch(`http://localhost:5001/chats/getChatsByUserId/${user.id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/getChatsByUserId/${user.id}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -132,7 +132,7 @@ function Messages() {
             return;
         }
         try {
-          const response = await fetch(`http://localhost:5001/chats/newPrizeProposal`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/newPrizeProposal`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -149,7 +149,7 @@ function Messages() {
             console.log("Price proposal sent successfully:", data);
 
             if (prizeProposalMessage) {
-                const messageResponse = await fetch(`http://localhost:5001/chats/newMessage`, {
+                const messageResponse = await fetch(`${process.env.REACT_APP_API_URL}/chats/newMessage`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include",
@@ -180,7 +180,7 @@ function Messages() {
         return;
     }
     try {
-      const response = await fetch(`http://localhost:5001/chats/newMeetingProposal`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/newMeetingProposal`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -227,7 +227,7 @@ function Messages() {
   
   async function handleReadMessages(chatId, userId) {
     try {
-      const response = await fetch(`http://localhost:5001/chats/handleReadMessages/${chatId}/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/handleReadMessages/${chatId}/${userId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

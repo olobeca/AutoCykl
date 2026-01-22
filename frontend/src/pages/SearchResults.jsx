@@ -20,7 +20,7 @@ function SearchResult() {
     // if there are filters, call backend endpoint to fetch filtered offers
     if (newFilters && Object.keys(newFilters).length > 0) {
       try {
-        fetch("http://localhost:5001/offers/getOffersByFilters", {
+        fetch(`${process.env.REACT_APP_API_URL}/offers/getOffersByFilters`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -58,7 +58,7 @@ function SearchResult() {
   ).toString();
 
   try {
-    fetch(`http://localhost:5001/offers/getOffersByParams?${qs}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/offers/getOffersByParams?${qs}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

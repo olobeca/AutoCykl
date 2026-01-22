@@ -113,7 +113,7 @@ function OfferPutting() {
             offerType: selectedPackage,
         };
 
-        fetch("http://localhost:5001/offers/create", {
+        fetch(`${process.env.REACT_APP_API_URL}/offers/create`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

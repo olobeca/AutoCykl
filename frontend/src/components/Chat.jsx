@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 
 function Chat({props}) {
 
-    const socket = io('http://localhost:5001');
+    const socket = io(process.env.REACT_APP_API_URL);
 
 
     useEffect(() => {
-        const socket = io('http://localhost:5001');
+        const socket = io(process.env.REACT_APP_API_URL);
     
         socket.on("message", (msg) => {
           console.log("Received websocket message:", msg);
@@ -36,7 +36,7 @@ function Chat({props}) {
             return;
         }
         try {
-            const response = await fetch(`http://localhost:5001/chats/newMessage`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/newMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -119,7 +119,7 @@ function Chat({props}) {
 
     async function changeMeetingStatus(newStatus,id) {
         try {
-            const response = await fetch(`http://localhost:5001/chats/changeMeetingProposalStatus/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/changeMeetingProposalStatus/${id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -139,7 +139,7 @@ function Chat({props}) {
 
     async function changePriceStatus(newStatus,id) {
         try {
-            const response = await fetch(`http://localhost:5001/chats/changePrizeProposalStatus/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/chats/changePrizeProposalStatus/${id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

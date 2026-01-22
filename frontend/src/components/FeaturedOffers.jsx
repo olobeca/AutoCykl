@@ -14,7 +14,7 @@ function FeaturedOffers() {
     useEffect( () => {
         async function fetchFeaturedOffers() {
             try {
-                const response = await fetch("http://localhost:5001/offers/getFeaturedOffers", {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/getFeaturedOffers`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

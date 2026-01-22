@@ -17,7 +17,7 @@ function FavouriteOfferCard({props}) {
 
   async function handleRemoveFavourite() {
     try {
-      const response = await fetch(`http://localhost:5001/offers/unlikeOffer`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/unlikeOffer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

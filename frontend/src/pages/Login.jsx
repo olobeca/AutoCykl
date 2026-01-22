@@ -34,7 +34,7 @@ function Login() {
   }
 
   function handleLoginSubmit() {
-    fetch("http://localhost:5001/login", {
+    fetch(`${process.env.REACT_APP_API_URL}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function Login() {
         toast.error("Musisz zaakceptować regulamin i politykę prywatności, aby założyć konto");
         return;
     }
-    fetch("http://localhost:5001/register", {
+    fetch(`${process.env.REACT_APP_API_URL}/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

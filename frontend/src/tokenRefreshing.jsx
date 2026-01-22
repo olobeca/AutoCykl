@@ -28,7 +28,7 @@ export function useTokenRefresher(token, setToken) {
         console.log("Access token expired — refreshing...");
 
         try {
-          const res = await fetch("http://localhost:5001/refresh", {
+          const res = await fetch(`${process.env.REACT_APP_API_URL}/refresh`, {
             method: "POST",
             credentials: "include", // bardzo ważne! wysyła cookie z refresh tokenem
           });

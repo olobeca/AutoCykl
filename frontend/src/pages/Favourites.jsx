@@ -21,7 +21,7 @@ function Favourites() {
     const [data,setData] = useState([]);
     console.log("Favourites page - current user:", user);
     function fetchFavourites() {
-        fetch(`http://localhost:5001/offers/getLikedOffersByUser/${user.id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/offers/getLikedOffersByUser/${user.id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

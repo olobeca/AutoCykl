@@ -22,7 +22,7 @@ function SimilarOffers ({props}) {
             }
             console.log("Fetching similar offers for car type:", carType);
             try {
-                const response = await fetch(`http://localhost:5001/offers/getSimilarOffers/${carType}`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/getSimilarOffers/${carType}`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
                 });
