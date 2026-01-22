@@ -18,7 +18,7 @@ import {useState} from "react";
 function Favourites() {
 
     const {user} = useContext(UserContext);
-    const [data,setData] = useState([]);
+    const [data2,setData2] = useState([]);
     console.log("Favourites page - current user:", user);
     function fetchFavourites() {
         fetch(`${process.env.REACT_APP_API_URL}/offers/getLikedOffersByUser/${user.id}`, {
@@ -32,7 +32,9 @@ function Favourites() {
         })
         .then((data) => {
             console.log("Fetched favourite offers:", data);
-            setData(data.likedOffers || []);
+            const offers = data.likedOffers.map(like => like.offer);
+            setData2(offers);
+            console.log("Mapped favourite offers:", offers);
         })
         .catch((err) => console.error("Error fetching favourite offers:", err));
     }
@@ -121,9 +123,9 @@ function Favourites() {
                             id: 2,
                             userId: user.id
                         }} />
-                        {data.map((offer) => (<FavouriteOfferCard key={offer.id} props={{
+                        {data2.map((offer) => (<FavouriteOfferCard key={offer.id} props={{
                             image: volkswagengolf,
-                            title: offer.title,
+                            title: offer.brand + " " + offer.model,
                             price: `${offer.price} zł`,
                             year: offer.year,
                             mileage: `${offer.mileage} km`,

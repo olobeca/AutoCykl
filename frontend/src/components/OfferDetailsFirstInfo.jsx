@@ -1,10 +1,16 @@
 import CarDetailsCard from "./CarDetailsCard.jsx";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function OfferDetailsFirstInfo({ props }) {
 
     async function handleAddToFavourites() {
         try {
+          if (!props.userId || !props.offerId) {
+            console.error("Missing userId or offerId", { userId: props.userId, offerId: props.offerId });
+            toast.error("Musisz być zalogowany, aby dodać do ulubionych");
+            return;
+          }
+
           const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/likeOffer`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -15,8 +21,10 @@ function OfferDetailsFirstInfo({ props }) {
             throw new Error("Failed to add to favourites");
           }
           console.log("Successfully added to favourites for offer ID:", props.offerId);
+          toast.success("Dodano do ulubionych!");
         } catch (error) {
           console.error("Error adding to favourites:", error);
+          toast.error("Błąd podczas dodawania do ulubionych");
         }
       }
 

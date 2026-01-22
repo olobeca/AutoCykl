@@ -398,8 +398,8 @@ exports.LikeOffer = async (req, res) => {
     }
     const newLike = await prisma.like.create({
       data: {
-        userId: userId,
-        offerId: offerId,
+        userId: parseInt(userId),
+        offerId: parseInt(offerId),
       },
     });
     return res.status(201).json({ message: "Offer liked", like: newLike });
