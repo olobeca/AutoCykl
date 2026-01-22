@@ -1,4 +1,4 @@
-# AutoPortal - Portal Motoryzacyjny
+# AutoCykl - Portal Motoryzacyjny
 
 ## Opis Projektu
 
@@ -332,5 +332,5 @@ Panel sprzedawcy pokazuje statystyki: liczbę wyświetleń, polubień, wiadomoś
 
 ## Autorzy i Licencja
 
-Projekt: AutoPortal - Portal Motoryzacyjny
+Projekt: AutoCykl - Portal Motoryzacyjny
 Autor: Aleksander Radecki
