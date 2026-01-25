@@ -8,11 +8,18 @@ import userPlus from '../icons/user-plus.svg';
 import location from '../icons/location.svg';
 import calendar from '../icons/calendar.svg';
 import star from '../icons/star.svg';
+import OfferCard from "../components/OfferCard.jsx";
+import toyotacorolla from '../toyotacorolla.jpg';
+import hondacivic from '../hondacivic.jpg';
+import fordfocus from '../fordfocus.jpg';
+import SkeletonOfferCard from "../components/SkeletonOfferCard.jsx";
 
 function Profile() {
 
     const {id} = useParams();
     console.log("Profile page loaded for user ID:", id);
+
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const [userData, setUserData] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
@@ -32,6 +39,7 @@ function Profile() {
             const data = await response.json();
             console.log("Fetched profile data:", data.userProfile);
             setUserData(data.userProfile);
+            setIsDataLoaded(true);
 
        } catch (err) {
             console.error("Error fetching profile data:", err);
@@ -105,6 +113,34 @@ function Profile() {
                             <h1 className="text-sm text-gray-600">Ocena</h1>
                         </div>
                     </div>
+                </div>
+                <div className="bg-gray-100 flex flex-col p-8 gap-8 w-full mt-2 ">
+                    <h1 className="text-left text-md font-bold text-black">Aktualne Ogłoszenia</h1>
+                    <div className="grid grid-cols-3 gap-4  w-full mt-4">
+                    {/* <OfferCard props={{image: toyotacorolla, title: "Toyota Corolla", price: "85 000 PLN", year: "2018", mileage: "50 000 km", fuelType: "Benzyna", location: "Warszawa", isFeatured: true, id: 1}} />
+                    <OfferCard props={{image: hondacivic, title: "Honda Civic", price: "90 000 PLN", year: "2019", mileage: "40 000 km", fuelType: "Diesel", location: "Kraków", isFeatured: true, id: 2}} />
+                    <OfferCard props={{image: fordfocus, title: "Ford Focus", price: "75 000 PLN", year: "2017", mileage: "60 000 km", fuelType: "Benzyna", location: "Gdańsk", isFeatured: true, id: 3}} /> */}
+                    {!isDataLoaded ? 
+                    <>
+                        <SkeletonOfferCard /> 
+                        <SkeletonOfferCard />
+                        <SkeletonOfferCard /> 
+                    </>
+                    :
+                    null
+                    }
+                    {userData?.offers.map((offer) => (<OfferCard key={offer.id} props={{
+                            image: toyotacorolla,
+                            title: offer.brand + " " + offer.model,
+                            price: `${offer.price} zł`,
+                            year: offer.year,
+                            mileage: `${offer.mileage} km`,
+                            fuelType: offer.fuelType,
+                            location: offer.location,
+                            isFeatured: offer.isFeatured,
+                            id: offer.id,
+                        }} />))}
+                </div>
                 </div>
             </div>
             </SkeletonTheme>
