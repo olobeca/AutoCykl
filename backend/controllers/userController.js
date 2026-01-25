@@ -172,6 +172,8 @@ exports.GetUserProfile = async (req, res) => {
         userPosts: true,
         userPostLikes: true,
         userPostComments: true,
+        followers: true,
+        following: true,
       },
     });
     if (!userProfile) {
