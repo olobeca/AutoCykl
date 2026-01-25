@@ -166,6 +166,13 @@ exports.GetUserProfile = async (req, res) => {
       where: {
         id: userId,
       },
+      include: {
+        offers: true,
+        userRatings: true,
+        userPosts: true,
+        userPostLikes: true,
+        userPostComments: true,
+      },
     });
     if (!userProfile) {
       return res
