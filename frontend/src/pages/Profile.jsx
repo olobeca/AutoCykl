@@ -7,7 +7,7 @@ import user from '../icons/user.svg';
 import userPlus from '../icons/user-plus.svg';
 import location from '../icons/location.svg';
 import calendar from '../icons/calendar.svg';
-
+import star from '../icons/star.svg';
 
 function Profile() {
 
@@ -79,6 +79,30 @@ function Profile() {
                         <div className="flex gap-3 items-center">
                             <h1 className="text-black text-sm font-semibold">{new Date(userData?.createdAt).getFullYear() || <Skeleton width={40} />}</h1>
                             <img src={calendar} alt="Calendar Icon" className="h-5 w-5"></img>
+                        </div>
+                    </div>
+                    <div className="flex gap-6">
+                        <div className="flex flex-col items-center">
+                            <h1 className="text-gray-900">{userData?.offers.length || <Skeleton width={40} />}</h1>
+                            <h1 className="text-sm text-gray-600">Ogłoszenia</h1>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <h1 className="text-gray-900">{userData?.followers.length || <Skeleton width={40} />}</h1>
+                            <h1 className="text-sm text-gray-600">Obserwujący</h1>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <div className="flex gap-1">
+                                <img src={star} alt="Star Icon" className="h-5 w-5"></img>
+                                {/* <h1 className="text-gray-900">{userData ? (userData?.raterRatings.length ? (userData?.raterRatings.reduce((acc, rating) => acc + rating.rating, 0) / userData?.raterRatings.length).toFixed(1) : "0.0") : <Skeleton width={40} />}</h1> */}
+                                <h1 className="text-gray-900">
+                                    {userData
+                                        ? (userData.userRatings?.length
+                                            ? (userData.userRatings.reduce((acc, rating) => acc + rating.rating, 0) / userData.userRatings.length).toFixed(1)
+                                            : "0.0")
+                                        : <Skeleton width={40} />}
+                                </h1>
+                            </div>
+                            <h1 className="text-sm text-gray-600">Ocena</h1>
                         </div>
                     </div>
                 </div>
