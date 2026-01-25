@@ -8,6 +8,7 @@ import OfferPutting from "./pages/OfferPutting";
 import Login from "./pages/Login";
 import Favourites from "./pages/Favourites";
 import SellerPannel from "./pages/SellerPannel";
+import Profile from "./pages/Profile";
 import React from "react";
 import UserContext from "./context/UserContext";
 import { useState } from "react";
@@ -43,6 +44,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/favourites" element={<ProtectedRoutes><Favourites /></ProtectedRoutes>} />
       <Route path="/sellerPanel" element={<ProtectedRoutes><SellerPannel /></ProtectedRoutes>} />
+      <Route path="/profile/:id" element={<Profile />} />
     </Routes>
     </UserContext.Provider>
     </>
