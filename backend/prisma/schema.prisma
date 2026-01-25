@@ -56,6 +56,8 @@ model User {
   userPostLikes       UserPostLike[]
   userPostComments    UserPostComment[]
   raterRatings        UserRating[]        @relation("raterRatings")
+  followers           UserFollow[]        @relation("Followers")
+  following           UserFollow[]        @relation("Following")
 
   @@map("users")
 }
@@ -235,4 +237,14 @@ model UserPostComment {
   createdAt  DateTime @default(now()) @map("created_at")
 
   @@map("user_post_comments")
+}
+
+model UserFollow {
+  id          Int  @id @default(autoincrement())
+  followerId  Int  @map("follower_id")
+  follower    User @relation("Following", fields: [followerId], references: [id])
+  followingId Int  @map("following_id")
+  following   User @relation("Followers", fields: [followingId], references: [id])
+
+  @@map("user_follows")
 }
