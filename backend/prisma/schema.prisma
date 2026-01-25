@@ -40,6 +40,9 @@ model User {
   name                String              @unique @db.VarChar(120)
   passwordHashed      String              @db.VarChar(255)
   phoneNumber         String              @db.VarChar(9)
+  description         String              @default("") @db.Text
+  profilePictureUrl   String              @default("") @map("profile_picture_url") @db.Text
+  location            String              @default("") @db.VarChar(120)
   createdAt           DateTime            @default(now()) @map("created_at")
   offers              Offer[]
   messages            Message[]
@@ -48,6 +51,11 @@ model User {
   likes               Like[]
   pricePropostions    PricePropostion[]
   meetingPropostions  MeetingPropostion[]
+  userRatings         UserRating[]        @relation("userRatings")
+  userPosts           UserPost[]
+  userPostLikes       UserPostLike[]
+  userPostComments    UserPostComment[]
+  raterRatings        UserRating[]        @relation("raterRatings")
 
   @@map("users")
 }
@@ -180,4 +188,51 @@ model View {
   viewDate DateTime @default(now()) @map("view_date")
 
   @@map("views")
+}
+
+model UserRating {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  user      User     @relation("userRatings", fields: [userId], references: [id])
+  rating    Int
+  comment   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  raterId   Int      @map("rater_id")
+  rater     User     @relation("raterRatings", fields: [raterId], references: [id])
+
+  @@map("user_ratings")
+}
+
+model UserPost {
+  id        Int               @id @default(autoincrement())
+  userId    Int               @map("user_id")
+  user      User              @relation(fields: [userId], references: [id])
+  content   String            @db.Text
+  createdAt DateTime          @default(now()) @map("created_at")
+  likes     UserPostLike[]
+  comments  UserPostComment[]
+
+  @@map("user_posts")
+}
+
+model UserPostLike {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  user       User     @relation(fields: [userId], references: [id])
+  userPostId Int      @map("user_post_id")
+  userPost   UserPost @relation(fields: [userPostId], references: [id])
+
+  @@map("user_post_likes")
+}
+
+model UserPostComment {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  user       User     @relation(fields: [userId], references: [id])
+  userPostId Int      @map("user_post_id")
+  userPost   UserPost @relation(fields: [userPostId], references: [id])
+  content    String   @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("user_post_comments")
 }
